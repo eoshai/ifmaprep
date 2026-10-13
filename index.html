@@ -208,6 +208,17 @@ body{overscroll-behavior-y:none}
 }
 @media(max-width:380px){.cards{grid-template-columns:1fr}.fbar{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ===== login / sincronização ===== */
+#cld .lb{font-size:13px}
+#cld.ok .ic{filter:none}#cld.off .ic{opacity:.5}
+.sbk{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
+.sbk.on{display:flex}
+.sbx{background:var(--pn);border:1px solid var(--br);border-radius:var(--r);padding:22px;width:min(380px,100%);box-shadow:0 20px 60px #000a}
+.sbx h3{margin:0 0 4px;font-size:20px}.sbx p{margin:0 0 14px}
+.sbx input{display:block;width:100%;max-width:none;margin:8px 0}
+.sbx .row{margin-top:12px}.sbx .row .btn{flex:1}
+.sbm{min-height:20px;margin-top:10px;font-size:13px;color:var(--mu)}.sbm.er{color:var(--er)}.sbm.ok{color:var(--ok)}
+.sbl{background:none;border:0;color:var(--mu);font:inherit;font-size:13px;cursor:pointer;margin-top:10px;padding:4px;text-decoration:underline}
 </style><script>addEventListener('DOMContentLoaded',()=>{const r=document.documentElement,b=document.createElement('button'),set=on=>{r.dataset.foco=on?'on':'off';b.textContent=on?'✖':'🎯';b.title=on?'Sair do modo foco (Esc)':'Modo foco: esconde o menu e distrações'};b.id='fcs';b.onclick=()=>set(r.dataset.foco!=='on');addEventListener('keydown',e=>{if(e.key==='Escape'&&r.dataset.foco==='on')set(false)});document.body.appendChild(b);set(false)})</script>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ifma_tema')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}
 addEventListener('DOMContentLoaded',()=>{const b=document.createElement('button'),r=document.documentElement,set=t=>{r.dataset.theme=t;b.textContent=t==='light'?'🌙':'☀️';b.title=t==='light'?'Mudar para tema escuro':'Mudar para tema claro';try{localStorage.setItem('ifma_tema',t)}catch(e){}};b.id='thm';b.onclick=()=>set(r.dataset.theme==='light'?'dark':'light');document.body.appendChild(b);set(r.dataset.theme)})</script>
@@ -220,7 +231,7 @@ const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[
 const MATS=['Português','Matemática'],anos=[...new Set(Q.map(q=>q.ano))].sort((a,b)=>b-a);
 let S={resp:{},fav:[],hard:[],log:[],vid:{},com:{},dia:{d:'',n:0},tempo:{'Português':0,'Matemática':0},col:0};
 try{const l=JSON.parse(localStorage.getItem('ifma')||'{}');S={...S,...l,tempo:{...S.tempo,...(l.tempo||{})}}}catch(e){}
-const save=()=>{try{localStorage.setItem('ifma',JSON.stringify(S))}catch(e){}};
+const save=()=>{S._t=Date.now();try{localStorage.setItem('ifma',JSON.stringify(S))}catch(e){}window.__sy&&__sy.dirty()};
 const hms=s=>{s=Math.max(0,Math.floor(s));return[s/3600|0,s%3600/60|0,s%60].map(x=>String(x).padStart(2,'0')).join(':')};
 const stat=q=>S.resp[q.id];
 const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['sim','📝','Simulado'],['cron','⏱','Cronômetro'],['desp','📊','Desempenho']];
@@ -239,7 +250,7 @@ const ytT=u=>{const m=(u||'').match(/[?&](?:t|start)=(?:(\d+)h)?(?:(\d+)m)?(?:(\
 const vidHtml=u=>{if(!u)return'';const id=ytId(u),t=ytT(u);return id?`<div class=vid><iframe referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/${id}${t?'?start='+t:''}" allowfullscreen loading=lazy></iframe></div><a class=btn href="${escA(u)}" target=_blank rel=noopener>↗ Abrir no YouTube</a>`:(/^https?:\/\//i.test(u)?`<a class=btn href="${escA(u)}" target=_blank rel=noopener>▶ Abrir resolução</a>`:'')};
 const dayInc=()=>{const k=new Date().toLocaleDateString('sv');if(!S.dia||S.dia.d!==k)S.dia={d:k,n:0};S.dia.n++};
 let CUT={};try{CUT=JSON.parse(localStorage.getItem('ifma_cut')||'{}')}catch(e){}
-const saveCut=()=>{try{localStorage.setItem('ifma_cut',JSON.stringify(CUT))}catch(e){}};
+const saveCut=()=>{try{localStorage.setItem('ifma_cut',JSON.stringify(CUT))}catch(e){}save()};
 function mountQ(el,q,c){const R=c.R,g=G[q.id];let sel=R[q.id]?R[q.id].r:'',shown=!q.enun;
  el.innerHTML=`<div class=qh><span class="tag ${q.materia[0]}">${q.materia}</span><span class=tag>${q.ano} · Q${q.num}</span><span class="tag d${q.dif[0]}">${q.dif}</span><button class=ic2 id=st title=Favoritar>${S.fav.includes(q.id)?'★':'☆'}</button></div><div class=tp>${esc(q.topico)}</div>${q.enun?`<div class=en>${esc(q.enun)}</div>`:''}<div class=alts>${q.alts.map((a,i)=>`<button class=alt data-l=${'ABCDE'[i]}><b>${'ABCDE'[i]}</b><span>${esc(a)}</span><i class=pen role=button title="Riscar alternativa">✎</i></button>`).join('')}</div><div class=acts><button class="btn p" id=go>Responder</button><label class=chk title="Marque se você chutou a resposta"><input type=checkbox id=ch> 🎲 Chutei</label><button class=btn id=pg></button><button class=btn id=hd></button><button class=btn id=rv>🎬 Resolução explicada</button><span class=sp></span><button class=btn id=pv>◀</button><button class=btn id=nx>▶</button></div><div id=fb></div><div id=cm></div><div id=pgv></div>`;
  const paint=r=>$$('.alt',el).forEach(a=>{const l=a.dataset.l;a.className='alt'+(l===sel?' sel':'')+(r&&g&&l===g?' ok':'')+(r&&g&&l===sel&&l!==g?' bad':'')+((CUT[q.id]||[]).includes(l)?' cut':'')});
@@ -280,7 +291,7 @@ let FI=Math.floor(Date.now()/864e5)%FRASES.length;
 function heroInit(b){const h=new Date().getHours(),sd=h<5?'Boa madrugada':h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
  $('#hgr',b).textContent=sd+' · '+new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
  const n=$('#hnome',b),f=$('#hfrase',b);n.textContent=getNome().toUpperCase();f.textContent=FRASES[FI];
- n.onclick=()=>{const v=prompt('Seu nome:',getNome());if(v&&v.trim()){try{localStorage.setItem('ifma_nome',v.trim())}catch(e){}n.textContent=v.trim().toUpperCase()}};
+ n.onclick=()=>{const v=prompt('Seu nome:',getNome());if(v&&v.trim()){try{localStorage.setItem('ifma_nome',v.trim())}catch(e){}save();n.textContent=v.trim().toUpperCase()}};
  f.onclick=()=>{FI=(FI+1)%FRASES.length;f.textContent=FRASES[FI]}}
 function estInit(b){const m={},qs=new Set();Q.forEach(q=>{const r=stat(q),w=r&&r.ok===false,h=S.hard.includes(q.id),ch=r&&r.ch;if(!w&&!h&&!ch)return;qs.add(q.id);const k=q.materia+'|'+q.topico,o=m[k]=m[k]||{mat:q.materia,t:q.topico,w:0,h:0,c:0,n:0};o.n++;if(w)o.w++;if(h)o.h++;if(ch)o.c++});
  const T=Object.values(m).sort((x,y)=>y.n-x.n),W=$('#estw',b);
@@ -410,7 +421,7 @@ function viewCron(b){b.innerHTML=`<div class=card2 style="text-align:center"><di
 function viewDesp(b){const d={};Q.forEach(q=>{const r=stat(q);if(r){const k=q.materia+q.topico;d[k]=d[k]||[q.materia,q.topico,0,0,0];d[k][2]++;if(r.ok!=null){d[k][3]++;if(r.ok)d[k][4]++}}});
  const rows=Object.values(d).sort((x,y)=>(x[3]?x[4]/x[3]:2)-(y[3]?y[4]/y[3]:2));
  b.innerHTML=`<div class=cards>${MATS.map(m=>`<div class=card><small>${m} · tempo estudado</small><b>${hms(S.tempo[m])}</b></div>`).join('')}</div><div class=card2><h3>Por assunto <small>(piores primeiro)</small></h3>${rows.map(r=>{const p=r[3]?Math.round(100*r[4]/r[3]):0;return `<div class=bar><span>${esc(r[1])}<br><small>${r[0]} · ${r[2]} resp.</small></span><div class=trk><i style="width:${p}%"></i></div><b>${r[3]?p+'%':'—'}</b></div>`}).join('')||'<p class=mu>Responda questões para ver seu desempenho.</p>'}</div><br><button class=btn id=rs>Zerar progresso</button>`;
- let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.fav=[];S.tempo={'Português':0,'Matemática':0};save();go('desp')}}
+ let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.fav=[];S.tempo={'Português':0,'Matemática':0};S._rs=Date.now();save();go('desp')}}
 const TT=Object.fromEntries(NAV.map(n=>[n[0],n[2]]));
 function go(v){V=v;$$('.ni').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$$('#bn button').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$('#main').scrollTop=0;
  $('#main').innerHTML=`<div class=top><button class="btn hb" id=hb>☰</button><h1>${TT[v]}</h1></div><div id=bd></div>`;
@@ -426,6 +437,134 @@ setInterval(()=>{if(T.run&&T.alvo&&tel()>=T.alvo){credit();T.run=0;T.dec=0;
   else{T.alvo=alvo0();T.msg='Tempo esgotado! ⏰'}if(V==='cron')go('cron')}
  paintRing();if(SIM&&!SIM.done){const r=(SIM.fim-Date.now())/1000,e=$('#simclk');if(e){e.textContent=hms(r);e.style.color=r<300?'var(--er)':''}if(r<=0)finSim()}},300);
 go('home');
+
+
+/* ===== login + sincronização na nuvem (Supabase) ===== */
+(()=>{
+const URL_='https://cclfobzemrwdilwgdati.supabase.co',KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjbGZvYnplbXJ3ZGlsd2dkYXRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MTcxMzMsImV4cCI6MjEwNzQ5MzEzM30.lrIpkzpOWx6hkqL2GLlwvGrmY4kL7GBO97HWg_owTnE';
+const SK='sb_sess',lsG=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsS=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsD=k=>{try{localStorage.removeItem(k)}catch(e){}};
+let sess=null;try{sess=JSON.parse(lsG(SK)||'null')}catch(e){}
+let timer=0,busy=0,again=0,state=sess?'idle':'out',first=1;
+const hd=(tok)=>({apikey:KEY,Authorization:'Bearer '+(tok||KEY),'Content-Type':'application/json'});
+const setSess=r=>{sess=r&&r.access_token?{access_token:r.access_token,refresh_token:r.refresh_token,exp:r.expires_at||Math.floor(Date.now()/1000)+(r.expires_in||3600),uid:(r.user||{}).id||(sess&&sess.uid),email:(r.user||{}).email||(sess&&sess.email)}:null;sess?lsS(SK,JSON.stringify(sess)):lsD(SK)};
+const msgErr=(j,st)=>{const m=((j&&(j.msg||j.error_description||j.message||j.error))||'')+'';
+ if(/invalid login/i.test(m))return 'Email ou senha incorretos.';if(/already|registered/i.test(m))return 'Esse email já tem conta. Use "Entrar".';
+ if(/password/i.test(m)&&/6|short|least/i.test(m))return 'A senha precisa ter pelo menos 6 caracteres.';if(/valid email|invalid.*email/i.test(m))return 'Email inválido.';
+ if(/rate|too many|seconds/i.test(m))return 'Muitas tentativas. Espere um pouco e tente de novo.';if(/not confirmed/i.test(m))return 'Confirme seu email primeiro (veja sua caixa de entrada).';
+ return m||('Erro '+st)};
+async function auth(path,body){const r=await fetch(URL_+'/auth/v1/'+path,{method:'POST',headers:hd(),body:JSON.stringify(body)});let j={};try{j=await r.json()}catch(e){}return{ok:r.ok,st:r.status,j}}
+async function token(){if(!sess)return null;if(sess.exp-60>Date.now()/1000)return sess.access_token;
+ try{const a=await auth('token?grant_type=refresh_token',{refresh_token:sess.refresh_token});
+  if(a.ok){setSess(a.j);return sess.access_token}
+  if(a.st>=400&&a.st<500){setSess(null);state='out';paint();throw new Error('auth')}
+ }catch(e){if(e.message==='auth')throw e}
+ throw new Error('net')}
+
+/* ---- merge ---- */
+const arr=a=>Array.isArray(a)?a:[];
+function lastT(log){const m={};arr(log).forEach(x=>{if(x&&x.id&&(m[x.id]||0)<x.t)m[x.id]=x.t});return m}
+function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
+ const a=L.S||{},b=R.S||{},tl=a._t||0,tr=b._t||0,o={...a};
+ // 1) dados acumulativos: respostas, histórico, tempo, contagem do dia
+ const rl=a._rs||0,rr=b._rs||0;
+ if(rl!==rr){const w=rl>rr?a:b;o.resp={...(w.resp||{})};o.log=arr(w.log).slice();o.tempo={...(w.tempo||{})};o.dia=w.dia;o._rs=Math.max(rl,rr)}
+ else{
+  const la=lastT(a.log),lb=lastT(b.log),ra=a.resp||{},rb=b.resp||{},r={};
+  new Set([...Object.keys(ra),...Object.keys(rb)]).forEach(id=>{if(!(id in rb))r[id]=ra[id];else if(!(id in ra))r[id]=rb[id];else r[id]=(lb[id]||0)>(la[id]||0)?rb[id]:ra[id]});
+  o.resp=r;
+  const seen=new Set(),lg=[];[...arr(a.log),...arr(b.log)].forEach(x=>{const k=x.t+'|'+x.id;if(!seen.has(k)){seen.add(k);lg.push(x)}});
+  lg.sort((x,y)=>x.t-y.t);o.log=lg.length>5000?lg.slice(-5000):lg;
+  const ta=a.tempo||{},tb=b.tempo||{};o.tempo={};new Set([...Object.keys(ta),...Object.keys(tb)]).forEach(k=>o.tempo[k]=Math.max(ta[k]||0,tb[k]||0));
+  const da=a.dia||{d:'',n:0},db=b.dia||{d:'',n:0};o.dia=da.d>db.d?da:db.d>da.d?db:{d:da.d,n:Math.max(da.n||0,db.n||0)};
+ }
+ // 2) preferências/marcações: vale a versão mais recente (empate = junta as duas)
+ let cut,nome=L.nome!=null?L.nome:R.nome;
+ if(tl===tr){
+  o.fav=[...new Set([...arr(a.fav),...arr(b.fav)])];o.hard=[...new Set([...arr(a.hard),...arr(b.hard)])];
+  o.vid={...(b.vid||{}),...(a.vid||{})};o.com={...(b.com||{}),...(a.com||{})};
+  cut={...(R.cut||{})};Object.entries(L.cut||{}).forEach(([k,v])=>{cut[k]=[...new Set([...(cut[k]||[]),...v])]});
+ }else{
+  const w=tl>tr?a:b,wc=tl>tr?L:R;
+  o.fav=arr(w.fav).slice();o.hard=arr(w.hard).slice();o.vid={...(w.vid||{})};o.com={...(w.com||{})};cut={...(wc.cut||{})};
+  nome=tl>tr?(L.nome!=null?L.nome:R.nome):(R.nome!=null?R.nome:L.nome);
+ }
+ o.col=a.col;o._t=Math.max(tl,tr);
+ return{S:o,cut,nome}}
+
+const sj=v=>JSON.stringify(v,(k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(i=>[i,x[i]])):x);
+const snap=()=>{let n=lsG('ifma_nome');return{S:JSON.parse(JSON.stringify(S)),cut:JSON.parse(JSON.stringify(CUT)),nome:n}};
+function apply(m){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,m.S);Object.keys(CUT).forEach(k=>delete CUT[k]);Object.assign(CUT,m.cut);
+ lsS('ifma',JSON.stringify(S));lsS('ifma_cut',JSON.stringify(CUT));if(m.nome!=null)lsS('ifma_nome',m.nome)}
+
+/* ---- sync ---- */
+async function sync(){
+ if(!sess)return;if(busy){again=1;return}
+ busy=1;clearTimeout(timer);timer=0;state='sync';paint();
+ try{
+  const tk=await token();
+  const g=await fetch(URL_+'/rest/v1/progresso?select=dados&limit=1',{headers:hd(tk),keepalive:false});
+  if(g.status===401){setSess(null);state='out';paint();return}
+  if(!g.ok)throw new Error('http '+g.status);
+  const rows=await g.json(),rd=rows[0]&&rows[0].dados,local=snap();
+  const merged=rd&&rd.S?merge(local,{S:rd.S,cut:rd.cut||{},nome:rd.nome!=null?rd.nome:null}):local;
+  const changed=sj(merged)!==sj(local);
+  if(changed)apply(merged);
+  const payload={S:merged.S,cut:merged.cut,nome:merged.nome};
+  if(!rd||sj({S:rd.S,cut:rd.cut||{},nome:rd.nome!=null?rd.nome:null})!==sj(payload)){
+   const p=await fetch(URL_+'/rest/v1/progresso?on_conflict=user_id',{method:'POST',headers:{...hd(tk),Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:sess.uid,dados:payload,atualizado_em:new Date().toISOString()}),keepalive:true});
+   if(!p.ok)throw new Error('http '+p.status)}
+  state='ok';lsS('sb_last',Date.now());
+  if(changed&&(first||V==='home'||V==='desp')&&!(SIM&&!SIM.done)){go(V)}
+  else if(changed){const f=$('#ft');if(f)f.textContent=Object.keys(S.resp).length+' questões respondidas'}
+  first=0;
+ }catch(e){if(e.message!=='auth')state=navigator.onLine===false||e.message==='net'||/fetch|network|load/i.test(e.message)?'off':'err'}
+ finally{busy=0;paint();if(again){again=0;sync()}}}
+
+window.__sy={dirty(){if(!sess)return;clearTimeout(timer);timer=setTimeout(sync,2500)}};
+
+/* ---- UI ---- */
+const bk=document.createElement('div');bk.className='sbk';bk.id='sbk';document.body.appendChild(bk);
+const btn=document.createElement('button');btn.className='ni';btn.id='cld';
+const ft=$('#ft');ft.parentNode.insertBefore(btn,ft);
+function paint(){const t={out:['☁','Entrar para sincronizar','off'],idle:['☁','Sincronizar',''],sync:['🔄','Sincronizando…',''],ok:['☁','Sincronizado ✓','ok'],off:['☁','Sem internet · pendente','off'],err:['⚠','Erro ao sincronizar','off']}[state]||['☁','',''];
+ btn.className='ni '+t[2];btn.innerHTML='<span class=ic>'+t[0]+'</span><span class=lb>'+t[1]+'</span>';btn.title=sess?'Conta: '+sess.email:'Entrar ou criar conta'}
+const close=()=>bk.classList.remove('on');
+function openLogin(msg){
+ bk.innerHTML=`<div class=sbx><h3>☁ Sincronizar meus dispositivos</h3><p class=mu>Entre com email e senha para seu progresso aparecer igual no celular, PC e tablet.</p>
+ <input id=sbe type=email placeholder="Email" autocomplete=email><input id=sbp type=password placeholder="Senha (mín. 6 caracteres)" autocomplete=current-password>
+ <div class=row><button class="btn p" id=sbi>Entrar</button><button class=btn id=sbc>Criar conta</button></div><div class=sbm id=sbm>${msg||''}</div><button class=sbl id=sbn>Agora não</button></div>`;
+ bk.classList.add('on');const m=$('#sbm',bk),go_=async mode=>{
+  const email=$('#sbe',bk).value.trim(),password=$('#sbp',bk).value;
+  if(!email||!password){m.className='sbm er';m.textContent='Preencha email e senha.';return}
+  m.className='sbm';m.textContent='Aguarde…';$('#sbi',bk).disabled=$('#sbc',bk).disabled=true;
+  try{const a=mode==='in'?await auth('token?grant_type=password',{email,password}):await auth('signup',{email,password});
+   if(!a.ok){m.className='sbm er';m.textContent=msgErr(a.j,a.st);return}
+   if(!a.j.access_token){m.className='sbm ok';m.textContent='Conta criada! Confirme o email que enviamos e depois toque em "Entrar".';return}
+   setSess(a.j);lsD('sb_skip');state='sync';paint();close();first=1;sync()}
+  catch(e){m.className='sbm er';m.textContent='Sem conexão. Tente de novo.'}
+  finally{const i=$('#sbi',bk),c=$('#sbc',bk);if(i)i.disabled=c.disabled=false}};
+ $('#sbi',bk).onclick=()=>go_('in');$('#sbc',bk).onclick=()=>go_('up');$('#sbp',bk).onkeydown=e=>{if(e.key==='Enter')go_('in')};
+ $('#sbn',bk).onclick=()=>{lsS('sb_skip','1');close()};setTimeout(()=>{const e=$('#sbe',bk);e&&e.focus()},50)}
+function openAcct(){
+ const last=+lsG('sb_last')||0;
+ bk.innerHTML=`<div class=sbx><h3>☁ Sincronização ativa</h3><p class=mu>Conta: <b>${esc(sess.email||'')}</b><br>${last?'Última sincronização: '+new Date(last).toLocaleString('pt-BR'):'Ainda não sincronizou nesta sessão.'}</p>
+ <div class=row><button class="btn p" id=sbs>Sincronizar agora</button><button class=btn id=sbo>Sair</button></div><div class=sbm id=sbm></div><button class=sbl id=sbn>Fechar</button></div>`;
+ bk.classList.add('on');
+ $('#sbs',bk).onclick=()=>{first=1;sync();close()};
+ $('#sbo',bk).onclick=()=>{if(!confirm('Sair da conta? Seu progresso continua salvo neste aparelho e na nuvem.'))return;setSess(null);state='out';paint();close()};
+ $('#sbn',bk).onclick=close}
+btn.onclick=()=>{sess?openAcct():openLogin()};
+bk.onclick=e=>{if(e.target===bk)close()};
+addEventListener('keydown',e=>{if(e.key==='Escape'&&bk.classList.contains('on'))close()});
+paint();
+
+/* ---- gatilhos ---- */
+document.addEventListener('visibilitychange',()=>{if(!sess)return;if(document.visibilityState==='hidden'){if(timer)sync()}else sync()});
+addEventListener('online',()=>{if(sess)sync()});
+addEventListener('pagehide',()=>{if(sess&&timer)sync()});
+setInterval(()=>{if(sess&&document.visibilityState==='visible'&&!(SIM&&!SIM.done))sync()},90000);
+if(sess)sync();else if(!lsG('sb_skip'))setTimeout(()=>openLogin(),700);
+})();
 
 /* ===== mobile: barra inferior, gaveta, ampliar prova, PWA ===== */
 (()=>{const BN=[['home','🏠','Início'],['prov','📚','Provas'],['banco','🗂','Banco'],['sim','📝','Simulado'],['mais','☰','Mais']];
