@@ -228,6 +228,14 @@ body{overscroll-behavior-y:none}
 .cad{margin-bottom:16px}.cdh{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
 .cdn{display:flex;gap:14px;align-items:center;margin-bottom:12px}.cdb{font-size:38px;font-weight:800;color:var(--g);line-height:1}.cdok{margin:0}
 @media(max-width:480px){.dgc{gap:12px}.rng{width:112px;height:112px}}
+/* ===== estados das questões ===== */
+.tag.sx{font-weight:700}
+.s-acertou,.s-dominio{background:color-mix(in srgb,var(--ok) 22%,transparent);color:var(--ok)}
+.s-errou{background:color-mix(in srgb,var(--er) 22%,transparent);color:var(--er)}
+.s-estudando,.s-aprendida{background:color-mix(in srgb,var(--g) 22%,transparent);color:var(--g)}
+.s-sg{background:var(--p2);color:var(--mu)}
+.lrn{margin-top:10px;padding:12px;border:1px solid var(--br);border-radius:var(--r);background:var(--p2)}.lrn .row{margin-top:8px}
+.hin{display:block;margin-top:8px;font-size:12px;line-height:1.4}
 .sbl{background:none;border:0;color:var(--mu);font:inherit;font-size:13px;cursor:pointer;margin-top:10px;padding:4px;text-decoration:underline}
 </style><script>addEventListener('DOMContentLoaded',()=>{const r=document.documentElement,b=document.createElement('button'),set=on=>{r.dataset.foco=on?'on':'off';b.textContent=on?'✖':'🎯';b.title=on?'Sair do modo foco (Esc)':'Modo foco: esconde o menu e distrações'};b.id='fcs';b.onclick=()=>set(r.dataset.foco!=='on');addEventListener('keydown',e=>{if(e.key==='Escape'&&r.dataset.foco==='on')set(false)});document.body.appendChild(b);set(false)})</script>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ifma_tema')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}
@@ -245,37 +253,82 @@ const save=()=>{S._t=Date.now();try{localStorage.setItem('ifma',JSON.stringify(S
 const hms=s=>{s=Math.max(0,Math.floor(s));return[s/3600|0,s%3600/60|0,s%60].map(x=>String(x).padStart(2,'0')).join(':')};
 const stat=q=>S.resp[q.id];
 const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['sim','📝','Simulado'],['cron','⏱','Cronômetro'],['desp','📊','Desempenho']];
-const FD={ano:['Ano',['Todos',...anos]],mat:['Matéria',['Todas',...MATS]],ass:['Assunto',0],dif:['Dificuldade',['Todas','Fácil','Média','Difícil']],st:['Status',['Todas','Não respondidas','Erradas','Acertadas','Favoritas','Dificuldade','Chutei','A estudar','Revisão de hoje']]};
+const FD={ano:['Ano',['Todos',...anos]],mat:['Matéria',['Todas',...MATS]],ass:['Assunto',0],dif:['Dificuldade',['Todas','Fácil','Média','Difícil']],st:['Status',['Todas','Não respondidas','Erradas','Acertadas','Favoritas','Dificuldade','Chutei','A estudar','Revisão de hoje','Não estudadas','Estudadas sem domínio','Domínio confirmado','Erradas 2+ vezes']]};
 const VF={prov:['ano','mat','st'],ass:['mat','ass','st'],dif:['mat','dif','ano'],banco:['ano','mat','ass','dif','st']};
 const ST={};let V='home',SIM=null;
-function filt(f){const DU=f.st==='Revisão de hoje'?new Set(cadDue().due.map(x=>x.id)):null;return Q.filter(q=>{const s=stat(q);if(DU&&!DU.has(q.id))return 0;
+function filt(f){const HF=['Não estudadas','Estudadas sem domínio','Domínio confirmado','Erradas 2+ vezes'].includes(f.st),sc={},DU=f.st==='Revisão de hoje'?new Set(cadDue().due.map(x=>x.id)):null;return Q.filter(q=>{const s=stat(q);if(DU&&!DU.has(q.id))return 0;if(HF){const i=hInfo(q.id);if(f.st==='Não estudadas'&&i.st!=='errou')return 0;if(f.st==='Estudadas sem domínio'&&i.st!=='estudando'&&i.st!=='aprendida')return 0;if(f.st==='Domínio confirmado'&&i.st!=='dominio')return 0;if(f.st==='Erradas 2+ vezes'&&i.err<2)return 0}
  if(f.ano&&f.ano!=='Todos'&&String(q.ano)!==f.ano)return 0;if(f.mat&&f.mat!=='Todas'&&q.materia!==f.mat)return 0;
  if(f.ass&&f.ass!=='Todos'&&q.topico!==f.ass)return 0;if(f.dif&&f.dif!=='Todas'&&q.dif!==f.dif)return 0;
  if(f.st==='Não respondidas'&&s)return 0;if(f.st==='Erradas'&&(!s||s.ok!==false))return 0;
  if(f.st==='Acertadas'&&(!s||s.ok!==true))return 0;if(f.st==='Favoritas'&&!S.fav.includes(q.id))return 0;
- if(f.st==='Dificuldade'&&!S.hard.includes(q.id))return 0;if(f.st==='Chutei'&&!(s&&s.ch))return 0;if(f.st==='A estudar'&&!(S.hard.includes(q.id)||(s&&(s.ok===false||s.ch))))return 0;return 1}).sort((a,b)=>b.ano-a.ano||a.num-b.num)}
+ if(f.st==='Dificuldade'&&!S.hard.includes(q.id))return 0;if(f.st==='Chutei'&&!(s&&s.ch))return 0;if(f.st==='A estudar'&&!(S.hard.includes(q.id)||(s&&(s.ok===false||s.ch))))return 0;return 1}).sort((a,b)=>{if(REVF.includes(f.st)){const pr=q=>{const i=hInfo(q.id);return i.err*10+(i.st==='aprendida'?15:0)+(i.st==='errou'?5:0)};const d=pr(b)-pr(a);if(d)return d}return b.ano-a.ano||a.num-b.num})}
 const escA=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ytId=u=>{const m=(u||'').match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{11})/);return m?m[1]:''};
 const ytT=u=>{const m=(u||'').match(/[?&](?:t|start)=(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?/);return m?(+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0):0};
 const vidHtml=u=>{if(!u)return'';const id=ytId(u),t=ytT(u);return id?`<div class=vid><iframe referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/${id}${t?'?start='+t:''}" allowfullscreen loading=lazy></iframe></div><a class=btn href="${escA(u)}" target=_blank rel=noopener>↗ Abrir no YouTube</a>`:(/^https?:\/\//i.test(u)?`<a class=btn href="${escA(u)}" target=_blank rel=noopener>▶ Abrir resolução</a>`:'')};
+
+/* ===== histórico de tentativas · estados das questões ===== */
+const STL={sg:'Sem gabarito',acertou:'Acertou sem ajuda',errou:'Errou',estudando:'Estudando',aprendida:'Aprendida',dominio:'Domínio confirmado'};
+const hEv=(id,e)=>{const H=S.hist=S.hist||{};(H[id]=H[id]||{ev:[]}).ev.push(e)};
+const regAtt=(q,r,aj)=>{if(!r||r.ok==null)return;hEv(q.id,{t:Date.now(),k:'a',ok:r.ok?1:0,ch:r.ch?1:0,aj:aj?1:0})};
+/* tudo é calculado a partir de eventos que só são ACRESCENTADOS (nunca apagados nem sobrescritos):
+   a = tentativa (ok, ch=chute, aj=consultou ajuda, m=migrada do histórico antigo) · e = "estou estudando" · l = "estudei e aprendi" */
+function hInfo(id){const ev=((S.hist||{})[id]||{}).ev||[],o={st:'nova',n:0,err:0,acc:0,first:null,orig:0,estudou:0,aprEver:0,ret:0,retOk:0,last:0,mig:0,migSL:0};
+ ev.map((e,i)=>[e,i]).sort((x,y)=>x[0].t-y[0].t||x[1]-y[1]).forEach(([e])=>{
+  if(e.m)o.mig=1;
+  if(e.k==='a'){const ok=!!e.ok,idx=o.n++;o.last=Math.max(o.last,e.t);
+   if(!ok)o.err++;else if(!e.aj)o.acc++;
+   if(idx===0){o.orig=e.aj?0:1;o.first=e.aj?null:ok;if(e.m&&e.t===0)o.migSL=1}
+   else if(!e.aj&&!e.m){o.ret++;if(ok)o.retOk++}
+   if(!ok)o.st='errou';
+   else if(e.aj){if(o.st==='nova'||o.st==='errou'||o.st==='estudando')o.st='aprendida'}
+   else if(idx===0)o.st='acertou';
+   else if(e.m||e.ch){if(o.st==='errou'||o.st==='estudando')o.st='aprendida'}
+   else o.st='dominio'}
+  else if(e.k==='e'){o.estudou=1;if(o.st==='errou')o.st='estudando'}
+  else if(e.k==='l'){o.estudou=1;o.aprEver=1;if(o.st==='errou'||o.st==='estudando')o.st='aprendida'}});
+ if(!ev.length&&S.resp[id]&&!G[id])o.st='sg';
+ return o}
+function hStats(){const s={orig:0,ac:0,er:0,est:0,apr:0,aprPend:0,dom:0,ret:0,retOk:0,mig:0,migSL:0};
+ Q.forEach(q=>{const i=hInfo(q.id);if(i.first!==null){s.orig++;if(i.first)s.ac++;else s.er++}
+  if(i.err>0&&i.estudou)s.est++;if(i.aprEver)s.apr++;if(i.st==='aprendida')s.aprPend++;if(i.st==='dominio')s.dom++;s.ret+=i.ret;s.retOk+=i.retOk;if(i.mig)s.mig++;if(i.migSL)s.migSL++});
+ s.p=s.orig?Math.round(100*s.ac/s.orig):null;s.pr=s.ret?Math.round(100*s.retOk/s.ret):null;return s}
+/* migração segura: só usa o que já está registrado (log de respostas); nada é inventado */
+function migHist(){const H=S.hist=S.hist||{},by={};let ch=0;(S.log||[]).forEach(x=>{if(x&&x.ok!=null)(by[x.id]=by[x.id]||[]).push(x)});
+ Object.keys(S.resp||{}).forEach(id=>{if(H[id]&&H[id].ev&&H[id].ev.length)return;const r=S.resp[id];if(!r||r.ok==null||!G[id])return;
+  const L=(by[id]||[]).slice().sort((x,y)=>x.t-y.t);
+  H[id]={ev:L.length?L.map(x=>({t:x.t,k:'a',ok:x.ok?1:0,ch:x.ch?1:0,aj:0,m:1})):[{t:0,k:'a',ok:r.ok?1:0,ch:r.ch?1:0,aj:0,m:1}]};ch=1});
+ if(ch){try{localStorage.setItem('ifma',JSON.stringify(S))}catch(e){}}}
+const MK=q=>{const r=S.resp[q.id];if(!r)return'○';const s=hInfo(q.id).st;return{acertou:'✔',dominio:'✅',errou:'✘',estudando:'📖',aprendida:'🔁'}[s]||(r.ok===true?'✔':r.ok===false?'✘':'•')};
+const REVF=['Erradas','Não estudadas','Estudadas sem domínio','Erradas 2+ vezes','Revisão de hoje'];
+function histBlock(){const s=hStats(),f=v=>v==null?'—':v+'%';
+ return `<div class="card2"><h3>Aprendizado real <small>(1ª tentativa × evolução)</small></h3><div class="cards">${[['Respondidas originalmente',s.orig],['Acertos na 1ª tentativa',s.ac],['Erros na 1ª tentativa',s.er],['Aproveitamento original',f(s.p)]].map(c=>`<div class="card"><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div><div class="cards" style="margin-top:10px">${[['Estudadas após erro',s.est],['Aprendidas',s.apr+(s.aprPend?' <span class=mu style="font-size:12px">('+s.aprPend+' sem nova tentativa)</span>':'')],['Domínio confirmado',s.dom],['Aproveit. novas tentativas',s.ret?f(s.pr)+' <span class=mu style="font-size:12px">('+s.retOk+'/'+s.ret+')</span>':'—']].map(c=>`<div class="card"><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div><p class="mu" style="font-size:12px;margin:10px 0 0">O aproveitamento original usa só o resultado da 1ª tentativa de cada questão (com gabarito, sem consulta). Aprender depois de errar aparece em "Aprendidas" e "Domínio confirmado", sem alterar o resultado original.${s.mig?' · '+s.mig+' questão(ões) antiga(s) vieram do histórico anterior'+(s.migSL?' ('+s.migSL+' só com o último resultado registrado)':'')+'.':''}</p></div>`}
 const dayInc=()=>{const k=new Date().toLocaleDateString('sv');if(!S.dia||S.dia.d!==k)S.dia={d:k,n:0};S.dia.n++};
 let CUT={};try{CUT=JSON.parse(localStorage.getItem('ifma_cut')||'{}')}catch(e){}
 const saveCut=()=>{try{localStorage.setItem('ifma_cut',JSON.stringify(CUT))}catch(e){}save()};
-function mountQ(el,q,c){const R=c.R,g=G[q.id];let sel=R[q.id]?R[q.id].r:'',shown=!q.enun;
- el.innerHTML=`<div class=qh><span class="tag ${q.materia[0]}">${q.materia}</span><span class=tag>${q.ano} · Q${q.num}</span><span class="tag d${q.dif[0]}">${q.dif}</span><button class=ic2 id=st title=Favoritar>${S.fav.includes(q.id)?'★':'☆'}</button></div><div class=tp>${esc(q.topico)}</div>${q.enun?`<div class=en>${esc(q.enun)}</div>`:''}<div class=alts>${q.alts.map((a,i)=>`<button class=alt data-l=${'ABCDE'[i]}><b>${'ABCDE'[i]}</b><span>${esc(a)}</span><i class=pen role=button title="Riscar alternativa">✎</i></button>`).join('')}</div><div class=acts><button class="btn p" id=go>Responder</button><label class=chk title="Marque se você chutou a resposta"><input type=checkbox id=ch> 🎲 Chutei</label><button class=btn id=pg></button><button class=btn id=hd></button><button class=btn id=rv>🎬 Resolução explicada</button><span class=sp></span><button class=btn id=pv>◀</button><button class=btn id=nx>▶</button></div><div id=fb></div><div id=cm></div><div id=pgv></div>`;
+function mountQ(el,q,c){const R=c.R,g=G[q.id],H=c.sim?null:hInfo(q.id),retry=!!(H&&g&&H.st==='aprendida'),locked=!!(H&&g&&R[q.id]&&!retry),stTag=H&&H.st!=='nova'?`<span class="tag sx s-${H.st}">${STL[H.st]}</span>`:'';let sel=retry?'':(R[q.id]?R[q.id].r:''),shown=!q.enun;
+ el.innerHTML=`<div class=qh><span class="tag ${q.materia[0]}">${q.materia}</span><span class=tag>${q.ano} · Q${q.num}</span><span class="tag d${q.dif[0]}">${q.dif}</span>${stTag}<button class=ic2 id=st title=Favoritar>${S.fav.includes(q.id)?'★':'☆'}</button></div><div class=tp>${esc(q.topico)}</div>${q.enun?`<div class=en>${esc(q.enun)}</div>`:''}<div class=alts>${q.alts.map((a,i)=>`<button class=alt data-l=${'ABCDE'[i]}><b>${'ABCDE'[i]}</b><span>${esc(a)}</span><i class=pen role=button title="Riscar alternativa">✎</i></button>`).join('')}</div><div class=acts><button class="btn p" id=go>Responder</button><label class=chk title="Marque se você chutou a resposta"><input type=checkbox id=ch> 🎲 Chutei</label>${c.sim?'':'<label class=chk title="Marque se consultou material, gabarito ou resolução antes de responder"><input type=checkbox id=aj> 📖 Consultei</label>'}<button class=btn id=pg></button><button class=btn id=hd></button><button class=btn id=rv>🎬 Resolução explicada</button><span class=sp></span><button class=btn id=pv>◀</button><button class=btn id=nx>▶</button></div><div id=fb></div><div id=cm></div><div id=pgv></div>`;
  const paint=r=>$$('.alt',el).forEach(a=>{const l=a.dataset.l;a.className='alt'+(l===sel?' sel':'')+(r&&g&&l===g?' ok':'')+(r&&g&&l===sel&&l!==g?' bad':'')+((CUT[q.id]||[]).includes(l)?' cut':'')});
  const pgv=()=>{$('#pgv',el).innerHTML=shown?q.pags.map(p=>`<img class=pgi loading=lazy decoding=async alt="Prova ${q.ano} · página ${p} (toque para ampliar)" src="img/${q.ano}_${p}.webp">`).join(''):'';$('#pg',el).textContent=shown?'Ocultar prova':'Ver prova'};
+ const dt=t=>t?new Date(t).toLocaleDateString('pt-BR'):'';
+ const lpHtml=()=>{if(!H||!g||!H.n)return '';const s=H.st,hist=`<small class="mu hin">Tentativas: ${H.n} · 1ª tentativa: ${H.first===true?'acertou':H.first===false?'errou':'não conta (consulta)'} · erros: ${H.err} · acertos sem ajuda: ${H.acc}${H.estudou?' · conteúdo estudado':''}${H.last?' · última: '+dt(H.last):''}</small>`;
+  if(s==='errou')return `<div class="lrn"><span>Errou${H.err>1?' ('+H.err+'×)':''}. Estude o conteúdo e só depois tente de novo: a nova tentativa não mostra a resposta antes.</span><div class="row"><button class="btn" id="lst1">📖 Estou estudando</button><button class="btn p" id="lst2">✅ Estudei e aprendi</button></div>${hist}</div>`;
+  if(s==='estudando')return `<div class="lrn"><span>Estudando este conteúdo. Quando entender a resolução, marque abaixo para liberar uma nova tentativa.</span><div class="row"><button class="btn p" id="lst2">✅ Estudei e aprendi</button></div>${hist}</div>`;
+  return `<div class="lrn">${hist}</div>`};
+ const wireLp=()=>{const a=$('#lst1',el),b2=$('#lst2',el),rm=()=>{save();mountQ(el,q,c);c.after&&c.after()};
+  if(a)a.onclick=()=>{hEv(q.id,{t:Date.now(),k:'e'});rm()};if(b2)b2.onclick=()=>{hEv(q.id,{t:Date.now(),k:'l'});rm()}};
  const fb=()=>{const r=R[q.id],f=$('#fb',el);if(!r){f.innerHTML='';return}
+  if(retry){f.innerHTML='<div class="lrn"><b>🔁 Nova tentativa</b><br><span>Você já estudou este conteúdo. Resolva sem consultar a resolução: o gabarito só aparece depois que você responder.</span><small class="mu hin">Tentativas: '+H.n+' · 1ª tentativa: '+(H.first===true?'acertou':H.first===false?'errou':'não conta (consulta)')+' · erros: '+H.err+'</small></div>';return}
   if(c.sim){f.innerHTML='<p class=mu>Resposta registrada.</p>';return}
   f.innerHTML=g?(r.r===g?'<p class=okt>✔ Correto! Gabarito: '+g+'</p>':'<p class=ert>✘ Gabarito oficial: '+g+'</p>'):`<p class=mu>Sem gabarito oficial carregado. Confira na prova e marque:</p><button class=btn data-o=1>Acertei</button> <button class=btn data-o=0>Errei</button>${r.ok!=null?' <small>marcada: '+(r.ok?'acertou':'errou')+'</small>':''}`;
-  $$('[data-o]',el).forEach(x=>x.onclick=()=>{R[q.id].ok=x.dataset.o==='1';save();fb();c.after&&c.after()});paint(true)};
- $$('.alt',el).forEach(a=>a.onclick=()=>{sel=a.dataset.l;paint(false)});
+  $$('[data-o]',el).forEach(x=>x.onclick=()=>{R[q.id].ok=x.dataset.o==='1';save();fb();c.after&&c.after()});paint(true);if(g&&H){f.insertAdjacentHTML('beforeend',lpHtml());wireLp()}};
+ $$('.alt',el).forEach(a=>a.onclick=()=>{if(locked)return;sel=a.dataset.l;paint(false)});
  const syncCut=()=>$$('.alt',el).forEach(a=>{const ct=(CUT[q.id]||[]).includes(a.dataset.l),p=a.querySelector('.pen');a.classList.toggle('cut',ct);if(p){p.textContent=ct?'↺':'✎';p.title=ct?'Desfazer risco':'Riscar alternativa'}});
  $$('.pen',el).forEach(p=>p.onclick=e=>{e.stopPropagation();e.preventDefault();const l=p.parentElement.dataset.l,L=CUT[q.id]||[];CUT[q.id]=L.includes(l)?L.filter(x=>x!==l):[...L,l];if(!CUT[q.id].length)delete CUT[q.id];saveCut();syncCut()});
  syncCut();
- $('#go',el).onclick=()=>{if(!sel)return;R[q.id]={r:sel,ok:g?sel===g:null,ch:$('#ch',el)&&$('#ch',el).checked?1:0};if(!c.sim){dayInc();logA(q,R[q.id]);save()}fb();c.after&&c.after()};
+ $('#go',el).onclick=()=>{if(!sel||locked)return;const aj=$('#aj',el);R[q.id]={r:sel,ok:g?sel===g:null,ch:$('#ch',el)&&$('#ch',el).checked?1:0};if(!c.sim){dayInc();logA(q,R[q.id]);if(g)regAtt(q,R[q.id],aj&&aj.checked);save();if(g){mountQ(el,q,c);c.after&&c.after();return}}fb();c.after&&c.after()};
  $('#pg',el).onclick=()=>{shown=!shown;pgv()};
- {const ck=$('#ch',el);if(ck&&R[q.id]&&R[q.id].ch)ck.checked=true}
+ {const ck=$('#ch',el);if(ck&&R[q.id]&&R[q.id].ch&&!retry)ck.checked=true}
  if(c.sim)$('#rv',el).remove();else $('#rv',el).onclick=()=>{ST.vid={ano:q.ano,mat:q.materia,num:q.num};go('vid')};
  const hdp=()=>{const h=S.hard.includes(q.id),x=$('#hd',el);x.textContent=h?'⚠ Dificuldade marcada':'⚠ Tive dificuldade';x.classList.toggle('hot',h)};hdp();
  $('#hd',el).onclick=()=>{const i=S.hard.indexOf(q.id);i<0?S.hard.push(q.id):S.hard.splice(i,1);save();hdp();c.after&&c.after()};
@@ -285,12 +338,12 @@ function mountQ(el,q,c){const R=c.R,g=G[q.id];let sel=R[q.id]?R[q.id].r:'',shown
  const up=()=>{const l=$('#cl',el).value.trim(),t=$('#ct',el).value.trim();if(l||t)S.com[q.id]={l,t};else delete S.com[q.id];save();$('#cms',el).textContent=cmT();$('#cv',el).innerHTML=vidHtml(l)};
  $('#cl',el).onchange=up;$('#ct',el).onchange=up}
  $('#pv',el).onclick=()=>c.nav&&c.nav(-1);$('#nx',el).onclick=()=>c.nav&&c.nav(1);
- paint(!!R[q.id]&&!c.sim);fb();pgv()}
+ paint(!!R[q.id]&&!c.sim&&!retry);fb();pgv();if(locked){const b0=$('#go',el);b0.disabled=true;b0.textContent='Respondida';$$('#ch,#aj',el).forEach(x=>x.disabled=true)}}
 function viewQ(b,v){const s=ST[v]=ST[v]||{f:{},cur:0};
  const opts=k=>k==='ass'?['Todos',...[...new Set(Q.filter(q=>!s.f.mat||s.f.mat==='Todas'||q.materia===s.f.mat).map(q=>q.topico))].sort()]:FD[k][1];
  const L=filt(s.f);if(s.cur>=L.length)s.cur=0;
  b.innerHTML=`<div class=fbar>${VF[v].map(k=>`<label>${FD[k][0]}<select data-k=${k}>${opts(k).map(x=>`<option ${String(x)===(s.f[k]||String(opts(k)[0]))?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`).join('')}<span class=cnt>${L.length} questões</span></div><div class=two><div class=lst id=lst></div><div class=qc id=qc></div></div>`;
- const li=()=>{const l=$('#lst',b),sc=l.scrollTop;l.innerHTML=L.map((q,i)=>{const r=stat(q);return `<div class="li ${i===s.cur?'on':''}" data-i=${i}><span class=mk>${S.fav.includes(q.id)?'★':r?(r.ok===true?'✔':r.ok===false?'✘':'•'):'○'}</span><span><b>${q.ano} · Q${q.num}</b> <i class="dot ${q.dif[0]}"></i><br><small>${esc(q.topico)}</small>${S.hard.includes(q.id)?' <small class=hdm>⚠</small>':''}${S.com[q.id]&&S.com[q.id].l?' <small>🎥</small>':''}${(stat(q)||{}).ch?' <small>🎲</small>':''}</span></div>`}).join('')||'<p class=mu style="padding:12px">Nenhuma questão com esses filtros.</p>';l.scrollTop=sc};
+ const li=()=>{const l=$('#lst',b),sc=l.scrollTop;l.innerHTML=L.map((q,i)=>{const r=stat(q);return `<div class="li ${i===s.cur?'on':''}" data-i=${i}><span class=mk>${S.fav.includes(q.id)?'★':MK(q)}</span><span><b>${q.ano} · Q${q.num}</b> <i class="dot ${q.dif[0]}"></i><br><small>${esc(q.topico)}</small>${S.hard.includes(q.id)?' <small class=hdm>⚠</small>':''}${S.com[q.id]&&S.com[q.id].l?' <small>🎥</small>':''}${(stat(q)||{}).ch?' <small>🎲</small>':''}</span></div>`}).join('')||'<p class=mu style="padding:12px">Nenhuma questão com esses filtros.</p>';l.scrollTop=sc};
  const pane=()=>{const e=$('#qc',b);L[s.cur]?mountQ(e,L[s.cur],{R:S.resp,after:li,nav:d=>{const i=s.cur+d;if(L[i]){s.cur=i;li();pane()}}}):e.innerHTML='<p class=mu>Sem questão.</p>'};
  li();pane();
  $$('select',b).forEach(e=>e.onchange=()=>{s.f[e.dataset.k]=e.value;if(e.dataset.k==='mat')s.f.ass='Todos';s.cur=0;viewQ(b,v)});
@@ -372,14 +425,14 @@ function viewVid(b){const A=ST.vid=ST.vid||{ano:2026,mat:'Português',num:0},ano
 const logA=(q,r)=>{if(!r)return;S.log=S.log||[];S.log.push({t:Date.now(),id:q.id,ok:r.ok,ch:r.ch?1:0});if(S.log.length>5000)S.log=S.log.slice(-5000)};
 function relInit(b){const D=864e5,now=Date.now(),W=$('#rlw',b),L=S.log||[],qid=id=>Q.find(q=>q.id===id)||{};
  const per=(a,z)=>L.filter(x=>x.t>=now-z*D&&x.t<now-a*D),cur=per(0,7),prv=per(7,14);
- const pc=l=>{const c=l.filter(x=>x.ok!=null);return c.length?Math.round(c.filter(x=>x.ok).length/c.length*100):null};
+ const F0={};L.forEach(x=>{if(x.ok!=null&&(!(x.id in F0)||x.t<F0[x.id]))F0[x.id]=x.t});const pc=l=>{const c=l.filter(x=>x.ok!=null&&x.t===F0[x.id]);return c.length?Math.round(c.filter(x=>x.ok).length/c.length*100):null};
  const mt=m=>{const l=cur.filter(x=>qid(x.id).materia===m);return{n:l.length,p:pc(l)}};
  const dias=new Set(cur.map(x=>new Date(x.t).toLocaleDateString('sv'))).size,ch=cur.filter(x=>x.ch).length,chOk=cur.filter(x=>x.ch&&x.ok).length;
  const er={};cur.filter(x=>x.ok===false).forEach(x=>{const q=qid(x.id);if(q.topico){const o=er[q.topico]=er[q.topico]||{n:0,m:q.materia};o.n++}});
  const top=Object.entries(er).sort((x,y)=>y[1].n-x[1].n).slice(0,3),p1=pc(cur),p0=pc(prv),dl=p1!=null&&p0!=null?p1-p0:null;
  const dtx=dl==null?'':(dl>=0?'▲ +':'▼ ')+dl+' pts vs semana anterior';
- const txt=['📊 Relatório IFMA · últimos 7 dias','Questões: '+cur.length+' (semana anterior: '+prv.length+')','Aproveitamento: '+(p1==null?'—':p1+'%')+(dtx?' ('+dtx+')':''),...MATS.map(m=>{const x=mt(m);return m+': '+x.n+' questões · '+(x.p==null?'—':x.p+'%')}),'Dias estudados: '+dias+'/7','Chutes: '+ch+' (acertos chutados: '+chOk+')','Assuntos com mais erros: '+(top.length?top.map(t=>t[0]+' ('+t[1].n+')').join(', '):'—'),'Meta: '+META[0]+'–'+META[1]+' acertos de 30'].join('\n');
- W.innerHTML=`<details class="card2 vl"><summary><b>📊 Relatório da semana</b> <span class=mu>· ${cur.length} questões${p1==null?'':' · '+p1+'%'}</span></summary>${L.length?`<div class=rlg><div><small>Questões</small><b>${cur.length}</b><span class=mu>ant.: ${prv.length}</span></div><div><small>Aproveitamento</small><b>${p1==null?'—':p1+'%'}</b><span class=mu>${dtx||'sem comparação'}</span></div><div><small>Dias estudados</small><b>${dias}/7</b></div><div><small>Chutes</small><b>${ch}</b><span class=mu>${chOk} acertos chutados</span></div></div>${MATS.map(m=>{const x=mt(m);return`<p>${m}: <b>${x.p==null?'—':x.p+'%'}</b> <span class=mu>· ${x.n} questões</span></p>`}).join('')}<h3>Onde você mais errou</h3>${top.length?`<div class=chips>${top.map(t=>`<button class=chip data-m="${t[1].m}" data-t="${encodeURIComponent(t[0])}">${esc(t[0])} <b>${t[1].n}</b></button>`).join('')}</div>`:'<p class=mu>Nenhum erro nos últimos 7 dias. 👏</p>'}<div class=row style="margin-top:12px;align-items:center"><button class=btn id=rlc>📋 Copiar relatório</button><span class=mu id=rlm></span></div>`:'<p class=mu>O relatório começa a contar a partir de agora. Responda algumas questões e volte aqui.</p>'}</details>`;
+ const txt=['📊 Relatório IFMA · últimos 7 dias','Questões: '+cur.length+' (semana anterior: '+prv.length+')','Aproveitamento (1ª tentativa): '+(p1==null?'—':p1+'%')+(dtx?' ('+dtx+')':''),...MATS.map(m=>{const x=mt(m);return m+': '+x.n+' questões · '+(x.p==null?'—':x.p+'%')}),'Dias estudados: '+dias+'/7','Chutes: '+ch+' (acertos chutados: '+chOk+')','Assuntos com mais erros: '+(top.length?top.map(t=>t[0]+' ('+t[1].n+')').join(', '):'—'),'Meta: '+META[0]+'–'+META[1]+' acertos de 30'].join('\n');
+ W.innerHTML=`<details class="card2 vl"><summary><b>📊 Relatório da semana</b> <span class=mu>· ${cur.length} questões${p1==null?'':' · '+p1+'%'}</span></summary>${L.length?`<div class=rlg><div><small>Questões</small><b>${cur.length}</b><span class=mu>ant.: ${prv.length}</span></div><div><small>Aproveit. 1ª tentativa</small><b>${p1==null?'—':p1+'%'}</b><span class=mu>${dtx||'sem comparação'}</span></div><div><small>Dias estudados</small><b>${dias}/7</b></div><div><small>Chutes</small><b>${ch}</b><span class=mu>${chOk} acertos chutados</span></div></div>${MATS.map(m=>{const x=mt(m);return`<p>${m}: <b>${x.p==null?'—':x.p+'%'}</b> <span class=mu>· ${x.n} questões</span></p>`}).join('')}<h3>Onde você mais errou</h3>${top.length?`<div class=chips>${top.map(t=>`<button class=chip data-m="${t[1].m}" data-t="${encodeURIComponent(t[0])}">${esc(t[0])} <b>${t[1].n}</b></button>`).join('')}</div>`:'<p class=mu>Nenhum erro nos últimos 7 dias. 👏</p>'}<div class=row style="margin-top:12px;align-items:center"><button class=btn id=rlc>📋 Copiar relatório</button><span class=mu id=rlm></span></div>`:'<p class=mu>O relatório começa a contar a partir de agora. Responda algumas questões e volte aqui.</p>'}</details>`;
  $$('#rlw .chip',b).forEach(c=>c.onclick=()=>{ST.ass={f:{mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t),st:'Erradas'},cur:0};go('ass')});
  const bc=$('#rlc',b);if(bc)bc.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{$('#rlm',b).textContent='Copiado ✅'})}}
 const bkKeys=()=>Object.keys(localStorage).filter(k=>k==='ifma'||(k.startsWith('ifma_')&&k!=='ifma_bk'));
@@ -402,11 +455,11 @@ function ring(parts,big,small,total,sz=132,w=15){const r=(sz-w)/2,c=sz/2,C=2*Mat
  return `<svg class="rng" viewBox="0 0 ${sz} ${sz}" role="img" aria-label="${esc(big+' '+small)}"><circle cx="${c}" cy="${c}" r="${r}" fill="none" style="stroke:var(--p2)" stroke-width="${w}"/>${arcs}<text x="${c}" y="${c-4}" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="800">${esc(big)}</text><text class="sm" x="${c}" y="${c+19}" text-anchor="middle" dominant-baseline="central">${esc(small)}</text></svg>`}
 function dgInit(b){const W=$('#dgw',b);if(!W)return;let M='Todas';
  const draw=()=>{const st=streakInfo(),meta=MD(),hj=S.dia&&S.dia.d===dkey(Date.now())?S.dia.n:0,done=hj>=meta;
-  const L=Q.filter(q=>M==='Todas'||q.materia===M);let ok=0,er=0,un=0;L.forEach(q=>{const r=S.resp[q.id];if(!r)return;if(r.ok===true)ok++;else if(r.ok===false)er++;else un++});
+  const L=Q.filter(q=>M==='Todas'||q.materia===M);let ok=0,er=0,un=0;L.forEach(q=>{const r=S.resp[q.id];if(!r)return;const f=hInfo(q.id).first;if(f===true)ok++;else if(f===false)er++;else un++});
   const ans=ok+er+un,rest=L.length-ans,pct=L.length?Math.round(100*ans/L.length):0;
   const msg=st.cur===0?'Responda uma questão hoje e comece sua sequência.':st.hoje?'Sequência garantida hoje. Volte amanhã!':'Responda 1 questão hoje para não perder a sequência.';
   W.innerHTML=`<div class="dgrid"><div class="card2"><div class="dgh"><b>🔥 Hoje</b></div><div class="dgc">${ring([{v:Math.min(hj,meta),c:done?'var(--ok)':'var(--g)'}],hj+'/'+meta,done?'meta batida ✓':'questões hoje',meta)}<div class="dgl"><span class="dgs"><b>${st.cur}</b> ${st.cur===1?'dia seguido':'dias seguidos'}</span><span class="mu">Recorde: ${st.best}</span><span class="mu dgm">${msg}</span><button class="btn" id="dgm">Meta: ${meta}/dia ✎</button></div></div></div>
-  <div class="card2"><div class="dgt">${['Todas',...MATS].map(m=>`<button data-m="${m}" class="${m===M?'on':''}">${m==='Todas'?'Geral':m}</button>`).join('')}</div><div class="dgc">${ring([{v:ok,c:'var(--ok)'},{v:er,c:'var(--er)'},{v:un,c:'var(--mu)'}],pct+'%','respondido',L.length)}<div class="dgl"><span><i style="background:var(--ok)"></i>Acertos <b>${ok}</b></span><span><i style="background:var(--er)"></i>Erros <b>${er}</b></span>${un?`<span><i style="background:var(--mu)"></i>Sem gabarito <b>${un}</b></span>`:''}<span><i style="background:var(--p2);border:1px solid var(--br)"></i>Restantes <b>${rest}</b></span></div></div></div></div>`;
+  <div class="card2"><div class="dgt">${['Todas',...MATS].map(m=>`<button data-m="${m}" class="${m===M?'on':''}">${m==='Todas'?'Geral':m}</button>`).join('')}</div><div class="dgc">${ring([{v:ok,c:'var(--ok)'},{v:er,c:'var(--er)'},{v:un,c:'var(--mu)'}],pct+'%','respondido',L.length)}<div class="dgl"><span><i style="background:var(--ok)"></i>Acertos 1ª tent. <b>${ok}</b></span><span><i style="background:var(--er)"></i>Erros 1ª tent. <b>${er}</b></span>${un?`<span><i style="background:var(--mu)"></i>Fora da conta <b>${un}</b></span>`:''}<span><i style="background:var(--p2);border:1px solid var(--br)"></i>Restantes <b>${rest}</b></span></div></div></div></div>`;
   $$('.dgt button',W).forEach(x=>x.onclick=()=>{M=x.dataset.m;draw()});
   $('#dgm',W).onclick=()=>{const v=parseInt(prompt('Quantas questões por dia?',meta),10);if(v>=1&&v<=200){S.meta=v;save();draw()}}};
  draw()}
@@ -423,13 +476,16 @@ function cadDue(){const INT=[1,3,7,15],by={},ds=t=>{const d=new Date(t);d.setHou
  const due=all.filter(x=>x.due<=T0),fut=all.filter(x=>x.due>T0).sort((a,b)=>a.due-b.due);
  return{all,due,next:fut[0]?fut[0].due:0,T0}}
 function cdInit(b){const W=$('#cdw',b);if(!W)return;const c=cadDue(),n=c.due.length,m=c.all.length;
+ const C={'Erradas':0,'Não estudadas':0,'Estudadas sem domínio':0,'Domínio confirmado':0,'Erradas 2+ vezes':0};
+ Q.forEach(q=>{const r=S.resp[q.id],i=hInfo(q.id);if(r&&r.ok===false)C['Erradas']++;if(i.st==='errou')C['Não estudadas']++;if(i.st==='estudando'||i.st==='aprendida')C['Estudadas sem domínio']++;if(i.st==='dominio')C['Domínio confirmado']++;if(i.err>=2)C['Erradas 2+ vezes']++});
  const nx=c.next?(c.next-c.T0<=DAYMS*1.5?'amanhã':new Date(c.next).toLocaleDateString('pt-BR',{day:'numeric',month:'short'})):'';
- W.innerHTML=`<div class="card2 cad"><div class="cdh"><b>📓 Caderno de erros</b><span class="mu">revisão espaçada: 1 · 3 · 7 · 15 dias</span></div>${m?`<div class="cdn"><span class="cdb">${n}</span><span>${n===1?'questão para revisar hoje':'questões para revisar hoje'}<br><small class="mu">${m} no caderno${n===0&&nx?' · próxima revisão '+nx:''}</small></span></div>${n?'<button class="btn p" id="cdr">📓 Revisar agora</button>':'<p class="mu cdok">Tudo em dia por hoje ✅</p>'}`:'<p class="mu">Ainda vazio. Questões que você errar ou chutar entram aqui e voltam sozinhas no momento certo para fixar.</p>'}</div>`;
- const r=$('#cdr',W);if(r)r.onclick=()=>{ST.banco={f:{st:'Revisão de hoje'},cur:0};go('banco')}}
-function home(b){const a=Object.values(S.resp),cor=a.filter(x=>x.ok!=null),ok=cor.filter(x=>x.ok).length,tt=S.tempo['Português']+S.tempo['Matemática'];
+ W.innerHTML=`<div class="card2 cad"><div class="cdh"><b>📓 Revisão e caderno de erros</b><span class="mu">espaçada: 1 · 3 · 7 · 15 dias</span></div>${m?`<div class="cdn"><span class="cdb">${n}</span><span>${n===1?'questão para revisar hoje':'questões para revisar hoje'}<br><small class="mu">${m} no caderno${n===0&&nx?' · próxima revisão '+nx:''}</small></span></div>${n?'<button class="btn p" id="cdr">📓 Revisar agora</button>':'<p class="mu cdok">Tudo em dia por hoje ✅</p>'}`:'<p class="mu">Ainda vazio. Questões que você errar ou chutar entram aqui e voltam sozinhas no momento certo para fixar.</p>'}<div class="chips" style="margin-top:12px">${Object.entries(C).map(([k,v])=>`<button class="chip" data-f="${k}">${k} <b>${v}</b></button>`).join('')}</div><small class="mu hin">Nas listas de revisão, aparecem primeiro as questões erradas várias vezes e as aprendidas que ainda precisam de uma nova tentativa.</small></div>`;
+ const r=$('#cdr',W);if(r)r.onclick=()=>{ST.banco={f:{st:'Revisão de hoje'},cur:0};go('banco')};
+ $$('.chip[data-f]',W).forEach(x=>x.onclick=()=>{ST.banco={f:{st:x.dataset.f},cur:0};go('banco')})}
+function home(b){const HS=hStats(),a=Object.values(S.resp),cor=a.filter(x=>x.ok!=null),ok=cor.filter(x=>x.ok).length,tt=S.tempo['Português']+S.tempo['Matemática'];
  const top=m=>{const c={};Q.filter(q=>q.ano>=2022&&q.materia===m).forEach(q=>c[q.topico]=(c[q.topico]||0)+1);return Object.entries(c).sort((x,y)=>y[1]-x[1]).slice(0,6)};
  b.innerHTML=`<div class=hero><div class=hhd><div class=hlogo>🔥</div><div><div class=hgr id=hgr></div><h2 class=htt>Disciplina até o fim do dia, <span id=hnome class=hn title="Clique para mudar o nome"></span>!</h2><p class=hfr id=hfrase title="Clique para outra frase"></p></div></div><div class=row><button class="btn p" data-a=rand>🎲 Questão aleatória</button><button class=btn data-a=sim>📝 Simulado</button><button class=btn data-a=err>♻ Revisar erradas</button></div></div>
- <div class=cards>${[['Respondidas',a.length+'/'+Q.length],['Aproveitamento',cor.length?Math.round(100*ok/cor.length)+'%':'—'],['Tempo estudado',hms(tt)],['Favoritas',S.fav.length]].map(c=>`<div class=card><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div>
+ <div class=cards>${[['Respondidas',a.length+'/'+Q.length],['Aproveit. 1ª tentativa',HS.p==null?'—':HS.p+'%'],['Tempo estudado',hms(tt)],['Favoritas',S.fav.length]].map(c=>`<div class=card><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div>
  <div id=dgw></div>
  <div id=cdw></div>
  <div id=plw></div>
@@ -442,7 +498,7 @@ function home(b){const a=Object.values(S.resp),cor=a.filter(x=>x.ok!=null),ok=co
  $$('.chip[data-m]',b).filter(c=>!c.closest('#plw,#estw,#rlw,#bkw')).forEach(c=>c.onclick=()=>{ST.ass={f:{mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t)},cur:0};go('ass')});
  $('[data-a=sim]',b).onclick=()=>go('sim');$('[data-a=err]',b).onclick=()=>{ST.banco={f:{st:'Erradas'},cur:0};go('banco')};
  $('[data-a=rand]',b).onclick=()=>{const q=Q[Math.random()*Q.length|0],f={ano:String(q.ano),mat:q.materia};ST.banco={f,cur:Math.max(0,filt(f).findIndex(x=>x.id===q.id))};go('banco')}}
-function finSim(){SIM.list.forEach(q=>{const r=SIM.R[q.id];if(r){S.resp[q.id]={r:r.r,ok:G[q.id]?r.r===G[q.id]:null,ch:r.ch};logA(q,S.resp[q.id])}});save();SIM.done=1;go('sim')}
+function finSim(){SIM.list.forEach(q=>{const r=SIM.R[q.id];if(r){S.resp[q.id]={r:r.r,ok:G[q.id]?r.r===G[q.id]:null,ch:r.ch};logA(q,S.resp[q.id]);if(G[q.id])regAtt(q,S.resp[q.id],0)}});save();SIM.done=1;go('sim')}
 function viewSim(b){
  if(!SIM){b.innerHTML=`<div class=card2><h3>Novo simulado</h3><div class=fbar><label>Prova<select id=sa><option>Aleatório</option>${anos.map(a=>`<option>${a}</option>`).join('')}</select></label><label>Matéria<select id=sm><option>Ambas</option>${MATS.map(m=>`<option>${m}</option>`).join('')}</select></label><label>Questões<input id=sn type=number value=15 min=5 max=40></label><label>Minutos<input id=sx type=number value=90 min=5 max=240></label></div><button class="btn p" id=sg>▶ Iniciar simulado</button><p class=mu>A prova real tem 30 questões e 3 horas.</p></div>`;
   $('#sg',b).onclick=()=>{const A=$('#sa',b).value,M=$('#sm',b).value;let p=Q.filter(q=>(A==='Aleatório'||String(q.ano)===A)&&(M==='Ambas'||q.materia===M));if(A==='Aleatório')p=p.sort(()=>Math.random()-.5);
@@ -468,10 +524,10 @@ function viewCron(b){b.innerHTML=`<div class=card2 style="text-align:center"><di
  $('#cm',b).onchange=e=>{pause();T.mat=e.target.value;go('cron')};$('#cd',b).onchange=e=>{pause();T.modo=e.target.value;T.dec=0;T.fase='Foco';T.alvo=alvo0();T.msg='';go('cron')};$('#cn',b).onchange=e=>{T.min=+e.target.value||30;ap()};
  $('#cs',b).onclick=()=>{if(T.run)pause();else{if(!T.dec)T.alvo=alvo0();T.run=1;T.t0=Date.now();T.msg=''}go('cron')};
  $('#cz',b).onclick=()=>{pause();T.dec=0;T.fase='Foco';T.alvo=alvo0();T.msg='';go('cron')};paintRing()}
-function viewDesp(b){const d={};Q.forEach(q=>{const r=stat(q);if(r){const k=q.materia+q.topico;d[k]=d[k]||[q.materia,q.topico,0,0,0];d[k][2]++;if(r.ok!=null){d[k][3]++;if(r.ok)d[k][4]++}}});
+function viewDesp(b){const d={};Q.forEach(q=>{const r=stat(q);if(r){const k=q.materia+q.topico;d[k]=d[k]||[q.materia,q.topico,0,0,0];d[k][2]++;const hi=hInfo(q.id);if(hi.first!==null){d[k][3]++;if(hi.first)d[k][4]++}}});
  const rows=Object.values(d).sort((x,y)=>(x[3]?x[4]/x[3]:2)-(y[3]?y[4]/y[3]:2));
- b.innerHTML=`<div class=cards>${MATS.map(m=>`<div class=card><small>${m} · tempo estudado</small><b>${hms(S.tempo[m])}</b></div>`).join('')}</div><div class=card2><h3>Por assunto <small>(piores primeiro)</small></h3>${rows.map(r=>{const p=r[3]?Math.round(100*r[4]/r[3]):0;return `<div class=bar><span>${esc(r[1])}<br><small>${r[0]} · ${r[2]} resp.</small></span><div class=trk><i style="width:${p}%"></i></div><b>${r[3]?p+'%':'—'}</b></div>`}).join('')||'<p class=mu>Responda questões para ver seu desempenho.</p>'}</div><br><button class=btn id=rs>Zerar progresso</button>`;
- let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.fav=[];S.tempo={'Português':0,'Matemática':0};S._rs=Date.now();save();go('desp')}}
+ b.innerHTML=histBlock()+`<div class=cards>${MATS.map(m=>`<div class=card><small>${m} · tempo estudado</small><b>${hms(S.tempo[m])}</b></div>`).join('')}</div><div class=card2><h3>Por assunto <small>(1ª tentativa · piores primeiro)</small></h3>${rows.map(r=>{const p=r[3]?Math.round(100*r[4]/r[3]):0;return `<div class=bar><span>${esc(r[1])}<br><small>${r[0]} · ${r[2]} resp.</small></span><div class=trk><i style="width:${p}%"></i></div><b>${r[3]?p+'%':'—'}</b></div>`}).join('')||'<p class=mu>Responda questões para ver seu desempenho.</p>'}</div><br><button class=btn id=rs>Zerar progresso</button>`;
+ let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.hist={};S.log=[];S.fav=[];S.tempo={'Português':0,'Matemática':0};S._rs=Date.now();save();go('desp')}}
 const TT=Object.fromEntries(NAV.map(n=>[n[0],n[2]]));
 function go(v){V=v;$$('.ni').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$$('#bn button').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$('#main').scrollTop=0;
  $('#main').innerHTML=`<div class=top><button class="btn hb" id=hb>☰</button><h1>${TT[v]}</h1></div><div id=bd></div>`;
@@ -486,6 +542,7 @@ setInterval(()=>{if(T.run&&T.alvo&&tel()>=T.alvo){credit();T.run=0;T.dec=0;
   if(T.modo==='Pomodoro'){T.fase=T.fase==='Foco'?'Pausa':'Foco';T.alvo=alvo0();T.run=1;T.t0=Date.now();T.msg=T.fase==='Foco'?'Hora de focar!':'Pausa de 5 min ☕';try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}}
   else{T.alvo=alvo0();T.msg='Tempo esgotado! ⏰'}if(V==='cron')go('cron')}
  paintRing();if(SIM&&!SIM.done){const r=(SIM.fim-Date.now())/1000,e=$('#simclk');if(e){e.textContent=hms(r);e.style.color=r<300?'var(--er)':''}if(r<=0)finSim()}},300);
+try{migHist()}catch(e){}
 go('home');
 
 
@@ -517,7 +574,7 @@ function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
  const a=L.S||{},b=R.S||{},tl=a._t||0,tr=b._t||0,o={...a};
  // 1) dados acumulativos: respostas, histórico, tempo, contagem do dia
  const rl=a._rs||0,rr=b._rs||0;
- if(rl!==rr){const w=rl>rr?a:b;o.resp={...(w.resp||{})};o.log=arr(w.log).slice();o.tempo={...(w.tempo||{})};o.dia=w.dia;o._rs=Math.max(rl,rr)}
+ if(rl!==rr){const w=rl>rr?a:b;o.resp={...(w.resp||{})};o.log=arr(w.log).slice();o.tempo={...(w.tempo||{})};o.dia=w.dia;o.hist=JSON.parse(JSON.stringify(w.hist||{}));o._rs=Math.max(rl,rr)}
  else{
   const la=lastT(a.log),lb=lastT(b.log),ra=a.resp||{},rb=b.resp||{},r={};
   new Set([...Object.keys(ra),...Object.keys(rb)]).forEach(id=>{if(!(id in rb))r[id]=ra[id];else if(!(id in ra))r[id]=rb[id];else r[id]=(lb[id]||0)>(la[id]||0)?rb[id]:ra[id]});
@@ -526,6 +583,7 @@ function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
   lg.sort((x,y)=>x.t-y.t);o.log=lg.length>5000?lg.slice(-5000):lg;
   const ta=a.tempo||{},tb=b.tempo||{};o.tempo={};new Set([...Object.keys(ta),...Object.keys(tb)]).forEach(k=>o.tempo[k]=Math.max(ta[k]||0,tb[k]||0));
   const da=a.dia||{d:'',n:0},db=b.dia||{d:'',n:0};o.dia=da.d>db.d?da:db.d>da.d?db:{d:da.d,n:Math.max(da.n||0,db.n||0)};
+  {const ha=a.hist||{},hb=b.hist||{},HH={};new Set([...Object.keys(ha),...Object.keys(hb)]).forEach(id=>{const seen=new Set(),ev=[];[...((ha[id]||{}).ev||[]),...((hb[id]||{}).ev||[])].forEach(e=>{const k=[e.t,e.k,e.ok,e.ch|0,e.aj|0,e.m|0].join('|');if(!seen.has(k)){seen.add(k);ev.push(e)}});ev.sort((x,y)=>x.t-y.t);HH[id]={ev}});o.hist=HH}
  }
  // 2) preferências/marcações: vale a versão mais recente (empate = junta as duas)
  let cut,nome=L.nome!=null?L.nome:R.nome;
@@ -542,8 +600,8 @@ function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
  return{S:o,cut,nome}}
 
 const sj=v=>JSON.stringify(v,(k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(i=>[i,x[i]])):x);
-const snap=()=>{let n=lsG('ifma_nome');return{S:JSON.parse(JSON.stringify(S)),cut:JSON.parse(JSON.stringify(CUT)),nome:n}};
-function apply(m){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,m.S);Object.keys(CUT).forEach(k=>delete CUT[k]);Object.assign(CUT,m.cut);
+const snap=()=>{try{migHist()}catch(e){}let n=lsG('ifma_nome');return{S:JSON.parse(JSON.stringify(S)),cut:JSON.parse(JSON.stringify(CUT)),nome:n}};
+function apply(m){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,m.S);S.hist=S.hist||{};Object.keys(CUT).forEach(k=>delete CUT[k]);Object.assign(CUT,m.cut);
  lsS('ifma',JSON.stringify(S));lsS('ifma_cut',JSON.stringify(CUT));if(m.nome!=null)lsS('ifma_nome',m.nome)}
 
 /* ---- sync ---- */
@@ -636,7 +694,7 @@ window.__lem=b=>{const W=$('#lmw',b);if(!W)return;
    if(!r.ok)throw new Error('http '+r.status);
    lsS('lem_on','1');lsS('lem_hora',hora);redraw();m('Pronto! Você vai receber o aviso às '+hora+'.','ok');
    try{reg.showNotification('Lembrete ativado ✅',{body:'Aviso diário às '+hora+'.',icon:'icons/icon-192.png',tag:'lem-ok'})}catch(e){}
-  }catch(e){m(e.message==='auth'?'Sua sessão expirou. Entre de novo pelo botão ☁.':'Não consegui ativar ('+e.message+'). Confira se o SQL do lembrete foi rodado e tente de novo.','er')}};
+  }catch(e){m(e.message==='auth'?'Sua sessão expirou. Entre de novo pelo botão ☁.':/push service|AbortError|NotAllowed/i.test((e.name||'')+' '+e.message)?'O navegador não conseguiu registrar as notificações. No Brave, ative "Usar serviços do Google para mensagens push" em brave://settings/privacy. No Chrome, tente em outra rede ou confira se as notificações do site não estão bloqueadas.':'Não consegui ativar ('+e.message+'). Se for erro 404 ou "relation", rode o SQL do lembrete no Supabase.','er')}};
  const o=$('#lmo',b);if(o)o.onclick=async()=>{try{const reg=await navigator.serviceWorker.ready,sub=await reg.pushManager.getSubscription();
    if(sub){try{const tk=await token();await fetch(URL_+'/rest/v1/lembretes?endpoint=eq.'+encodeURIComponent(sub.endpoint),{method:'DELETE',headers:hd(tk)})}catch(e){}await sub.unsubscribe()}}catch(e){}
   lsD('lem_on');redraw();m('Lembrete desligado neste aparelho.')};
