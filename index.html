@@ -369,6 +369,24 @@ const PT_PLANO=[
  {f:'Conotação = sentido figurado; denotação = sentido literal. Figuras: metáfora, comparação, metonímia, hipérbole, ironia, personificação, antítese. Parônimos (iminente × eminente), homônimos, sinônimos e antônimos. Classes: pronomes, advérbios e os vários valores de "que".',t:['Denotação, conotação e figuras de linguagem','Léxico: sinônimos, antônimos, parônimos e homônimos','Classes de palavras (que, advérbio, substantivo, adjetivo)'],x:['Ambiguidade e polissemia']},
  {f:'Vírgula: separa orações coordenadas, adverbiais deslocadas, explicativas, aposto e vocativo; nunca separa sujeito de verbo. Coesão = ligação entre as partes (pronomes, conectivos); coerência = sentido global. Gêneros: notícia, reportagem, editorial, crônica, charge. Tipos: narrativo, descritivo, dissertativo, injuntivo.',t:['Pontuação (vírgula e aspas)','Coesão e coerência (referenciação e pronomes)','Gêneros textuais','Tipos textuais e estrutura narrativa']},
  {f:'Acentuação (oxítonas, paroxítonas, proparoxítonas, hiatos e ditongos), ortografia (s/z, ç, x/ch, g/j), formação de palavras (derivação e composição), registro formal × informal e funções da linguagem.',t:['Acentuação gráfica e ortografia','Formação de palavras','Variação linguística e registro','Funções da linguagem'],x:['Fonética e divisão silábica']}];
+const MAT_PLANO={
+ 2:{it:[
+  {l:'Ângulos',t:['Ângulos, triângulos, quadriláteros e polígonos']},
+  {l:'Equações do 1º e do 2º grau em problemas',t:['Equação do 1º grau','Equação do 2º grau']},
+  {l:'Sistema de duas equações do 1º grau (com porcentagem)',t:['Sistema de duas equações do 1º grau']},
+  {l:'Regra de três',t:['Regra de três (direta e inversa)']},
+  {l:'Juros simples',t:['Juros simples']}]},
+ 3:{g:'semana de geometria',it:[
+  {l:'Razões e proporções',t:['Razões e proporções (razão, taxa, densidade, velocidade)']},
+  {l:'Área de polígonos (incluindo o círculo)',t:['Área de polígonos','Círculo (área e comprimento)']},
+  {l:'Teorema de Pitágoras',t:['Teorema de Pitágoras']},
+  {l:'Semelhança de triângulos, Tales e razão entre áreas',t:['Teorema de Tales e semelhança de triângulos']}]},
+ 4:{it:[
+  {l:'Plano cartesiano',t:[]},
+  {l:'Função do 1º grau lendo gráfico (valor fixo + variável)',t:['Função do 1º grau (noções de função)']},
+  {l:'Volume do bloco retangular',t:['Volume do bloco retangular']},
+  {l:'Unidades e conversões (tempo, velocidade, fuso), notação científica',t:['Sistema métrico e unidades de medida (inclui tempo)','Notação científica']}]}};
+const GEO_REV=['Ângulos, triângulos, quadriláteros e polígonos','Área de polígonos','Círculo (área e comprimento)','Teorema de Pitágoras','Teorema de Tales e semelhança de triângulos','Volume do bloco retangular'];
 const INT_DIA=['Interpretação e inferência (informação explícita e implícita)','Propósito comunicativo, objetivo e tema do texto','Leitura de imagem, gráfico, charge e infográfico'];
 function planoInit(b){const hj0=new Date();hj0.setHours(0,0,0,0);const DAY=864e5,dias=Math.round((PROVA-hj0)/DAY),W=$('#plw',b);
  if(dias<0){W.innerHTML='';return}
@@ -376,7 +394,7 @@ function planoInit(b){const hj0=new Date();hj0.setHours(0,0,0,0);const DAY=864e5
  const k=new Date().toLocaleDateString('sv'),hj=S.dia&&S.dia.d===k?S.dia.n:0;
  const fd=d=>d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
  const st=(m,t)=>{const l=Q.filter(q=>q.materia===m&&q.topico===t);let n=0,o=0;l.forEach(q=>{const r=S.resp[q.id];if(r&&r.ok!=null){n++;if(r.ok)o++}});return{m,t,tot:l.length,n,o,p:n?o/n:0,dn:l.length>0&&n>=Math.min(8,l.length)&&o/n>=.7}};
- const chip=s=>`<button class="chip${s.dn?' dn':''}" data-m="${s.m}" data-t="${encodeURIComponent(s.t)}">${esc(s.t)} <small>${s.n}/${s.tot}${s.n?' · '+Math.round(s.p*100)+'%':''}</small></button>`;
+ const chip=(s,x='')=>`<button class="chip${s.dn?' dn':''}" data-m="${s.m}" data-t="${encodeURIComponent(s.t)}"${x}>${esc(s.t)} <small>${s.n}/${s.tot}${s.n?' · '+Math.round(s.p*100)+'%':''}</small></button>`;
  const rk={};const rank=m=>{const c={};Q.filter(q=>q.ano>=2022&&q.materia===m).forEach(q=>c[q.topico]=(c[q.topico]||0)+1);return Object.entries(c).sort((x,y)=>y[1]-x[1]).map(x=>x[0])};
  const RM=rank('Matemática');
  const weak=[];MATS.forEach(m=>[...new Set(Q.filter(q=>q.materia===m).map(q=>q.topico))].forEach(t=>{const s=st(m,t);if(s.n>=3)weak.push(s)}));weak.sort((x,y)=>x.p-y.p);
@@ -385,13 +403,13 @@ function planoInit(b){const hj0=new Date();hj0.setHours(0,0,0,0);const DAY=864e5
  for(let i=0;i<nw;i++){const ini=new Date(PLANO_INI.getFullYear(),PLANO_INI.getMonth(),PLANO_INI.getDate()+7*i),fim=new Date(ini.getFullYear(),ini.getMonth(),ini.getDate()+6);
   let fase,body,tag='';
   if(i===nw-1){fase='Reta final';body='<p class=mu>Simulado completo de 30 questões, revisar só os erros, nada de assunto novo. Descansar bem.</p><div class=row><button class="btn p" data-pl=sim>📝 Fazer simulado</button><button class=btn data-pl=err>♻ Revisar erradas</button></div>'}
-  else if(i>=nw-3){fase='Revisão';const r=i-(nw-3),w=weak.slice(r*6,r*6+6);body='<p class=mu>Refazer as erradas, atacar os assuntos de menor aproveitamento e fazer 1 simulado de 30 questões na semana.</p>'+(w.length?`<div class=chips>${w.map(chip).join('')}</div>`:'<p class=mu>Responda questões para o plano apontar seus assuntos mais fracos.</p>')+'<div class=row><button class=btn data-pl=err>♻ Revisar erradas</button></div>'}
-  else{fase='Base';const pt=PT_PLANO[i%PT_PLANO.length],ps=pt.t.map(t=>st('Português',t)),ms=RM.length?[0,1].map(t=>st('Matemática',RM[(i*2+t)%RM.length])):[],all=[...ps,...ms],nd=all.filter(s=>s.dn).length;
-   tag=` · ${nd}/${all.length} assuntos${nd===all.length?' ✅':''}`;
-   body=`<p class=mu>${pt.f}</p><div class=mu><b>Português</b></div><div class=chips>${ps.map(chip).join('')}${(pt.x||[]).map(x=>`<span class="chip tx" title="Sem questões no banco: estude a teoria">${esc(x)} <small>só teoria</small></span>`).join('')}</div><div class=mu><b>Matemática</b></div><div class=chips>${ms.map(chip).join('')}</div>`}
+  else if(i>=nw-3){fase='Revisão';const r=i-(nw-3),w=weak.slice(r*6,r*6+6);body='<p class=mu>Sem assunto novo. Foque em refazer as erradas de geometria, além do simulado de 30 questões na semana.</p><div class=mu><b>Erradas de geometria</b></div><div class=chips>'+GEO_REV.map(t=>chip(st('Matemática',t),' data-s="Erradas"')).join('')+'</div><div class=mu><b>Menor aproveitamento até agora</b></div>'+(w.length?`<div class=chips>${w.map(chip).join('')}</div>`:'<p class=mu>Responda questões para o plano apontar seus assuntos mais fracos.</p>')+'<div class=row><button class=btn data-pl=err>♻ Revisar erradas</button></div>'}
+  else{fase='Base';const pt=PT_PLANO[i%PT_PLANO.length],ps=pt.t.map(t=>st('Português',t)),mp=MAT_PLANO[i],ms=mp?mp.it.flatMap(x=>x.t.map(t=>st('Matemática',t))):RM.length?[0,1].map(t=>st('Matemática',RM[(i*2+t)%RM.length])):[],all=[...ps,...ms],nd=all.filter(s=>s.dn).length;
+   tag=` · ${nd}/${all.length} assuntos${nd===all.length?' ✅':''}${mp&&mp.g?' · '+mp.g:''}`;
+   body=`<p class=mu>${pt.f}</p><div class=mu><b>Português</b></div><div class=chips>${ps.map(chip).join('')}${(pt.x||[]).map(x=>`<span class="chip tx" title="Sem questões no banco: estude a teoria">${esc(x)} <small>só teoria</small></span>`).join('')}</div><div class=mu><b>Matemática</b></div>${mp?mp.it.map((x,j)=>`<div class=mu style="margin:6px 0"><b>${j+1}.</b> ${esc(x.l)}</div><div class=chips>${x.t.length?x.t.map(t=>chip(st('Matemática',t))).join(''):`<span class="chip tx" title="Sem questões no banco: estude a teoria">${esc(x.l)} <small>só teoria</small></span>`}</div>`).join(''):`<div class=chips>${ms.map(chip).join('')}</div>`}`}
   wk+=`<details class=wk ${i===cur?'open':''}><summary><b>Semana ${i+1}</b> · ${fd(ini)} a ${fd(fim)} · <span class=fase>${fase}</span>${tag}${i===cur?' · <b>esta semana</b>':''}</summary>${body}</details>`}
  W.innerHTML=`<div class="card2 pl"><div class=plh><div><small>⏳ Contagem regressiva</small><div><b class=pld>${dias}</b> ${dias===1?'dia':'dias'} <span class=mu>· prova em ${fd(PROVA)}</span></div></div><div class=plm><small>🎯 Meta: ${META[0]}–${META[1]} acertos de 30</small><div class=mbar><i style="width:${Math.min(100,Math.round(pc*100/(META[0]/30)))}%"></i></div><span class=mu>${a.length>=10?`Seu aproveitamento: ${Math.round(pc*100)}% ≈ ${est}/30 ${est>=META[0]?'· na meta ✅':'· faltam '+(META[0]-est)+' acertos'}`:'Responda ao menos 10 questões para estimar sua nota.'}</span></div><div class=plm><small>📅 Hoje</small><div class=mbar><i style="width:${Math.min(100,hj*100/MD())}%"></i></div><span class=mu>${hj}/${MD()} questões${hj>=META_DIA?' · meta batida 🔥':''}</span></div></div><h3>Plano até a prova</h3><p class=mu>Rotina: ${MD()} questões por dia. Sugestão: 5 de Português no assunto da semana, 3 de Matemática e 2 de interpretação. Um assunto vira ✓ com 70% de acerto (mínimo de 8 questões, ou todas, se houver menos).</p><div class=mu><b>Todo dia, interpretação de texto:</b></div><div class=chips>${INT_DIA.map(t=>chip(st('Português',t))).join('')}</div>${wk}</div>`;
- $$('#plw .chip[data-m]',b).forEach(c=>c.onclick=()=>{ST.ass={f:{mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t)},cur:0};go('ass')});
+ $$('#plw .chip[data-m]',b).forEach(c=>c.onclick=()=>{const f={mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t)};if(c.dataset.s)f.st=c.dataset.s;ST.ass={f,cur:0};go('ass')});
  $$('#plw [data-pl]',b).forEach(x=>x.onclick=()=>{if(x.dataset.pl==='sim')go('sim');else{ST.banco={f:{st:'Erradas'},cur:0};go('banco')}})}
 function vlInit(b){const n=Object.values(S.com).filter(x=>x.l).length,W=$('#vlw',b);
  W.innerHTML=`<details class="card2 vl"><summary><b>🎥 Links das resoluções</b> <span class=mu>· ${n} de ${Q.length} questões com vídeo</span></summary><p class=mu>Cole um link por linha: <code>ano número link</code>. Ex.: <code>2025 1 https://youtu.be/XXXXXXXXXXX</code>. Se uma prova inteira está num vídeo só, use o tempo de cada questão (<code>?t=95</code>).</p><textarea class=cin id=vlt rows=6 placeholder="2025 1 https://youtu.be/...&#10;2025 2 https://youtu.be/..."></textarea><div class=row><button class="btn p" id=vli>Importar</button><button class=btn id=vle>Mostrar os já salvos</button><span class=mu id=vlm></span></div></details>`;
