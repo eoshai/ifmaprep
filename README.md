@@ -6,7 +6,7 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 
 ## Recursos
 
-- 📚 190 questões de Português e Matemática das provas de 2020 e de 2022 a 2026 (não há prova de 2021), filtráveis por ano, matéria, assunto, dificuldade e status
+- 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto, dificuldade e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
 - 🎯 Questões por assunto e por dificuldade, com gabarito e correção automática
 - 📝 Simulados com cronômetro, em tempo configurável
 - ⏱ Cronômetro de estudo (livre, regressivo e Pomodoro)
@@ -28,10 +28,12 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 O plano tem 8 semanas, de 05/10 a 29/11/2026 (data da prova):
 
 - **Semanas 1 a 5 (base):** um bloco de Português por semana e um bloco de Matemática. Os itens de Matemática das semanas 3, 4 e 5 são fixos (veja `MAT_PLANO` no `index.html`); a semana 4 é a semana de geometria. Um assunto ganha ✓ com 70% de acerto, com no mínimo 8 questões respondidas (ou todas, se o assunto tiver menos).
-- **Semanas 6 e 7 (revisão):** sem assunto novo. O foco é refazer as erradas de geometria, além de 1 simulado de 30 questões por semana.
+- **Semanas 6 e 7 (revisão):** sem assunto novo. O foco é refazer as erradas de geometria, além de 1 simulado de 30 questões por semana. Ângulos entram só como uma revisão leve, sem foco.
 - **Semana 8 (reta final):** simulado completo, revisão só dos erros e descanso.
 
 Todo dia, o plano sugere 10 questões (a meta diária é ajustável): 5 de Português no assunto da semana, 3 de Matemática e 2 de interpretação de texto. A meta de nota é de 27 a 30 acertos em 30.
+
+O plano só usa assuntos que caíram de 2022 em diante. Assuntos que só apareceram em 2020 (ângulos, expressões algébricas, potências e radicais, funções da linguagem e variação linguística) somem junto com a prova de 2020.
 
 Para reaproveitar o plano em outra prova ou data, ajuste as constantes `PROVA`, `PLANO_INI`, `META`, `META_DIA`, `PT_PLANO`, `MAT_PLANO` e `GEO_REV` no `index.html`.
 
