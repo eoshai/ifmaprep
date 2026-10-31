@@ -237,6 +237,42 @@ body{overscroll-behavior-y:none}
 .lrn{margin-top:10px;padding:12px;border:1px solid var(--br);border-radius:var(--r);background:var(--p2)}.lrn .row{margin-top:8px}
 .hin{display:block;margin-top:8px;font-size:12px;line-height:1.4}
 .sbl{background:none;border:0;color:var(--mu);font:inherit;font-size:13px;cursor:pointer;margin-top:10px;padding:4px;text-decoration:underline}
+
+/* ===== motivação ===== */
+.mq{font-size:21px;line-height:1.4;font-weight:700;margin:6px 0 14px}.mq small{display:block;font-size:13px;font-weight:400;margin-top:6px}
+.mt{width:100%;min-height:92px;resize:vertical;background:var(--p2);color:var(--tx);border:1px solid var(--br);border-radius:12px;padding:10px 12px;font:inherit}.mt:focus{outline:0;border-color:var(--g)}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.mb{background:var(--p2);border:1px solid var(--br);border-radius:14px;padding:12px 8px;text-align:center;opacity:.45;filter:grayscale(1)}.mb.on{opacity:1;filter:none;border-color:var(--g)}.mb span{display:block;font-size:28px}.mb b{display:block;font-size:13px}.mb small{font-size:11px}
+.mx{margin-bottom:16px}.mx h3{margin-top:0}
+.mh{margin-top:12px;padding:14px;border-radius:14px;background:var(--p2);border:1px solid var(--g);line-height:1.5}
+.mok{color:var(--ok);font-size:12px;margin-left:8px}
+
+.cfw{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9999}
+.cfw i{position:absolute;top:-20px;border-radius:2px;animation:cfl linear forwards}
+@keyframes cfl{to{transform:translate(var(--dx),110vh) rotate(var(--rot));opacity:.9}}
+.cfm{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:10000;background:linear-gradient(135deg,var(--g),var(--g2));color:#1a0802;font-weight:800;padding:12px 20px;border-radius:999px;box-shadow:0 8px 30px #000a;max-width:90vw;text-align:center;animation:cfi .35s ease-out}
+@keyframes cfi{from{transform:translate(-50%,-30px);opacity:0}}
+.mem{display:flex;gap:8px;flex-wrap:wrap}.mebt{flex:1;min-width:58px;background:var(--p2);border:1px solid var(--br);color:var(--tx);border-radius:14px;padding:10px 4px;cursor:pointer;font:inherit}.mebt span{display:block;font-size:26px}.mebt small{font-size:11px;color:var(--mu)}.mebt:hover{border-color:var(--g)}.mebt.on{border-color:var(--g);box-shadow:0 0 0 2px #ff6a2b33}
+.mch{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin:14px 0 6px}.mcb{height:56px;background:var(--p2);border-radius:6px;display:flex;align-items:flex-end;overflow:hidden}.mcb i{display:block;width:100%;border-radius:6px 6px 0 0}.mcd{display:block;width:6px;height:6px;border-radius:50%;margin:5px auto 0}.mcd.on{background:var(--g)}
+.mrfb{border-color:var(--g)}.card2.mrfb{margin-bottom:16px}
+.mpl{display:grid;gap:6px;margin:10px 0}.mpl>div{display:flex;gap:10px;padding:8px 12px;border-radius:12px;background:var(--p2);border:1px solid var(--br);font-size:14px}.mpl>div.on{border-color:var(--g);background:color-mix(in srgb,var(--g) 14%,var(--p2))}.mpl b{flex:none;width:104px}.mpl span{color:var(--mu)}.mpl .on span{color:var(--tx)}
+.mck{display:flex;gap:10px;align-items:flex-start;padding:7px 2px;cursor:pointer}.mck input{margin-top:4px;accent-color:var(--g);flex:none}.mck.on span{color:var(--mu);text-decoration:line-through}
+.hmw2{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}.hmd{display:grid;grid-template-rows:repeat(7,18px);gap:3px;font-size:10px;color:var(--mu);line-height:18px}.hmg{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,18px);grid-auto-columns:18px;gap:3px}
+.hmc{display:block;border-radius:4px;background:var(--p2)}.hmc.hm1{background:color-mix(in srgb,var(--g) 30%,var(--p2))}.hmc.hm2{background:color-mix(in srgb,var(--g) 55%,var(--p2))}.hmc.hm3{background:color-mix(in srgb,var(--g) 80%,var(--p2))}.hmc.hm4{background:var(--g)}.hmc.hmx{background:transparent}
+.hml{display:flex;gap:4px;align-items:center;font-size:11px;color:var(--mu);margin-top:8px}.hml .hmc{width:14px;height:14px}
+.mrb{height:10px;border-radius:99px;background:var(--p2);overflow:hidden;margin:8px 0 12px}.mrb i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--ok))}
+.mel{display:grid;gap:6px;margin:10px 0}.mel>div{display:flex;gap:8px;align-items:center;padding:8px 12px;background:var(--p2);border-radius:12px;font-size:14px}.mel small{margin-left:auto;white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.cfm{animation:none}}
+
+.rsw canvas{display:block;width:100%;max-width:340px;height:auto;aspect-ratio:9/16;margin:0 auto 12px;border-radius:18px;border:1px solid var(--br);background:#070605}
+.rsw+.row{justify-content:center}
+.tur{margin-bottom:16px}.tur input{max-width:none;flex:1;min-width:140px}.tur label{display:block;margin-bottom:10px}
+.trh{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.trh h3{margin-top:0}
+.trc{margin:8px 0 10px;color:var(--mu)}.trc b{color:var(--g);letter-spacing:2px;font-size:17px}
+.trm{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--p2);border:1px solid var(--br);margin-top:8px}.trm.me{border-color:var(--g)}
+.trr{width:30px;text-align:center;font-size:20px;flex:none}.trb{flex:1;min-width:0}.trn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trbar{height:8px;border-radius:99px;background:var(--bg);overflow:hidden;margin:6px 0}.trbar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--g2))}
+.trv{font-size:22px;color:var(--g);flex:none}
 </style><script>addEventListener('DOMContentLoaded',()=>{const r=document.documentElement,b=document.createElement('button'),set=on=>{r.dataset.foco=on?'on':'off';b.textContent=on?'✖':'🎯';b.title=on?'Sair do modo foco (Esc)':'Modo foco: esconde o menu e distrações'};b.id='fcs';b.onclick=()=>set(r.dataset.foco!=='on');addEventListener('keydown',e=>{if(e.key==='Escape'&&r.dataset.foco==='on')set(false)});document.body.appendChild(b);set(false)})</script>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ifma_tema')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}
 addEventListener('DOMContentLoaded',()=>{const b=document.createElement('button'),r=document.documentElement,set=t=>{r.dataset.theme=t;b.textContent=t==='light'?'🌙':'☀️';b.title=t==='light'?'Mudar para tema escuro':'Mudar para tema claro';try{localStorage.setItem('ifma_tema',t)}catch(e){}};b.id='thm';b.onclick=()=>set(r.dataset.theme==='light'?'dark':'light');document.body.appendChild(b);set(r.dataset.theme)})</script>
@@ -253,7 +289,7 @@ try{const l=JSON.parse(localStorage.getItem('ifma')||'{}');S={...S,...l,tempo:{.
 const save=()=>{S._t=Date.now();try{localStorage.setItem('ifma',JSON.stringify(S))}catch(e){}window.__sy&&__sy.dirty()};
 const hms=s=>{s=Math.max(0,Math.floor(s));return[s/3600|0,s%3600/60|0,s%60].map(x=>String(x).padStart(2,'0')).join(':')};
 const stat=q=>S.resp[q.id];
-const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['sim','📝','Simulado'],['cron','⏱','Cronômetro'],['desp','📊','Desempenho']];
+const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['sim','📝','Simulado'],['cron','⏱','Cronômetro'],['mot','💪','Motivação'],['tur','👥','Turma de estudo'],['desp','📊','Desempenho']];
 const FD={ano:['Ano',['Todos',...anos]],mat:['Matéria',['Todas',...MATS]],ass:['Assunto',0],dif:['Dificuldade',['Todas','Fácil','Média','Difícil']],st:['Status',['Todas','Não respondidas','Erradas','Acertadas','Favoritas','Dificuldade','Chutei','A estudar','Revisão de hoje','Não estudadas','Estudadas sem domínio','Domínio confirmado','Erradas 2+ vezes']]};
 const VF={prov:['ano','mat','st'],ass:['mat','ass','st'],dif:['mat','dif','ano'],banco:['ano','mat','ass','dif','st']};
 const ST={};let V='home',SIM=null;
@@ -304,7 +340,7 @@ const MK=q=>{const r=S.resp[q.id];if(!r)return'○';const s=hInfo(q.id).st;retur
 const REVF=['Erradas','Não estudadas','Estudadas sem domínio','Erradas 2+ vezes','Revisão de hoje'];
 function histBlock(){const s=hStats(),f=v=>v==null?'—':v+'%';
  return `<div class="card2"><h3>Aprendizado real <small>(1ª tentativa × evolução)</small></h3><div class="cards">${[['Respondidas originalmente',s.orig],['Acertos na 1ª tentativa',s.ac],['Erros na 1ª tentativa',s.er],['Aproveitamento original',f(s.p)]].map(c=>`<div class="card"><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div><div class="cards" style="margin-top:10px">${[['Estudadas após erro',s.est],['Aprendidas',s.apr+(s.aprPend?' <span class=mu style="font-size:12px">('+s.aprPend+' sem nova tentativa)</span>':'')],['Domínio confirmado',s.dom],['Aproveit. novas tentativas',s.ret?f(s.pr)+' <span class=mu style="font-size:12px">('+s.retOk+'/'+s.ret+')</span>':'—']].map(c=>`<div class="card"><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div><p class="mu" style="font-size:12px;margin:10px 0 0">O aproveitamento original usa só o resultado da 1ª tentativa de cada questão (com gabarito, sem consulta). Aprender depois de errar aparece em "Aprendidas" e "Domínio confirmado", sem alterar o resultado original.${s.mig?' · '+s.mig+' questão(ões) antiga(s) vieram do histórico anterior'+(s.migSL?' ('+s.migSL+' só com o último resultado registrado)':'')+'.':''}</p></div>`}
-const dayInc=()=>{const k=new Date().toLocaleDateString('sv');if(!S.dia||S.dia.d!==k)S.dia={d:k,n:0};S.dia.n++};
+const dayInc=()=>{const k=new Date().toLocaleDateString('sv');if(!S.dia||S.dia.d!==k)S.dia={d:k,n:0};S.dia.n++;setTimeout(motCheck,0)};
 let CUT={};try{CUT=JSON.parse(localStorage.getItem('ifma_cut')||'{}')}catch(e){}
 const saveCut=()=>{try{localStorage.setItem('ifma_cut',JSON.stringify(CUT))}catch(e){}save()};
 function mountQ(el,q,c){const R=c.R,g=G[q.id],H=c.sim?null:hInfo(q.id),retry=!!(H&&g&&H.st==='aprendida'),locked=!!(H&&g&&R[q.id]&&!retry),stTag=H&&H.st!=='nova'?`<span class="tag sx s-${H.st}">${STL[H.st]}</span>`:'';let sel=retry?'':(R[q.id]?R[q.id].r:''),shown=!q.enun;
@@ -519,7 +555,7 @@ function home(b){const HS=hStats(),a=Object.values(S.resp),cor=a.filter(x=>x.ok!
  $$('.chip[data-m]',b).filter(c=>!c.closest('#plw,#estw,#rlw,#bkw')).forEach(c=>c.onclick=()=>{ST.ass={f:{mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t)},cur:0};go('ass')});
  $('[data-a=sim]',b).onclick=()=>go('sim');$('[data-a=err]',b).onclick=()=>{ST.banco={f:{st:'Erradas'},cur:0};go('banco')};
  $('[data-a=rand]',b).onclick=()=>{const q=Q[Math.random()*Q.length|0],f={ano:String(q.ano),mat:q.materia};ST.banco={f,cur:Math.max(0,filt(f).findIndex(x=>x.id===q.id))};go('banco')}}
-function finSim(){SIM.list.forEach(q=>{const r=SIM.R[q.id];if(r){S.resp[q.id]={r:r.r,ok:G[q.id]?r.r===G[q.id]:null,ch:r.ch};logA(q,S.resp[q.id]);if(G[q.id])regAtt(q,S.resp[q.id],0)}});save();SIM.done=1;go('sim')}
+function finSim(){SIM.list.forEach(q=>{const r=SIM.R[q.id];if(r){S.resp[q.id]={r:r.r,ok:G[q.id]?r.r===G[q.id]:null,ch:r.ch};logA(q,S.resp[q.id]);if(G[q.id])regAtt(q,S.resp[q.id],0)}});save();SIM.done=1;setTimeout(motCheck,0);go('sim')}
 function viewSim(b){
  if(!SIM){b.innerHTML=`<div class=card2><h3>Novo simulado</h3><div class=fbar><label>Prova<select id=sa><option>Aleatório</option>${anos.map(a=>`<option>${a}</option>`).join('')}</select></label><label>Matéria<select id=sm><option>Ambas</option>${MATS.map(m=>`<option>${m}</option>`).join('')}</select></label><label>Questões<input id=sn type=number value=15 min=5 max=40></label><label>Minutos<input id=sx type=number value=90 min=5 max=240></label></div><button class="btn p" id=sg>▶ Iniciar simulado</button><p class=mu>A prova real tem 30 questões e 3 horas.</p></div>`;
   $('#sg',b).onclick=()=>{const A=$('#sa',b).value,M=$('#sm',b).value;let p=Q.filter(q=>(A==='Aleatório'||String(q.ano)===A)&&(M==='Ambas'||q.materia===M));if(A==='Aleatório')p=p.sort(()=>Math.random()-.5);
@@ -534,7 +570,7 @@ function viewSim(b){
 const T={run:0,t0:0,dec:0,alvo:0,mat:'Matemática',modo:'Livre',min:30,fase:'Foco',msg:''};
 const tel=()=>T.dec+(T.run?(Date.now()-T.t0)/1000:0);
 const alvo0=()=>T.modo==='Regressivo'?T.min*60:T.modo==='Pomodoro'?(T.fase==='Foco'?1500:300):0;
-const credit=()=>{if(T.fase==='Foco'&&T.run){S.tempo[T.mat]+=(Date.now()-T.t0)/1000;save()}};
+const credit=()=>{if(T.fase==='Foco'&&T.run){const dd=(Date.now()-T.t0)/1000;S.tempo[T.mat]+=dd;motTmp(dd);save()}};
 function paintRing(){const e=$('#tclk');if(!e)return;const el=tel(),a=T.alvo;e.textContent=hms(a?a-el:el);$('#ring').style.strokeDashoffset=565.5*(1-(a?Math.max(0,1-el/a):(el%3600)/3600))}
 function viewCron(b){b.innerHTML=`<div class=card2 style="text-align:center"><div class=fbar style="justify-content:center"><label>Matéria<select id=cm>${MATS.map(m=>`<option ${m===T.mat?'selected':''}>${m}</option>`).join('')}</select></label><label>Modo<select id=cd>${['Livre','Regressivo','Pomodoro'].map(m=>`<option ${m===T.modo?'selected':''}>${m}</option>`).join('')}</select></label><label>Minutos (regressivo)<input id=cn type=number value=${T.min} min=1 max=240></label></div>
  <div class=ringw><svg width=240 height=240><circle cx=120 cy=120 r=90 fill=none stroke="#1f3b2c" stroke-width=12 /><circle id=ring cx=120 cy=120 r=90 fill=none stroke="#22e57b" stroke-width=12 stroke-linecap=round stroke-dasharray=565.5 stroke-dashoffset=565.5 /></svg><div><div id=tclk>00:00:00</div><small>${T.modo==='Pomodoro'?T.fase:MATS.includes(T.mat)?T.mat:''}</small></div></div>
@@ -548,12 +584,197 @@ function viewCron(b){b.innerHTML=`<div class=card2 style="text-align:center"><di
 function viewDesp(b){const d={};Q.forEach(q=>{const r=stat(q);if(r){const k=q.materia+q.topico;d[k]=d[k]||[q.materia,q.topico,0,0,0];d[k][2]++;const hi=hInfo(q.id);if(hi.first!==null){d[k][3]++;if(hi.first)d[k][4]++}}});
  const rows=Object.values(d).sort((x,y)=>(x[3]?x[4]/x[3]:2)-(y[3]?y[4]/y[3]:2));
  b.innerHTML=histBlock()+`<div class=cards>${MATS.map(m=>`<div class=card><small>${m} · tempo estudado</small><b>${hms(S.tempo[m])}</b></div>`).join('')}</div><div class=card2><h3>Por assunto <small>(1ª tentativa · piores primeiro)</small></h3>${rows.map(r=>{const p=r[3]?Math.round(100*r[4]/r[3]):0;return `<div class=bar><span>${esc(r[1])}<br><small>${r[0]} · ${r[2]} resp.</small></span><div class=trk><i style="width:${p}%"></i></div><b>${r[3]?p+'%':'—'}</b></div>`}).join('')||'<p class=mu>Responda questões para ver seu desempenho.</p>'}</div><br><button class=btn id=rs>Zerar progresso</button>`;
- let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.hist={};S.log=[];S.fav=[];S.tempo={'Português':0,'Matemática':0};S._rs=Date.now();save();go('desp')}}
+ let c=0;$('#rs',b).onclick=e=>{if(!c++){e.target.textContent='Clique de novo para confirmar';return}S.resp={};S.hist={};S.log=[];S.fav=[];S.tempo={'Português':0,'Matemática':0};if(S.mot){S.mot.bd=[];S.mot.dm=0}S._rs=Date.now();save();go('desp')}}
+/* ===== seção Motivação ===== */
+const MOT_F=['Você não precisa estar motivado para começar. Comece, e a motivação costuma chegar no meio do caminho.','Cada questão respondida é um tijolo. Ninguém vê a parede ficar pronta num dia só.','Errar aqui é barato. Errar na prova é caro. Aproveite para errar agora e aprender.','Constância vence intensidade: 10 questões por dia durante um mês valem mais que um domingo inteiro de maratona.','Seu eu do futuro, aprovado, está agradecendo o esforço de hoje.','Você não está atrasado. Está exatamente onde precisa estar para dar o próximo passo.','Dia ruim também conta. Fazer só um pouco ainda é fazer.','A vaga no IFMA é de quem aparece todo dia, não de quem nunca erra.','Cansaço passa. A sensação de ter desistido demora muito mais para passar.','Revisar o que errou é a forma mais rápida de subir a nota.','Não compare seu capítulo 1 com o capítulo 10 de ninguém.','Foque no processo: meta do dia batida, o resultado vem junto.','Respire, beba água, volte com a cabeça leve. Um bom estudo de 25 minutos já muda o dia.','Quem estudou com calma na véspera chega mais tranquilo na hora da prova.','O difícil de hoje vira o fácil de amanhã. É assim que se aprende.','Sua família, seus planos e seu futuro cabem dentro dessa prova. Vale a pena o esforço.','Pequenos progressos diários somam resultados enormes. Confie na soma.','Não precisa ser perfeito. Precisa ser feito.','Ansiedade é sinal de que você se importa. Transforme em ação: abra uma questão.','Você já resolveu questões que antes parecia impossível. Vai resolver as próximas também.'];
+const MOT_D=['Ei, respira. Cansar faz parte, desistir não precisa fazer. Hoje o objetivo é só não zerar o dia.','Você não precisa estudar três horas agora. Faça só uma questão fácil e depois decide se continua.','Se a cabeça está pesada, faça uma pausa de 10 minutos, tome água, caminhe um pouco e volte para uma única questão.','Um dia fraco não apaga os dias bons. Sua sequência de esforço continua valendo.','Talvez hoje seja dia de revisar erros em vez de aprender coisa nova. É mais leve e rende muito.','Você está cansado porque está tentando. Quem não tenta não sente esse peso.','Se for demais, divida: 10 minutos agora, 10 depois. Pequenos blocos também contam.','Seu objetivo não mudou, só o ritmo de hoje. Ajuste o ritmo, não o sonho.'];
+const MOT_B=[['👣','Primeiro passo',1,'q'],['🌱','10 questões',10,'q'],['📘','50 questões',50,'q'],['💯','100 questões',100,'q'],['🚀','250 questões',250,'q'],['🏆','500 questões',500,'q'],['🔥','3 dias seguidos',3,'s'],['⚡','7 dias seguidos',7,'s'],['💎','14 dias seguidos',14,'s'],['👑','30 dias seguidos',30,'s']];
+function viewMot(b){
+ const M=S.mot=S.mot||{porque:'',carta:'',t:0},dk=new Date(),dn=Math.floor((new Date(dk.getFullYear(),dk.getMonth(),dk.getDate())-new Date(2026,0,1))/864e5);
+ let fi=((dn%MOT_F.length)+MOT_F.length)%MOT_F.length;
+ const st=streakInfo(),nq=Object.keys(S.resp).length,hj=S.dia&&S.dia.d===dkey(Date.now())?S.dia.n:0,meta=MD(),
+  dias=Math.max(0,Math.ceil((new Date(PROVA.getFullYear(),PROVA.getMonth(),PROVA.getDate())-new Date(dk.getFullYear(),dk.getMonth(),dk.getDate()))/864e5));
+ const bd=MOT_B.map(x=>{const v=x[3]==='q'?nq:st.best,on=v>=x[2];return `<div class="mb${on?' on':''}"><span>${x[0]}</span><b>${x[1]}</b><small>${on?'Conquistada!':(x[3]==='q'?nq:st.best)+'/'+x[2]}</small></div>`}).join('');
+ b.innerHTML=`<div class="hero"><small>✨ Frase do dia</small><p class="mq" id="mqf"></p><div class="row"><button class="btn" id="mqn">🔄 Outra frase</button><button class="btn p" id="mqq">🎲 Fazer 1 questão agora</button></div></div>
+ <div class="cards"><div class="card"><small>⏳ Dias para a prova</small><b>${dias}</b></div><div class="card"><small>🔥 Sequência atual</small><b>${st.cur}</b></div><div class="card"><small>🏅 Melhor sequência</small><b>${st.best}</b></div><div class="card"><small>🎯 Meta de hoje</small><b>${Math.min(hj,meta)}/${meta}</b></div></div>
+ ${motDias()>=0&&motDias()<=7?'<div id="mrf"></div>':''}<div id="mrs"></div><div id="mhm"></div>${motDias()>7||motDias()<0?'<div id="mrf"></div>':''}<div id="mhp"></div><div id="mer"></div>
+ <div class="card2 mx"><h3>😮‍💨 Estou desanimado(a)</h3><p class="mu">Bateu aquela vontade de largar tudo? Clique e leia com calma.</p><button class="btn p" id="mdb">Preciso de um empurrãozinho</button><div id="mdr"></div></div>
+ <div class="card2 mx"><h3>💭 Meu porquê <span class="mok" id="mok1"></span></h3><p class="mu">Escreva por que você quer passar no IFMA. Quando bater o cansaço, volte aqui e leia.</p><textarea class="mt" id="mpq" placeholder="Eu quero passar porque...">${esc(M.porque||'')}</textarea></div>
+ <div class="card2 mx"><h3>🏅 Conquistas <button class="btn" id="mtc" style="float:right;padding:4px 10px;font-size:12px">🎉 Testar</button></h3><div class="mg">${bd}</div></div>
+ <div class="card2 mx"><h3>✉️ Carta para mim mesmo <span class="mok" id="mok2"></span></h3><p class="mu">Escreva algo para ler no dia da prova ou numa semana difícil.</p><textarea class="mt" id="mct" placeholder="Querido eu...">${esc(M.carta||'')}</textarea></div>`;
+ const showF=()=>$('#mqf',b).innerHTML=esc(MOT_F[fi]);showF();
+ $('#mqn',b).onclick=()=>{fi=(fi+1+Math.floor(Math.random()*(MOT_F.length-1)))%MOT_F.length;showF()};
+ $('#mqq',b).onclick=()=>go('banco');
+ let di=-1;$('#mdb',b).onclick=()=>{let n;do{n=Math.floor(Math.random()*MOT_D.length)}while(n===di&&MOT_D.length>1);di=n;
+  $('#mdr',b).innerHTML=`<div class="mh">${esc(MOT_D[n])}${M.porque?`<br><br><small class="mu">Seu porquê:</small><br><i>${esc(M.porque)}</i>`:''}<div class="row" style="margin-top:12px"><button class="btn p" id="mdq">⚡ Uma questão fácil</button><button class="btn" id="mdc">⏱ Foco de 25 min</button></div></div>`;
+  $('#mdq',b).onclick=()=>go('dif');$('#mdc',b).onclick=()=>go('cron')};
+ const tm={};const bind=(id,k,ok)=>{$(id,b).oninput=e=>{M[k]=e.target.value;M.t=Date.now();clearTimeout(tm[k]);tm[k]=setTimeout(()=>{save();const o=$(ok,b);if(o){o.textContent='✓ salvo';setTimeout(()=>{o.textContent=''},1500)}},500)}};
+ bind('#mpq','porque','#mok1');bind('#mct','carta','#mok2');
+ $('#mtc',b).onclick=()=>confete('🎉 É assim que vai ser a comemoração!');motRes($('#mrs',b));motHum($('#mhm',b));motReta($('#mrf',b));motHeat($('#mhp',b));motErr($('#mer',b))}
+/* ===== motivação: comemoração, check-in, reta final, mapa de calor, erros que viraram acerto ===== */
+function confete(msg){const t=document.createElement('div');t.className='cfm';t.setAttribute('role','status');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3800);
+ try{if(matchMedia('(prefers-reduced-motion:reduce)').matches)return}catch(e){}
+ const w=document.createElement('div');w.className='cfw';const cs=['var(--g)','var(--ok)','#ffc857','#7dd3fc','#f472b6','var(--g2)'];
+ for(let i=0;i<70;i++){const p=document.createElement('i');p.style.cssText=`left:${(Math.random()*100).toFixed(1)}%;background:${cs[i%cs.length]};--dx:${(Math.random()*160-80).toFixed(0)}px;--rot:${(Math.random()*720-360).toFixed(0)}deg;animation-duration:${(1.8+Math.random()*1.6).toFixed(2)}s;animation-delay:${(Math.random()*.5).toFixed(2)}s;width:${6+(Math.random()*6|0)}px;height:${8+(Math.random()*8|0)}px`;w.appendChild(p)}
+ document.body.appendChild(w);setTimeout(()=>w.remove(),4400)}
+const motM=()=>S.mot=S.mot||{porque:'',carta:'',t:0};
+function motEarned(){const nq=Object.keys(S.resp).length,bs=streakInfo().best;return MOT_B.filter(x=>(x[3]==='q'?nq:bs)>=x[2]).map(x=>x[1])}
+function motDom(){let n=0;Q.forEach(q=>{const i=hInfo(q.id);if(i.err>0&&i.st==='dominio')n++});return n}
+function motInit(){const M=motM();if(!M.bd)M.bd=motEarned();if(M.dm==null)M.dm=motDom()}
+function motCheck(){try{const M=motM(),k=dkey(Date.now()),hj=S.dia&&S.dia.d===k?S.dia.n:0,msgs=[];if(!M.bd)M.bd=[];
+ if(hj>=MD()&&M.meta!==k){M.meta=k;msgs.push('🎯 Meta do dia batida! '+hj+' questões hoje')}
+ const ne=motEarned().filter(x=>!M.bd.includes(x));if(ne.length){M.bd=[...M.bd,...ne];const x=MOT_B.find(y=>y[1]===ne[ne.length-1]);msgs.push(x[0]+' Nova conquista: '+x[1])}
+ const dm=motDom();if(dm>(M.dm||0))msgs.push('🔄 Um erro virou acerto!');M.dm=dm;
+ save();if(msgs.length)confete(msgs.join(' · '))}catch(e){}}
+function motDias(){const n=new Date();return Math.round((new Date(PROVA.getFullYear(),PROVA.getMonth(),PROVA.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)}
+function motBanner(v){if(v!=='home')return;try{motBannerRes()}catch(e){}const d=motDias();if(d<0||d>7)return;const bd=$('#bd');if(!bd)return;
+ bd.insertAdjacentHTML('afterbegin',`<div class="card2 mrfb"><b>🏁 Reta final: ${d===0?'a prova é hoje!':d===1?'falta 1 dia':'faltam '+d+' dias'}</b><br><span class="mu">Veja o plano leve e o checklist da prova.</span><div class="row" style="margin-top:10px"><button class="btn p" id="mrfg">Abrir reta final</button></div></div>`);$('#mrfg').onclick=()=>go('mot')}
+
+/* check-in de humor e sono */
+function motHum(el,saved){if(!el)return;const M=motM(),H=M.hum=M.hum||{},k=dkey(Date.now()),h=H[k]||{},E=['😞','😕','😐','🙂','😄'],L=['Péssimo','Ruim','Normal','Bem','Ótimo'],SO=[['😴','Mal'],['😐','Ok'],['💤','Bem']];
+ const days=[];for(let i=13;i>=0;i--){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-i);days.push(dkey(d))}
+ const stud=new Set((S.log||[]).map(x=>dkey(x.t)));if(S.dia&&S.dia.n>0)stud.add(S.dia.d);
+ const vals=days.map(x=>(H[x]||{}).h||0),l7=vals.slice(-7).filter(Boolean),avg=l7.length?l7.reduce((a,c)=>a+c,0)/l7.length:0,col=v=>v>=4?'var(--ok)':v===3?'#ffc857':'var(--er)';
+ el.innerHTML=`<div class="card2 mx"><h3>🫶 Check-in de hoje <span class="mok">${saved?'✓ salvo':''}</span></h3><p class="mu">Como você está se sentindo hoje?</p>
+ <div class="mem">${E.map((e,i)=>`<button class="mebt${h.h===i+1?' on':''}" data-h="${i+1}"><span>${e}</span><small>${L[i]}</small></button>`).join('')}</div>
+ <p class="mu" style="margin:12px 0 6px">E o sono da noite passada?</p><div class="row">${SO.map((x,i)=>`<button class="btn${h.s===i+1?' p':''}" data-s="${i+1}">${x[0]} ${x[1]}</button>`).join('')}</div>
+ ${h.h&&h.h<=2?`<div class="mh">${esc(MOT_D[new Date().getDate()%MOT_D.length])}</div>`:''}
+ <div class="mch" role="img" aria-label="Humor dos últimos 14 dias">${days.map((x,i)=>{const v=vals[i];return `<div title="${x.slice(8)}/${x.slice(5,7)}: ${v?L[v-1]:'sem check-in'}"><div class="mcb">${v?`<i style="height:${v*20}%;background:${col(v)}"></i>`:''}</div><span class="mcd${stud.has(x)?' on':''}"></span></div>`}).join('')}</div>
+ <small class="mu">Últimos 14 dias · barra = humor · ponto laranja = dia em que você estudou${avg?' · média de 7 dias: '+avg.toFixed(1)+'/5':''}</small></div>`;
+ const sv=(p,v)=>{H[k]={...(H[k]||{}),[p]:v};M.t=Date.now();save();motHum(el,1)};
+ $$('[data-h]',el).forEach(x=>x.onclick=()=>sv('h',+x.dataset.h));$$('[data-s]',el).forEach(x=>x.onclick=()=>sv('s',+x.dataset.s))}
+
+/* modo reta final */
+const MOT_CK=['Conferi o local da prova e sei como chegar','Sei o horário em que os portões abrem e vou chegar com folga','Separei um documento oficial com foto','Separei o comprovante/cartão de inscrição (se o edital pedir)','Separei a caneta do tipo exigido no edital','Reli o edital: regras, horários e o que pode ou não levar','Preparei água e um lanche leve','Deixei roupa e material separados na véspera','Planejei dormir cedo na véspera'];
+const MOT_PL=[[7,5,'Faça 1 simulado completo e revise todas as questões que errou.'],[4,3,'Foque nas questões que você errou 2+ vezes e nos assuntos que mais caem.'],[2,2,'Sessão leve: 10 a 15 questões que você já domina. Nada de assunto novo.'],[1,1,'Véspera: no máximo 30 min de revisão leve, confira o checklist, jante leve e durma cedo.'],[0,0,'Dia da prova: respire fundo, leia com calma e comece pelas questões que você domina.']];
+function motReta(el){if(!el)return;const d=motDias();if(d<0){el.innerHTML='';return}
+ const M=motM(),ck=M.ck=M.ck||{},on=d<=7,n=MOT_CK.filter((_,i)=>ck[i]).length,pl=MOT_PL.find(p=>d<=p[0]&&d>=p[1]),lb=p=>p[0]===0?'Dia da prova':p[0]===1?'Véspera':p[0]===p[1]?p[0]+' dias':p[0]+' a '+p[1]+' dias';
+ el.innerHTML=`<div class="card2 mx${on?' mrfb':''}"><h3>🏁 Modo reta final</h3>
+ ${on?`<p><b>${d===0?'A prova é hoje!':d===1?'Falta 1 dia.':'Faltam '+d+' dias.'}</b> ${esc(pl?pl[2]:'')}</p><div class="mpl">${MOT_PL.map(p=>`<div class="${p===pl?'on':''}"><b>${lb(p)}</b><span>${esc(p[2])}</span></div>`).join('')}</div>
+ <div class="row" style="margin-bottom:10px"><button class="btn" data-g="err">♻ Revisar erradas</button><button class="btn" data-g="err2">🔁 Erradas 2+ vezes</button><button class="btn" data-g="sim">📝 Simulado</button></div>`
+ :`<p class="mu">Faltam ${d} dias para a prova. O plano da reta final aparece quando restarem 7 dias, mas você já pode ir marcando o checklist.</p>`}
+ <b>✅ Checklist da prova <span class="mu">(${n}/${MOT_CK.length})</span></b><div style="margin-top:6px">${MOT_CK.map((t,i)=>`<label class="mck${ck[i]?' on':''}"><input type="checkbox" data-i="${i}"${ck[i]?' checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <small class="mu">Confira sempre os detalhes no edital do IFMA.</small></div>`;
+ $$('[data-i]',el).forEach(x=>x.onchange=()=>{ck[x.dataset.i]=x.checked;M.t=Date.now();save();motReta(el);if(x.checked&&MOT_CK.every((_,i)=>ck[i]))confete('✅ Checklist completo! Você está pronto(a)')});
+ $$('[data-g]',el).forEach(x=>x.onclick=()=>{const g=x.dataset.g;if(g==='sim')return go('sim');ST.banco={f:{st:g==='err'?'Erradas':'Erradas 2+ vezes'},cur:0};go('banco')})}
+
+/* mapa de calor de estudo */
+function motHeat(el){if(!el)return;const W=13,cnt={};(S.log||[]).forEach(x=>{const k=dkey(x.t);cnt[k]=(cnt[k]||0)+1});const kt=dkey(Date.now());if(S.dia&&S.dia.d===kt)cnt[kt]=Math.max(cnt[kt]||0,S.dia.n);
+ const meta=MD(),hoje=new Date();hoje.setHours(12,0,0,0);const ini=new Date(hoje);ini.setDate(ini.getDate()-hoje.getDay()-(W-1)*7);
+ let cells='',dias=0,tot=0;for(let i=0;i<W*7;i++){const d=new Date(ini);d.setDate(ini.getDate()+i);if(d>hoje){cells+='<i class="hmc hmx"></i>';continue}
+  const k=dkey(d),c=cnt[k]||0,l=!c?0:c<meta/3?1:c<meta*2/3?2:c<meta?3:4;if(c){dias++;tot+=c}cells+=`<i class="hmc hm${l}" title="${k.slice(8)}/${k.slice(5,7)}: ${c} ${c===1?'questão':'questões'}"></i>`}
+ const st=streakInfo();
+ el.innerHTML=`<div class="card2 mx"><h3>🗓 Mapa de estudo <small class="mu">(últimas 13 semanas)</small></h3><p class="mu">Cada quadradinho é um dia. Quanto mais forte a cor, mais perto (ou além) da sua meta de ${meta} questões.</p>
+ <div class="hmw2" id="hmsc"><div class="hmd"><span></span><span>Seg</span><span></span><span>Qua</span><span></span><span>Sex</span><span></span></div><div class="hmg">${cells}</div></div>
+ <div class="hml">menos <i class="hmc hm0"></i><i class="hmc hm1"></i><i class="hmc hm2"></i><i class="hmc hm3"></i><i class="hmc hm4"></i> mais</div>
+ <p style="margin:10px 0 0"><b>${dias}</b> ${dias===1?'dia estudado':'dias estudados'} · <b>${tot}</b> questões · sequência atual <b>${st.cur}</b> · melhor <b>${st.best}</b></p></div>`;
+ const sc=$('#hmsc',el);if(sc)sc.scrollLeft=sc.scrollWidth}
+
+/* erros que viraram acerto */
+function motErr(el){if(!el)return;let err=0,dom=0,apr=0,pen=0;const L=[];
+ Q.forEach(q=>{const i=hInfo(q.id);if(i.err>0){err++;if(i.st==='dominio'){dom++;L.push([q,i])}else if(i.st==='aprendida'){apr++;L.push([q,i])}else pen++}});
+ L.sort((a,b)=>b[1].last-a[1].last);const p=err?Math.round(100*(dom+apr)/err):0;
+ el.innerHTML=`<div class="card2 mx"><h3>🔄 Erros que viraram acerto</h3>${err?`<div class="cdn"><div class="cdb">${dom}</div><div><b>domínio confirmado</b><br><span class="mu">de ${err} ${err===1?'questão que você já errou':'questões que você já errou'}</span></div></div>
+ <div class="mrb" role="img" aria-label="${p}% dos erros já foram vencidos"><i style="width:${p}%"></i></div>
+ <p class="mu" style="margin:0">✅ ${dom} dominadas · 📘 ${apr} aprendidas (acertou com ajuda ou chute) · ⏳ ${pen} ainda pendentes</p>
+ ${L.length?`<div class="mel">${L.slice(0,5).map(([q,i])=>`<div><span>${i.st==='dominio'?'✅':'📘'}</span><span>${q.ano} · Q${q.num} · ${esc(q.materia)}<br><small class="mu" style="margin:0">${esc(q.topico)}</small></span><small>${i.err} ${i.err===1?'erro':'erros'} → acerto</small></div>`).join('')}</div>`:''}
+ ${pen?`<button class="btn" id="merv">♻ Revisar as que ainda erro</button>`:'<p class="okt" style="margin:8px 0 0">Todos os seus erros já foram vencidos. 👏</p>'}`
+ :`<p class="mu">Você ainda não errou nenhuma questão registrada. Responda algumas e acompanhe aqui quantos erros você transforma em acerto.</p>`}</div>`;
+ const bt=$('#merv',el);if(bt)bt.onclick=()=>{ST.banco={f:{st:'Erradas'},cur:0};go('banco')}}
+/* ===== resumo da semana (PNG para compartilhar) ===== */
+const RES_MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],RES_DIA=['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'],RES_D3=['SEG','TER','QUA','QUI','SEX','SÁB','DOM'],RES_F=['Constância vence intensidade.','Um passo por dia e a vaga chega.','Quem aparece todo dia, passa.','Questão a questão, dia a dia.'];
+const motNome=()=>{try{return(localStorage.getItem('ifma_nome')||'').trim()}catch(e){return''}};
+function motTmp(d){const M=motM(),t=M.tmp=M.tmp||{},k=dkey(Date.now());t[k]=(t[k]||0)+d}
+function resSem(){const n=new Date(),dow=(n.getDay()+6)%7,ws=new Date(n.getFullYear(),n.getMonth(),n.getDate()-dow-(n.getDay()===0?0:7));return ws}
+function resStats(ws){const Y=ws.getFullYear(),Mo=ws.getMonth(),D=ws.getDate(),t0=new Date(Y,Mo,D).getTime(),t1=new Date(Y,Mo,D+7).getTime(),p0=new Date(Y,Mo,D-7).getTime(),
+ keys=[0,1,2,3,4,5,6].map(i=>dkey(new Date(Y,Mo,D+i,12))),cnt=[0,0,0,0,0,0,0],qm={};Q.forEach(q=>qm[q.id]=q);
+ const tl={},mat={'Português':0,'Matemática':0};let n=0,ok=0,gr=0,pn=0,pok=0,pgr=0;
+ (S.log||[]).forEach(x=>{if(!x)return;if(x.t>=t0&&x.t<t1){n++;const i=keys.indexOf(dkey(x.t));if(i>=0)cnt[i]++;if(x.ok!=null){gr++;if(x.ok)ok++}const q=qm[x.id];if(q){mat[q.materia]=(mat[q.materia]||0)+1;tl[q.topico]=(tl[q.topico]||0)+1}}else if(x.t>=p0&&x.t<t0){pn++;if(x.ok!=null){pgr++;if(x.ok)pok++}}});
+ let virou=0;Object.values(S.hist||{}).forEach(h=>{let bad=false,k=0;((h&&h.ev)||[]).filter(e=>e.k==='a').sort((a,b)=>a.t-b.t).forEach(e=>{if(e.ok&&!e.aj&&!e.ch&&k>0&&bad&&!e.m&&e.t>=t0&&e.t<t1)virou++;bad=!e.ok||!!e.aj;k++})});
+ let tp=0;keys.forEach(k=>tp+=((S.mot||{}).tmp||{})[k]||0);
+ const top=Object.entries(tl).sort((a,b)=>b[1]-a[1])[0],mx=Math.max(...cnt);let run=0,best=0;cnt.forEach(c=>{run=c>0?run+1:0;if(run>best)best=run});
+ const fim=new Date(Y,Mo,D+6);
+ return{ws,key:dkey(ws),cnt,n,pn,acc:gr?Math.round(100*ok/gr):null,pacc:pgr?Math.round(100*pok/pgr):null,dias:cnt.filter(c=>c>0).length,mx,mi:mx>0?cnt.indexOf(mx):-1,run:best,mat,top:top?top[0]:'',virou,tempo:tp,
+  rotulo:D+' '+RES_MES[Mo].toUpperCase()+' – '+fim.getDate()+' '+RES_MES[fim.getMonth()].toUpperCase(),nome:motNome()}}
+function resTitulo(d){return d>=7?'Semana perfeita 🏆':d>=5?'Semana de ferro 🔥':d>=3?'Semana consistente 💪':d>=1?'Semana de recomeço 🌱':'Semana de pausa 😴'}
+function resDraw(cv,st){const W=1080,H=1920,c=cv.getContext('2d');cv.width=W;cv.height=H;
+ const F='"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif',O1='#ff6a2b',O2='#e8430f',O3='#ffb27a',PN='#120e0c',BR='#2b1f18',TX='#f6ede7',MU='#9b8a7f',OK='#2ee27a',ER='#ff6b6b';
+ const rr=(x,y,w,h,r)=>{c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()};
+ const lg=(x0,y0,x1,y1,a,b)=>{const g=c.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,a);g.addColorStop(1,b);return g};
+ const ls=v=>{try{c.letterSpacing=v}catch(e){}};
+ const tx=(t,x,y,sz,col,w,al,sp)=>{c.font=(w||'700')+' '+sz+'px '+F;c.fillStyle=col;c.textAlign=al||'left';c.textBaseline='alphabetic';ls(sp||'0px');c.fillText(t,x,y);ls('0px')};
+ const fit=(t,max,sz,w)=>{c.font=(w||'700')+' '+sz+'px '+F;ls('0px');if(c.measureText(t).width<=max)return t;while(t.length>1&&c.measureText(t+'…').width>max)t=t.slice(0,-1);return t.trim()+'…'};
+ const card=(x,y,w,h)=>{rr(x,y,w,h,36);c.fillStyle=PN;c.fill();c.lineWidth=2;c.strokeStyle=BR;c.stroke()};
+ /* fundo */
+ c.fillStyle='#070605';c.fillRect(0,0,W,H);
+ let g=c.createRadialGradient(W*.92,110,0,W*.92,110,860);g.addColorStop(0,'rgba(255,106,43,.45)');g.addColorStop(1,'rgba(255,106,43,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
+ g=c.createRadialGradient(40,H-160,0,40,H-160,950);g.addColorStop(0,'rgba(232,67,15,.32)');g.addColorStop(1,'rgba(232,67,15,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
+ c.fillStyle='rgba(255,180,130,.06)';for(let y=27;y<H;y+=54)for(let x=27;x<W;x+=54){c.beginPath();c.arc(x,y,2.2,0,7);c.fill()}
+ /* cabeçalho */
+ rr(72,84,96,96,26);c.fillStyle=lg(72,84,168,180,O1,O2);c.fill();tx('IF',120,150,46,'#fff','900','center');
+ tx('AprovaIFMA',192,130,46,TX,'800');tx('RESUMO DA SEMANA',192,168,24,O1,'800','left','4px');
+ tx(st.rotulo,1008,130,28,MU,'700','right');
+ /* título */
+ tx(fit(resTitulo(st.dias),936,70,'800'),72,300,70,TX,'800');
+ tx(st.nome?'de '+fit(st.nome,700,34,'700'):'bora pra cima!',72,350,34,MU,'600');
+ /* hero */
+ card(72,400,936,470);tx('QUESTÕES RESPONDIDAS',120,470,26,MU,'700','left','3px');
+ const ds=String(st.n),sz=ds.length>=4?210:ds.length===3?270:300;
+ c.font='800 '+sz+'px '+F;c.fillStyle=lg(0,560,0,760,O3,O1);c.textAlign='left';c.fillText(ds,112,730);
+ let dt,dc,db;if(st.pn>0){const p=Math.round(100*(st.n-st.pn)/st.pn);if(p>0){dt='▲ '+p+'% vs semana passada';dc=OK;db='rgba(46,226,122,.16)'}else if(p<0){dt='▼ '+Math.abs(p)+'% vs semana passada';dc=ER;db='rgba(255,107,107,.16)'}else{dt='= igual à semana passada';dc=MU;db='rgba(155,138,127,.18)'}}else{dt=st.n?'primeira semana registrada 🚀':'bora retomar essa semana';dc=O3;db='rgba(255,106,43,.16)'}
+ c.font='700 28px '+F;const cw=c.measureText(dt).width+56;rr(120,776,cw,60,30);c.fillStyle=db;c.fill();tx(dt,148,816,28,dc,'700');
+ const cx=832,cy=640,r=104;c.lineWidth=26;c.lineCap='round';c.strokeStyle='#241a15';c.beginPath();c.arc(cx,cy,r,0,7);c.stroke();
+ if(st.dias>0){c.strokeStyle=lg(cx-r,cy-r,cx+r,cy+r,O3,O1);c.beginPath();c.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+2*Math.PI*Math.min(1,st.dias/7));c.stroke()}
+ tx(st.dias+'/7',cx,cy+22,64,TX,'800','center');tx('dias estudados',cx,cy+r+66,26,MU,'600','center');
+ /* semana */
+ card(72,900,936,310);tx('SUA SEMANA',120,962,26,MU,'700','left','3px');
+ if(st.tempo>=60){const h=Math.floor(st.tempo/3600),m=Math.round(st.tempo%3600/60);tx('⏱ '+(h?h+'h'+String(m).padStart(2,'0'):m+' min')+' no cronômetro',960,962,26,O3,'700','right')}
+ for(let i=0;i<7;i++){const x=180+i*120,v=st.cnt[i],top=990,hh=130,fh=v>0?Math.max(22,Math.round(hh*v/Math.max(1,st.mx))):0;
+  rr(x-28,top,56,hh,28);c.fillStyle='#1d1511';c.fill();
+  if(fh){c.save();rr(x-28,top,56,hh,28);c.clip();c.fillStyle=lg(0,top+hh-fh,0,top+hh,i===st.mi?O3:O1,O2);c.fillRect(x-28,top+hh-fh,56,fh);c.restore()}
+  tx(RES_D3[i],x,1158,24,i===st.mi?O3:MU,'700','center');tx(v?String(v):'–',x,1190,24,v?TX:MU,'800','center')}
+ /* linha 1 */
+ card(72,1240,456,210);tx('TAXA DE ACERTO',112,1294,24,MU,'700','left','3px');
+ tx(st.acc==null?'—':st.acc+'%',112,1390,100,TX,'800');
+ let at='',ac=MU;if(st.acc!=null&&st.pacc!=null){const d=st.acc-st.pacc;at=(d>0?'▲ +':d<0?'▼ ':'= ')+(d!==0?d+' pts':'igual')+' vs anterior';ac=d>0?OK:d<0?ER:MU}tx(at,112,1430,24,ac,'700');
+ card(552,1240,456,210);tx('SEQUÊNCIA NA SEMANA',592,1294,24,MU,'700','left','3px');
+ tx(String(st.run),592,1390,100,TX,'800');c.font='800 100px '+F;const rw=c.measureText(String(st.run)).width;tx(st.run===1?'dia':'dias',592+rw+16,1390,40,O1,'800');
+ tx('🔥 recorde geral: '+streakInfo().best,592,1430,24,MU,'700');
+ /* linha 2 */
+ card(72,1474,456,210);tx('ERROS VENCIDOS',112,1528,24,MU,'700','left','3px');
+ tx(String(st.virou),112,1624,100,st.virou?OK:TX,'800');tx('🔄',112+(()=>{c.font='800 100px '+F;return c.measureText(String(st.virou)).width})()+20,1624,60,TX,'700');tx('viraram acerto na semana',112,1664,24,MU,'700');
+ card(552,1474,456,210);tx('MELHOR DIA',592,1528,24,MU,'700','left','3px');
+ tx(st.mx>0?String(st.mx):'—',592,1624,100,TX,'800');if(st.mx>0){c.font='800 100px '+F;const mw=c.measureText(String(st.mx)).width;tx('questões',592+mw+16,1624,34,O1,'800');tx(RES_DIA[st.mi],592,1664,24,MU,'700')}
+ /* linha 3 */
+ card(72,1704,936,122);const pt=st.mat['Português']||0,mt=st.mat['Matemática']||0,tt=pt+mt;
+ tx(st.top?'📚 '+fit(st.top,860,28,'700'):'📚 Sem assunto em destaque ainda',112,1748,28,TX,'700');
+ rr(112,1768,856,20,10);c.fillStyle='#241a15';c.fill();if(tt>0){const pw=Math.max(20,Math.round(856*pt/tt));c.save();rr(112,1768,856,20,10);c.clip();c.fillStyle=O1;c.fillRect(112,1768,pt?Math.min(856,pw):0,20);c.fillStyle=O3;c.fillRect(112+(pt?Math.min(856,pw):0),1768,856,20);c.restore()}
+ tx('Português '+pt,112,1816,22,O1,'700');tx('Matemática '+mt,968,1816,22,O3,'700','right');
+ /* rodapé */
+ const dd=motDias();tx(dd>=0?(dd===0?'A prova é hoje! 🎓':dd===1?'Falta 1 dia para a prova 🎓':'Faltam '+dd+' dias para a prova 🎓'):RES_F[0],W/2,1868,32,O1,'800','center');
+ tx(RES_F[Math.abs(Math.round(st.ws.getTime()/6048e5))%RES_F.length]+'  ·  AprovaIFMA',W/2,1904,22,MU,'600','center')}
+function motRes(el){if(!el)return;const M=motM(),dom=new Date().getDay()===0;let off=0;const mx=7,mn=dom?0:-1;
+ const draw=()=>{const ws0=resSem(),ws=new Date(ws0.getFullYear(),ws0.getMonth(),ws0.getDate()-7*off),st=resStats(ws),oficial=off>=0;
+  el.innerHTML=`<div class="card2 mx"><h3>📸 Resumo da semana <small class="mu">${st.rotulo.toLowerCase()}</small></h3><p class="mu">${off<0?'Semana em andamento (parcial). O resumo oficial fecha no domingo.':off===0&&dom?'Hoje é domingo: sua semana fechou! O resumo está pronto para compartilhar.':off===0?'Resumo da semana que passou. O novo sai no próximo domingo.':'Resumo de uma semana anterior.'}</p>
+  <div class="rsw"><canvas id="rsc" width="1080" height="1920" role="img" aria-label="Resumo da semana: ${st.n} questões, ${st.dias} de 7 dias estudados"></canvas></div>
+  <div class="row"><button class="btn" id="rsp" ${off>=mx?'disabled':''} title="Semana anterior">‹</button><button class="btn p" id="rsh">📤 Compartilhar</button><button class="btn" id="rsd">⬇ Baixar PNG</button><button class="btn" id="rsn" ${off<=mn?'disabled':''} title="Semana seguinte">›</button></div>
+  <small class="mu" style="display:block;text-align:center;margin-top:8px">No iPhone, se abrir a imagem, segure nela e toque em “Salvar”.</small></div>`;
+  const cv=$('#rsc',el);try{resDraw(cv,st)}catch(e){cv.replaceWith(Object.assign(document.createElement('p'),{className:'mu',textContent:'Não consegui desenhar a imagem neste navegador.'}));return}
+  if(off===0&&M.rv!==st.key){M.rv=st.key;save()}
+  const blob=()=>new Promise(r=>cv.toBlob(r,'image/png')),nm='resumo-semana-'+st.key+'.png',
+  baixar=async()=>{const b=await blob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+  $('#rsd',el).onclick=baixar;
+  $('#rsh',el).onclick=async()=>{try{const b=await blob(),f=new File([b],nm,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text:'Minha semana no AprovaIFMA 🔥'});return}}catch(e){if(e&&e.name==='AbortError')return}baixar()};
+  $('#rsp',el).onclick=()=>{off=Math.min(mx,off+1);draw()};$('#rsn',el).onclick=()=>{off=Math.max(mn,off-1);draw()}};
+ draw()}
+function motBannerRes(){const M=motM(),st=resStats(resSem());if(!st.n||M.rv===st.key)return;const bd=$('#bd');if(!bd)return;
+ bd.insertAdjacentHTML('afterbegin',`<div class="card2 mrfb"><b>📸 Seu resumo da semana está pronto</b><br><span class="mu">${st.n} questões · ${st.dias}/7 dias estudados. Compartilhe com a galera!</span><div class="row" style="margin-top:10px"><button class="btn p" id="mrsg">Ver e compartilhar</button></div></div>`);$('#mrsg').onclick=()=>go('mot')}
+function viewTur(b){if(window.__tur)window.__tur(b);else b.innerHTML='<p class="mu">Carregando…</p>'}
 const TT=Object.fromEntries(NAV.map(n=>[n[0],n[2]]));
 function go(v){V=v;$$('.ni').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$$('#bn button').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$('#main').scrollTop=0;
  $('#main').innerHTML=`<div class=top><button class="btn hb" id=hb>☰</button><h1>${TT[v]}</h1></div><div id=bd></div>`;
  $('#hb').onclick=()=>$('#sd').classList.remove('c');
- ({home,sim:viewSim,cron:viewCron,desp:viewDesp,vid:viewVid}[v]||(x=>viewQ(x,v)))($('#bd'));
+ ({home,sim:viewSim,cron:viewCron,desp:viewDesp,vid:viewVid,mot:viewMot,tur:viewTur}[v]||(x=>viewQ(x,v)))($('#bd'));motBanner(v);
  $('#ft').textContent=Object.keys(S.resp).length+' questões respondidas';if(innerWidth<760)$('#sd').classList.add('c')}
 $('#nv').innerHTML=NAV.map(n=>`<button class=ni data-v=${n[0]} title="${n[2]}"><span class=ic>${n[1]}</span><span class=lb>${n[2]}</span></button>`).join('');
 $$('.ni').forEach(n=>n.onclick=()=>go(n.dataset.v));
@@ -564,6 +785,7 @@ setInterval(()=>{if(T.run&&T.alvo&&tel()>=T.alvo){credit();T.run=0;T.dec=0;
   else{T.alvo=alvo0();T.msg='Tempo esgotado! ⏰'}if(V==='cron')go('cron')}
  paintRing();if(SIM&&!SIM.done){const r=(SIM.fim-Date.now())/1000,e=$('#simclk');if(e){e.textContent=hms(r);e.style.color=r<300?'var(--er)':''}if(r<=0)finSim()}},300);
 try{migHist()}catch(e){}
+try{motInit()}catch(e){}
 go('home');
 
 
@@ -617,7 +839,7 @@ function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
   o.meta=w.meta!=null?w.meta:(a.meta!=null?a.meta:b.meta);o.fav=arr(w.fav).slice();o.hard=arr(w.hard).slice();o.vid={...(w.vid||{})};o.com={...(w.com||{})};cut={...(wc.cut||{})};
   nome=tl>tr?(L.nome!=null?L.nome:R.nome):(R.nome!=null?R.nome:L.nome);
  }
- o.col=a.col;o._t=Math.max(tl,tr);
+ o.col=a.col;if(a.mot||b.mot){const ma=a.mot||{},mb=b.mot||{},w=(ma.t||0)>=(mb.t||0)?ma:mb,l=w===ma?mb:ma,u=(x,y)=>[...new Set([...(x||[]),...(y||[])])];o.mot={...l,...w,hum:{...(l.hum||{}),...(w.hum||{})},ck:{...(l.ck||{}),...(w.ck||{})},bd:u(l.bd,w.bd),dm:Math.max(l.dm||0,w.dm||0),meta:(l.meta||'')>(w.meta||'')?l.meta:w.meta,rv:(l.rv||'')>(w.rv||'')?l.rv:w.rv,tmp:(()=>{const o2={...(l.tmp||{})};Object.entries(w.tmp||{}).forEach(([k,v])=>o2[k]=Math.max(o2[k]||0,v));return o2})(),t:Math.max(ma.t||0,mb.t||0)}}o._t=Math.max(tl,tr);
  return{S:o,cut,nome}}
 
 const sj=v=>JSON.stringify(v,(k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(i=>[i,x[i]])):x);
@@ -642,7 +864,7 @@ async function sync(){
   if(!rd||sj({S:rd.S,cut:rd.cut||{},nome:rd.nome!=null?rd.nome:null})!==sj(payload)){
    const p=await fetch(URL_+'/rest/v1/progresso?on_conflict=user_id',{method:'POST',headers:{...hd(tk),Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:sess.uid,dados:payload,atualizado_em:new Date().toISOString()}),keepalive:true});
    if(!p.ok)throw new Error('http '+p.status)}
-  state='ok';lsS('sb_last',Date.now());
+  state='ok';lsS('sb_last',Date.now());turPush().catch(()=>{});
   if(changed&&(first||V==='home'||V==='desp')&&!(SIM&&!SIM.done)){go(V)}
   else if(changed){const f=$('#ft');if(f)f.textContent=Object.keys(S.resp).length+' questões respondidas'}
   first=0;
@@ -724,6 +946,54 @@ window.__lem=b=>{const W=$('#lmw',b);if(!W)return;
   else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/calendar'}));a.download='lembrete-estudo.ics';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)}
   m(isIOS?'Se abrir o Calendário, toque em "Adicionar". Se não abrir, faça isso pelo Safari.':'Arquivo baixado. Abra-o para adicionar o evento diário ao seu calendário.','ok')};
 };
+
+/* ---- turma de estudo (parceiros) ---- */
+const turSt=()=>{const h7={};for(let i=6;i>=0;i--){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-i);h7[dkey(d)]=0}
+ (S.log||[]).forEach(x=>{const q=dkey(x.t);if(q in h7)h7[q]++});if(S.dia&&S.dia.d in h7)h7[S.dia.d]=Math.max(h7[S.dia.d],S.dia.n||0);
+ const st=streakInfo(),HS=hStats();return{v:1,seq:st.cur,melhor:st.best,h7,tot:Object.keys(S.resp).length,acc:HS.p,dom:motDom()}};
+let tpJ='',tpT=0;
+async function turPush(force){if(!sess||!(+lsG('tur_n')>0))return;const st=turSt(),j=JSON.stringify(st);if(!force&&j===tpJ&&Date.now()-tpT<18e5)return;
+ const tk=await token(),r=await fetch(URL_+'/rest/v1/turma_membros?user_id=eq.'+sess.uid,{method:'PATCH',headers:{...hd(tk),Prefer:'return=minimal'},body:JSON.stringify({stats:st,atualizado_em:new Date().toISOString()})});
+ if(r.ok){tpJ=j;tpT=Date.now()}}
+async function turRpc(fn,body){const tk=await token(),r=await fetch(URL_+'/rest/v1/rpc/'+fn,{method:'POST',headers:hd(tk),body:JSON.stringify(body)});let j=null;try{j=await r.json()}catch(e){}
+ if(!r.ok)throw new Error((j&&(j.message||j.hint))||('http '+r.status));return j}
+async function turList(){const tk=await token(),r=await fetch(URL_+'/rest/v1/turma_membros?select=turma_id,user_id,apelido,stats,atualizado_em,turmas(nome,codigo)&order=atualizado_em.desc',{headers:hd(tk)});
+ if(!r.ok){let j=null;try{j=await r.json()}catch(e){}throw new Error((j&&(j.message||j.hint))||('http '+r.status))}return r.json()}
+const turErr=e=>{const m=(e&&e.message)||'';return /codigo_invalido/.test(m)?'Código não encontrado. Confira com seu amigo.':/turma_cheia/.test(m)?'Essa turma já está cheia (máximo de 30 pessoas).':/auth/.test(m)?'Sua sessão expirou. Entre de novo pelo botão ☁.':/PGRST20|schema cache|Could not find|does not exist|http 404/i.test(m)?'A turma ainda não foi ativada no servidor. Rode o arquivo turma_setup.sql no Supabase (SQL Editor) uma vez.':/Failed to fetch|network|load/i.test(m)?'Sem conexão. Tente de novo.':'Não deu certo: '+m}
+window.__tur=b=>{
+ if(!sess){b.innerHTML=`<div class="card2 tur"><h3>👥 Turma de estudo</h3><p class="mu">Estude junto com seus amigos: vejam a sequência e as questões uns dos outros e se puxem pra frente. Para isso você precisa de uma conta (é a mesma que sincroniza seus aparelhos).</p><button class="btn p" id="tgi">☁ Entrar ou criar conta</button></div>`;$('#tgi',b).onclick=()=>openLogin();return}
+ const nm0=()=>{try{return(localStorage.getItem('ifma_nome')||'').trim()}catch(e){return''}};
+ let ord=lsG('tur_ord')||'7',dados=null;
+ b.innerHTML=`<div class="card2 tur"><h3>👥 Turma de estudo</h3><p class="mu">Crie uma turma e mande o código para seus amigos, ou entre numa que já existe. Vocês veem a sequência e as questões uns dos outros, sem competição pesada: o objetivo é se puxar pra frente.</p></div><div id="tlist"><p class="mu">Carregando…</p></div><div id="tform"></div>`;
+ const L=$('#tlist',b),Fm=$('#tform',b),hk=()=>dkey(Date.now()),
+ val=(m,o)=>{const s=m.stats||{},h=s.h7||{},hj=h[hk()]||0;return o==='h'?hj:o==='s'?(s.seq||0):Object.values(h).reduce((a,c)=>a+c,0)},
+ ago=t=>{const x=Math.round((Date.now()-new Date(t))/6e4);return x<2?'agora':x<60?x+' min':x<1440?Math.round(x/60)+' h':Math.round(x/1440)+' d'},
+ msg=(t,ok)=>{const e=$('#tmsg',b);if(e){e.textContent=t;e.className='sbm '+(ok?'ok':'er')}};
+ const drawList=()=>{const G={};dados.forEach(r=>{(G[r.turma_id]=G[r.turma_id]||{t:r.turmas||{},m:[]}).m.push(r)});const ids=Object.keys(G);
+  if(!ids.length){L.innerHTML='<div class="card2 tur"><p class="mu">Você ainda não está em nenhuma turma. Crie uma ou entre com um código logo abaixo.</p></div>';return}
+  L.innerHTML=ids.map(id=>{const g=G[id],ms=g.m.slice().sort((a,c)=>val(c,ord)-val(a,ord)||((c.stats||{}).melhor||0)-((a.stats||{}).melhor||0)),mx=Math.max(1,...ms.map(m=>val(m,ord))),hn=ms.filter(m=>val(m,'h')>0).length;
+   return `<div class="card2 tur"><div class="trh"><div><h3>${esc(g.t.nome||'Turma')}</h3><small class="mu">${ms.length} ${ms.length===1?'pessoa':'pessoas'} · ${hn} ${hn===1?'já estudou':'já estudaram'} hoje</small></div><button class="btn" data-sh="${escA(id)}">📤 Convidar</button></div>
+   <div class="trc">Código: <b>${esc(g.t.codigo||'')}</b></div>
+   <div class="dgt">${[['7','Últimos 7 dias'],['h','Hoje'],['s','Sequência']].map(o=>`<button data-o="${o[0]}" class="${ord===o[0]?'on':''}">${o[1]}</button>`).join('')}</div>
+   ${ms.map((m,i)=>{const s=m.stats||{},me=m.user_id===sess.uid,v=val(m,ord),hj=val(m,'h'),w=val(m,'7');
+    return `<div class="trm${me?' me':''}"><span class="trr">${i<3&&v>0?['🥇','🥈','🥉'][i]:(i+1)+'º'}</span><div class="trb"><div class="trn"><b>${esc(m.apelido)}</b>${me?' <small class="mu">(você)</small>':''}${hj>0?' <span class="okt" title="Estudou hoje">●</span>':''}</div><div class="trbar"><i style="width:${v?Math.max(4,Math.round(100*v/mx)):0}%"></i></div><small class="mu">🔥 ${s.seq||0} · ${w} questões em 7 dias · hoje ${hj}${s.acc!=null?' · '+s.acc+'% acerto':''}${s.dom?' · 🔄 '+s.dom:''} · ${ago(m.atualizado_em)}</small></div><b class="trv">${ord==='s'?(s.seq||0)+'🔥':v}</b></div>`}).join('')}
+   <button class="sbl" data-lv="${escA(id)}">Sair da turma</button></div>`}).join('');
+  $$('[data-o]',L).forEach(x=>x.onclick=()=>{ord=x.dataset.o;lsS('tur_ord',ord);drawList()});
+  $$('[data-sh]',L).forEach(x=>x.onclick=async()=>{const g=G[x.dataset.sh].t,t='Bora estudar juntos pro IFMA! Entra na minha turma "'+(g.nome||'')+'" no AprovaIFMA com o código '+g.codigo+': '+location.href.split('#')[0];
+   try{if(navigator.share){await navigator.share({text:t});return}}catch(e){if(e&&e.name==='AbortError')return}
+   try{await navigator.clipboard.writeText(t);x.textContent='✓ Copiado';setTimeout(()=>{x.textContent='📤 Convidar'},2000)}catch(e){prompt('Copie o convite:',t)}});
+  $$('[data-lv]',L).forEach(x=>x.onclick=async()=>{if(!confirm('Sair desta turma? Seus amigos deixam de ver seus números.'))return;try{await turRpc('sair_turma',{p_turma:x.dataset.lv});await load()}catch(e){alert(turErr(e))}})};
+ const load=async quiet=>{try{dados=await turList();lsS('tur_n',String(new Set(dados.map(r=>r.turma_id)).size));drawList();if(!quiet)turPush(true).catch(()=>{})}
+  catch(e){if(!quiet||!dados)L.innerHTML=`<div class="card2 tur"><p class="er" style="color:var(--er)">${esc(turErr(e))}</p><button class="btn" id="trt">Tentar de novo</button></div>`;const t=$('#trt',L);if(t)t.onclick=()=>load()}};
+ Fm.innerHTML=`<div class="card2 tur"><h3>➕ Criar ou entrar numa turma</h3><label class="mu">Seu apelido na turma<input id="tap" maxlength="24" placeholder="Como seus amigos vão te ver" value="${escA(lsG('tur_ap')||nm0())}"></label>
+  <div class="row" style="margin-bottom:10px"><input id="tnm" maxlength="40" placeholder="Nome da nova turma"><button class="btn p" id="tcr">Criar turma</button></div>
+  <div class="row"><input id="tcd" maxlength="12" placeholder="Código da turma" style="text-transform:uppercase"><button class="btn" id="ten">Entrar</button></div><div class="sbm" id="tmsg"></div>
+  <small class="mu" style="display:block;margin-top:8px">🔒 Seus amigos veem só: apelido, sequência, questões dos últimos 7 dias, % de acerto na 1ª tentativa e erros vencidos. Humor, sono, textos e cartas nunca são compartilhados.</small></div>`;
+ const act=async(fn,body,ok)=>{const ap=($('#tap',b).value||'').trim();if(!ap){msg('Escolha um apelido primeiro.');return}lsS('tur_ap',ap);body.p_apelido=ap;
+  try{msg('Aguarde…',1);await turRpc(fn,body);lsS('tur_n','1');msg(ok,1);$('#tnm',b).value='';$('#tcd',b).value='';await load()}catch(e){msg(turErr(e))}};
+ $('#tcr',b).onclick=()=>{const n=($('#tnm',b).value||'').trim();if(!n){msg('Dê um nome para a turma.');return}act('criar_turma',{p_nome:n},'Turma criada! Toque em “Convidar” para chamar os amigos.')};
+ $('#ten',b).onclick=()=>{const c=($('#tcd',b).value||'').trim();if(!c){msg('Digite o código da turma.');return}act('entrar_turma',{p_codigo:c},'Pronto, você entrou na turma!')};
+ load();const iv=setInterval(()=>{if(!b.isConnected){clearInterval(iv);return}if(document.visibilityState==='visible')load(true)},60000)};
 
 /* ---- gatilhos ---- */
 document.addEventListener('visibilitychange',()=>{if(!sess)return;if(document.visibilityState==='hidden'){if(timer)sync()}else sync()});
