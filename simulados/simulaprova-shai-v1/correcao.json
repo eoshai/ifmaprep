@@ -1,0 +1,122 @@
+{
+  "1": {
+    "answer": "B",
+    "explanation": "A conversa e o empréstimo do livro levam Marina a perceber o bairro como espaço de encontro, além de um trajeto."
+  },
+  "2": {
+    "answer": "C",
+    "explanation": "O narrador usa a terceira pessoa e informa o que Marina pensava, sem ser personagem."
+  },
+  "3": {
+    "answer": "A",
+    "explanation": "A praça recebe a ação humana de acordar: personificação ou prosopopeia."
+  },
+  "4": {
+    "answer": "D",
+    "explanation": "“Atravessava” está no pretérito imperfeito do indicativo e exprime hábito no passado."
+  },
+  "5": {
+    "answer": "B",
+    "explanation": "O bibliotecário entregou um livro a Marina. O pronome substitui o complemento introduzido por “a”."
+  },
+  "6": {
+    "answer": "C",
+    "explanation": "A demora permanece, porém a reação de Marina muda. A conjunção liga orações por oposição."
+  },
+  "7": {
+    "answer": "A",
+    "explanation": "“Marina” é o chamamento feito pelo bibliotecário: vocativo."
+  },
+  "8": {
+    "answer": "C",
+    "explanation": "O texto apresenta uma iniciativa, seu funcionamento e resultados, características de uma notícia."
+  },
+  "9": {
+    "answer": "D",
+    "explanation": "A expressão retoma a informação apresentada no início: abrir a biblioteca aos sábados."
+  },
+  "10": {
+    "answer": "B",
+    "explanation": "Oferece-se algo a alguém. O “a” da regência se funde com o artigo “as” de “as famílias”."
+  },
+  "11": {
+    "answer": "A",
+    "explanation": "“Têm” concorda com “os estudantes”; a forma singular é “tem”."
+  },
+  "12": {
+    "answer": "D",
+    "explanation": "As divisões são sa-í-da e sa-ú-de: vogais tônicas i/u em hiato, sozinhas na sílaba."
+  },
+  "13": {
+    "answer": "B",
+    "explanation": "60 dos 120 estudantes, ou 50%, indicaram o celular. As categorias são exclusivas."
+  },
+  "14": {
+    "answer": "D",
+    "explanation": "“Nós viajamos” mantém o presente e a primeira pessoa do plural. “A gente viaja” é frequente na conversação."
+  },
+  "15": {
+    "answer": "A",
+    "explanation": "A crônica valoriza o encontro mediado pelo livro; a notícia trata de uma biblioteca aberta à comunidade."
+  },
+  "16": {
+    "answer": "C",
+    "explanation": "Se x é a quantidade inicial, 1,25x = 200. Logo, x = 160."
+  },
+  "17": {
+    "answer": "A",
+    "explanation": "3/8 de 240 = 90; 1/6 de 240 = 40. Restam 240 - 90 - 40 = 110 livros."
+  },
+  "18": {
+    "answer": "D",
+    "explanation": "O MMC de 18 e 24 é 72. Somando 72 minutos a 8h10, obtém-se 9h22."
+  },
+  "19": {
+    "answer": "B",
+    "explanation": "480 × 2,5 × 10⁶ = 1200 × 10⁶ = 1,2 × 10⁹ bytes."
+  },
+  "20": {
+    "answer": "C",
+    "explanation": "A taxa é 84/6 = 14 páginas por minuto. Para 210 páginas: 210/14 = 15 minutos."
+  },
+  "21": {
+    "answer": "D",
+    "explanation": "J = 2400 × 0,015 × 8 = 288. O montante é 2400 + 288 = R$ 2.688,00."
+  },
+  "22": {
+    "answer": "A",
+    "explanation": "Com i + e = 72 e 10i + 6e = 544, subtrai-se 6(i + e) = 432: 4i = 112, logo i = 28."
+  },
+  "23": {
+    "answer": "B",
+    "explanation": "O gráfico passa por (0,12) e (10,42). A taxa é 3 reais por cartaz: C(x) = 12 + 3x. Para C = 75, x = 21."
+  },
+  "24": {
+    "answer": "D",
+    "explanation": "x(x + 7) = 120 resulta em (x - 8)(x + 15) = 0. As dimensões são 8 m e 15 m; o perímetro é 46 m."
+  },
+  "25": {
+    "answer": "A",
+    "explanation": "As diferenças são 6 e 8 unidades. Por Pitágoras, d = √(6² + 8²) = 10 unidades, ou 1.000 m."
+  },
+  "26": {
+    "answer": "C",
+    "explanation": "A razão de semelhança é 18/12 = 3/2. As áreas estão na razão (3/2)² = 9/4; 32 × 9/4 = 72 cm²."
+  },
+  "27": {
+    "answer": "B",
+    "explanation": "Área do trapézio: (18 + 10) × 6/2 = 84. Área do círculo: 3,14 × 2² = 12,56. Diferença: 71,44 m²."
+  },
+  "28": {
+    "answer": "D",
+    "explanation": "O volume total é 1,5 × 0,8 × 0,6 = 0,72 m³ = 720 L. Três quartos correspondem a 540 L."
+  },
+  "29": {
+    "answer": "C",
+    "explanation": "Se a menor equipe tem n integrantes, 5n + 20 = 65, logo n = 9. As equipes têm 9, 11, 13, 15 e 17 integrantes. A probabilidade pedida é 11/65."
+  },
+  "30": {
+    "answer": "A",
+    "explanation": "-t² + 6t + 7 = 0 equivale a (t - 7)(t + 1) = 0. Descartando o tempo negativo, t = 7 s."
+  }
+}

@@ -8,3 +8,8 @@
   Cache-Control: no-cache
 /
   Cache-Control: no-cache
+
+/simulados/catalogo.json
+  Cache-Control: no-cache
+/simulados-avisos.js
+  Cache-Control: no-cache

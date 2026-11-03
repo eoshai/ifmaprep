@@ -6,9 +6,11 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 
 ## Recursos
 
+- ▶ Estudar agora: sessão guiada de até 5 questões e 25 minutos, com prioridade para pendências do plano e assuntos com erros, pausa automática ao sair do app e resumo final. A sessão pode ser retomada neste aparelho.
+
 - 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto, dificuldade e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
 - 🎯 Questões por assunto e por dificuldade, com gabarito e correção automática
-- 📝 Simulados com cronômetro, em tempo configurável
+- 📋 Simulados autorais: SimulAprova Inédito - SHAI (Feito com IA Plus), 30 questões e 3 horas sem pausa; modos impresso e digital, relatório por matéria/assunto e gabarito comentado após a entrega.
 - ⏱ Cronômetro de estudo (livre, regressivo e Pomodoro)
 - 🗓 Plano de estudos até a prova, com contagem regressiva, semanas de base, revisão e reta final (veja abaixo)
 - 📓 Caderno de erros com revisão espaçada (1, 3, 7 e 15 dias) e botão "Revisar agora"
@@ -80,3 +82,25 @@ As imagens das provas e os gabaritos pertencem ao IFMA e às respectivas bancas,
 ## Licença
 
 O código é distribuído sob a licença [MIT](LICENSE). A licença não cobre o conteúdo das provas (pasta `img/`).
+
+## SimulAprova Inédito
+
+A seção **📋 Simulados** oferece orientações, escolha de formato e uma tentativa de 3 horas corridas. O prazo absoluto fica salvo em `ifma_simulados_v1` neste navegador; fechar, recarregar ou sair da tela não pausa o relógio. Durante a tentativa, a navegação interna permanece no simulado. Não troque de aparelho durante a prova. Saídas da tela são registradas; o site não impede consultas externas ou alterações no relógio/armazenamento do aparelho. Uma fiscalização inviolável exigiria infraestrutura adicional.
+
+- **Impresso:** imprima `simulados/simulaprova-shai-v1/caderno-sem-gabarito.pdf` antes de iniciar. Contém somente as páginas 1 a 11: capa, questões e cartão. Após encerrar ou esgotar o prazo, transcreva o cartão físico, sem resolver novamente. O tempo de transcrição não faz parte do tempo para resolver a prova.
+- **Digital:** exibe somente as 11 páginas permitidas, com a folha de respostas por último. Marcações A–D, em branco, chute, dificuldade e revisão são salvas imediatamente. Entrega antecipada exige as 30 questões marcadas (incluindo brancos explícitos); no fim do prazo, entrega automática, com omissões como erro.
+- **Correção:** `correcao.json` só é solicitado pela interface após a entrega; contém as 30 respostas e comentários extraídos do PDF. Por ser um site estático, esse arquivo não tem controle de acesso contra inspeção técnica. Cada questão vale 1 ponto. Há relatório por matéria e sugestões por assunto; tentativas são preservadas separadamente do banco de provas anteriores. Resultados concluídos entram no backup/sincronização existente (`S.simResults`); a tentativa em curso é local.
+- **Turma:** usa o campo JSON `stats.simulado` já suportado pela tabela de membros. Mostra modo e prazo até o término das 3 horas, com atualização enquanto a página está aberta. Requer login, participação em turma e conexão. Nenhuma migração de banco é necessária.
+- **Offline:** o service worker v12 inclui os arquivos do simulado. Aguarde a instalação do cache online antes de depender do modo offline.
+
+Verificação: `node tests/estudar-agora.cjs` e `node tests/simulados.cjs`.
+
+## Novidades e avisos de publicação
+
+A atualização de 03/11/2026 está no topo de **Novidades**. Ali também é possível ativar/desativar os avisos de novos simulados no aparelho.
+
+Ao publicar um simulado, inclua uma entrada em `simulados/catalogo.json` com `id` único e estável, `titulo`, `publicadoEm` (AAAA-MM-DD), `questoes` e `minutos`, junto com a implementação e os arquivos da prova. Não troque o id para simples correções: cada id novo gera um anúncio para quem ainda não o viu. O catálogo é consultado sem cache HTTP e com prioridade à rede no service worker.
+
+No acesso, retorno à aba, reconexão e atualização do service worker, o site detecta publicações ainda não anunciadas. Mostra um aviso por publicação neste navegador, sem login, e adia avisos durante uma tentativa. Se as notificações do navegador estiverem permitidas e o recurso não estiver desativado, também exibe uma notificação do sistema para novas publicações após o primeiro acesso. A permissão só é solicitada ao tocar em **Ativar avisos no celular**. No iPhone, pode ser necessário instalar e abrir pela Tela de Início.
+
+O clique na notificação abre a seção Simulados. Estes avisos são verificados quando a pessoa acessa o site novamente; não são push enviados com o site fechado. O lembrete diário existente continua separado. Offline, um catálogo em cache pode ser usado; falhas de rede/JSON não marcam publicações como vistas. Limpar os dados do navegador reinicia os avisos.
