@@ -1,6 +1,6 @@
 # 🎓 IFMA Prep (AprovaIFMA)
 
-Banco de questões, simulados e plano de estudos para o processo seletivo do IFMA. Funciona direto no navegador, sem cadastro obrigatório, e pode ser instalado no celular como app. Se quiser, dá para entrar com email e senha para sincronizar o progresso entre aparelhos.
+Banco de questões, simulados e plano de estudos para o processo seletivo do IFMA. Funciona direto no navegador com conta obrigatória e pode ser instalado no celular como app. A entrada com e-mail e senha sincroniza o progresso entre aparelhos.
 
 **Demo:** https://github.com/eoshai/ifmaprep
 
@@ -41,7 +41,7 @@ Para reaproveitar o plano em outra prova ou data, ajuste as constantes `PROVA`, 
 
 ## Como usar
 
-É um site estático. Basta abrir o `index.html`, mas para o modo app/offline, o login e as notificações use um servidor HTTP:
+É um site estático com entrada obrigatória. Para desenvolvimento local, use um servidor HTTP; a primeira autenticação exige conexão com a internet:
 
 ```bash
 python3 -m http.server 8000
@@ -55,7 +55,10 @@ Qualquer hospedagem estática serve. No GitHub Pages: **Settings → Pages → D
 ## Estrutura
 
 ```
-index.html              app completo (HTML, CSS e JS)
+index.html              layout e estilos da plataforma
+app.js                  lógica principal, carregada após validar a sessão
+auth.html               entrada, cadastro e recuperação de senha
+auth-*.js / auth.css     sessão e interface da entrada
 img/                    páginas das provas (WebP)
 icons/                  ícones do app
 manifest.webmanifest    configuração do PWA
@@ -69,7 +72,7 @@ Ao publicar uma nova versão, troque `ifma-v1` em `sw.js` (por `ifma-v2`, etc.) 
 
 Por padrão, o progresso fica no `localStorage` do navegador, neste dispositivo e neste endereço. Use **Backup do progresso** na tela inicial antes de trocar de endereço ou limpar os dados do navegador.
 
-Se você entrar com uma conta (botão ☁ no menu), o progresso (respostas, favoritas, dificuldades, chutes, vídeos e comentários) também é enviado a um banco hospedado no [Supabase](https://supabase.com) para sincronizar seus aparelhos. Ao ativar o lembrete por notificação, ficam guardados no servidor o endereço de envio do navegador, o horário escolhido e o fuso horário. Quem não faz login não envia nada a servidores.
+Com sua conta, o progresso (respostas, favoritas, dificuldades, chutes, vídeos e comentários) também é enviado a um banco hospedado no [Supabase](https://supabase.com) para sincronizar seus aparelhos. Ao ativar o lembrete por notificação, ficam guardados no servidor o endereço de envio do navegador, o horário escolhido e o fuso horário. A plataforma exige uma sessão ativa; os dados pessoais sincronizados continuam protegidos pelas políticas RLS do Supabase.
 
 ## Usando seu próprio backend
 
@@ -127,3 +130,15 @@ O HTML usa URLs com versão para `simulados.js`, `simulados.css` e `simulados-av
 - **Turma:** o histórico reúne conclusões de simulados e atividades do banco/revisões agrupadas por dia, em ordem recente. Publica no máximo 30 registros por pessoa e exibe os 20 mais recentes da turma, sem respostas individuais ou notas de simulado. Rever a mesma questão mais de uma vez no dia não infla o contador. Requer conexão/login e sincronização dos participantes.
 
 O módulo `simulados-progresso.js` é carregado antes do script principal. Todos os scripts do simulado usam `?v=20261104-3` e o service worker v15. Os novos testes são `tests/simulados-recursos.cjs` e `tests/simulados-recursos-browser.cjs` (Playwright/Chrome).
+
+## Entrada obrigatória e confirmação de e-mail
+
+- **Entrada dedicada:** `auth.html`, `auth.css` e `auth-page.js` oferecem login, cadastro com confirmação de senha, reenvio de confirmação e recuperação de senha. Não há opção de pular a conta. Senhas nunca são persistidas no navegador.
+- **Inicialização:** `index.html` contém o layout e os estilos. `auth-gate.js` valida a sessão antes de carregar os módulos do simulado e `app.js` (o antigo script principal, extraído do HTML). Sem sessão válida, abre a entrada. Tokens são validados pelo endpoint `/auth/v1/user` e renovados quando necessário. A sessão expirada bloqueia o app; uma sessão previamente validada e ainda não expirada pode funcionar offline.
+- **Domínio público:** `auth-config.js` define `https://aprovaifma.eoshai.workers.dev/` como retorno explícito dos novos e-mails de cadastro, reenvio e recuperação, inclusive quando o cadastro é feito localmente. O **Site URL** no Supabase deve continuar com esse endereço; caso use uma allowlist de redirecionamentos, mantenha essa URL exata permitida. Não se usa localhost como retorno de e-mail. Links antigos já enviados não mudam: solicite um novo na tela de entrada.
+- **Callback:** o retorno na raiz é encaminhado para `auth.html`, que valida o token, limpa os parâmetros de autenticação do endereço e entra no app. Links de recuperação abrem o formulário de nova senha. Links expirados apresentam opção de solicitar outro. Os documentos usam `Referrer-Policy: no-referrer`.
+- **Contas neste aparelho:** a primeira conta preserva o progresso local anterior. Ao trocar de usuário, o app guarda um snapshot da conta anterior e restaura o conjunto da próxima, sem misturar respostas e simulados na sincronização. `sb_sess` guarda a sessão; `ifma_data_owner` identifica a conta cujos dados estão ativos; `ifma_account_data_<uid>` guarda os snapshots locais. Logout não apaga o progresso.
+- **Limites do site estático:** a sessão bloqueia a navegação da interface e o Supabase deve manter RLS para dados particulares. O HTML/JS e os arquivos estáticos da prova continuam sendo arquivos públicos na hospedagem; torná-los privados também exigiria autorização no Worker/servidor. Não inclua chaves de serviço no front-end: a chave de `auth-config.js` é a chave pública anon já usada pelo projeto.
+- **Cache:** service worker v16, URLs `?v=20261104-4` e cache de navegação separado para `index.html` e `auth.html`.
+
+Verificação de acesso, cadastro, callbacks, logout, renovação, isolamento entre contas e layout: `node tests/auth-browser.cjs` (Playwright/Chrome, com respostas de autenticação simuladas, sem criar contas nem enviar e-mails reais). Os testes anteriores usam uma sessão de teste pelo helper `tests/browser-fixture.cjs`; não há bypass de autenticação no produto.

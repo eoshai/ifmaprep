@@ -13,7 +13,7 @@ function sxPresence(){return sxRunning()?{name:SX_META.name,end:SX.end,mode:SX.m
 function sxPushPresence(){if(window.__simPresence)window.__simPresence()}
 function sxCount(){return Object.values(SX.answers).filter(v=>['A','B','C','D','-'].includes(v)).length}
 function sxStop(expired=false){if(!SX||SX.status!=='running')return;sxTimeCharge();SX.stopped=expired?SX.end:Math.min(Date.now(),SX.end);SX.expired=expired;SX.status=SX.mode==='print'?'transcribing':'done';sxPersist();sxPushPresence();if(SX.status==='done'){sxReview=SX;sxRecord();}if(typeof go==='function')go('simulados')}
-function sxTick(){if(!SX||SX.status!=='running')return;sxTimeCharge();if(SX.timing&&Date.now()-(SX.timing.saved||0)>5000){SX.timing.saved=Date.now();sxPersist()}const left=SX.end-Date.now();if(left<=0){sxStop(true);return}const e=document.getElementById('sx-clock');if(e){e.textContent=hms(Math.ceil(left/1000));e.style.color=left<300000?'var(--er)':''}}
+function sxTick(){if(typeof S==='undefined')return;if(!SX||SX.status!=='running')return;sxTimeCharge();if(SX.timing&&Date.now()-(SX.timing.saved||0)>5000){SX.timing.saved=Date.now();sxPersist()}const left=SX.end-Date.now();if(left<=0){sxStop(true);return}const e=document.getElementById('sx-clock');if(e){e.textContent=hms(Math.ceil(left/1000));e.style.color=left<300000?'var(--er)':''}}
 /* Resultados concluídos são a fonte da atividade: abrir a correção não soma outra tentativa. */
 function sxResults(){const all={...(S.simResults||{})};if(SX&&SX.status==='done')all[SX.id]={...all[SX.id],...SX};return Object.values(all).filter(a=>a&&a.status==='done'&&a.id&&a.exam&&Number.isFinite(a.start)&&a.answers&&a.flags)}
 function sxFinishedAt(a){return Number.isFinite(a.stopped)?a.stopped:Number.isFinite(a.end)?a.end:a.start}

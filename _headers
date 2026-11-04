@@ -21,3 +21,19 @@
 
 /simulados-progresso.js
   Cache-Control: no-cache
+
+/auth.html
+  Cache-Control: no-cache
+  Referrer-Policy: no-referrer
+/auth-config.js
+  Cache-Control: no-cache
+/auth-session.js
+  Cache-Control: no-cache
+/auth-page.js
+  Cache-Control: no-cache
+/auth-gate.js
+  Cache-Control: no-cache
+/auth.css
+  Cache-Control: no-cache
+/app.js
+  Cache-Control: no-cache

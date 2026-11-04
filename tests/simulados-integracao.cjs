@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-(async()=>{const html=fs.readFileSync('index.html','utf8'),key=JSON.parse(fs.readFileSync('simulados/simulaprova-shai-v1/correcao.json','utf8')),store=new Map();let saved=0,pushes=0,requests=0;const now=new Date(2026,10,4,12).getTime();
+(async()=>{const html=fs.readFileSync('app.js','utf8'),key=JSON.parse(fs.readFileSync('simulados/simulaprova-shai-v1/correcao.json','utf8')),store=new Map();let saved=0,pushes=0,requests=0;const now=new Date(2026,10,4,12).getTime();
 class Clock extends Date{constructor(...args){super(...(args.length?args:[now]))}static now(){return now}}
 const ctx=vm.createContext({Date:Clock,console,Math,JSON,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},document:{addEventListener(){}},window:{__simPresence:()=>pushes++},addEventListener(){},setInterval(){},S:{simResults:{},log:[],resp:{},dia:{}},save:()=>saved++,fetch:async()=>{requests++;return {ok:true,json:async()=>key}}});const run=s=>vm.runInContext(s,ctx);vm.runInContext(fs.readFileSync('simulados.js','utf8'),ctx);vm.runInContext(fs.readFileSync('simulados-progresso.js','utf8'),ctx);
 run(`const DAYMS=864e5,dkey=t=>new Date(t).toLocaleDateString('sv'),Q=[],T={run:false};const hStats=()=>({p:null}),motDom=()=>0;`);
