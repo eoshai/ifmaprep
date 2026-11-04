@@ -7,7 +7,7 @@
  const seen=new Set(read()||[]);let initialized=read()!==null||!!get('ifma')||!!(get('app_seen')&&typeof APP_VER!=='undefined'&&get('app_seen')!==APP_VER),busy=false,catalog=[],queued=[],lastCheck=0;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const supported=()=>window.isSecureContext&&'Notification'in window&&'serviceWorker'in navigator;
- const paused=()=>typeof sxBusy==='function'&&sxBusy();
+ const paused=()=>(typeof sxBusy==='function'&&sxBusy())||(typeof sxPractice!=='undefined'&&sxPractice!==null);
  const remember=items=>{for(const id of read()||[])seen.add(id);items.forEach(x=>seen.add(x.id));put(KEY,JSON.stringify([...seen]));initialized=true};
  const enabled=()=>get(PREF)!=='off';
  async function notify(items){if(!items.length||!supported()||!enabled()||Notification.permission!=='granted')return false;

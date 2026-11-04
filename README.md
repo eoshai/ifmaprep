@@ -116,3 +116,14 @@ As tentativas antigas já salvas também entram no cálculo. Os resultados conti
 ## Atualização dos scripts e cache
 
 O HTML usa URLs com versão para `simulados.js`, `simulados.css` e `simulados-avisos.js`, também presentes no pré-cache do service worker v14. Ao mudar esses arquivos, atualize o parâmetro `v` no HTML e em `SIM_ASSETS` do `sw.js`, além da versão do cache. Isso evita que um worker anterior combine o HTML novo com um script antigo. Scripts e estilos usam prioridade à rede, com fallback offline apenas para a mesma URL (incluindo versão). Nenhuma atualização de cache limpa respostas ou tentativas do localStorage.
+
+## Ritmo, evolução e revisão dirigida
+
+- **Tempo digital:** novas tentativas guardam o tempo acumulado por questão em foco. A primeira questão da página recebe o foco automaticamente; o botão “Trabalhar nesta questão” permite mudá-lo. Trocar de página ou marcar uma alternativa também muda o foco. Leituras de texto contam na questão em foco. Capa, cartão sem questão selecionada e períodos fora/fechado ficam no tempo restante não atribuído. Recarregar não atribui retroativamente o intervalo fechado a uma questão. O prazo absoluto da prova continua correndo.
+- **Médias:** o relatório mostra tempo total dividido por 30 e, por matéria, o tempo em foco dividido pelo número de questões cronometradas, com esse número explícito (de 15). São estimativas de foco, não medição de leitura ocular. Tentativas antigas e provas impressas não recebem uma divisão inventada por matéria.
+- **Evolução:** a lista de tentativas mostra nota e duração. A tabela compara total, Português, Matemática, duração e chutes da mesma prova; também mostra a diferença entre as últimas notas disponíveis e a melhor nota.
+- **Revisão:** no Início, “Sua próxima revisão” destaca erros e outras pendências. É possível refazer só essas questões, consultar textos de apoio, conferir a resolução e marcar como revisada. A nota e as respostas da prova original são preservadas. No relatório, é possível reabrir uma revisão.
+- **Persistência:** `S.simRevisions` guarda o estado da revisão por tentativa/questão, com merge pelo horário da última alteração. `S.simReviewEvents` preserva as atividades de revisão mesmo após reabrir uma questão. Ambos entram no backup e na sincronização existentes.
+- **Turma:** o histórico reúne conclusões de simulados e atividades do banco/revisões agrupadas por dia, em ordem recente. Publica no máximo 30 registros por pessoa e exibe os 20 mais recentes da turma, sem respostas individuais ou notas de simulado. Rever a mesma questão mais de uma vez no dia não infla o contador. Requer conexão/login e sincronização dos participantes.
+
+O módulo `simulados-progresso.js` é carregado antes do script principal. Todos os scripts do simulado usam `?v=20261104-3` e o service worker v15. Os novos testes são `tests/simulados-recursos.cjs` e `tests/simulados-recursos-browser.cjs` (Playwright/Chrome).
