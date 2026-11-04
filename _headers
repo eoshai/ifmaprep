@@ -13,3 +13,8 @@
   Cache-Control: no-cache
 /simulados-avisos.js
   Cache-Control: no-cache
+
+/simulados.js
+  Cache-Control: no-cache
+/simulados.css
+  Cache-Control: no-cache

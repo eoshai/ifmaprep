@@ -104,3 +104,15 @@ Ao publicar um simulado, inclua uma entrada em `simulados/catalogo.json` com `id
 No acesso, retorno à aba, reconexão e atualização do service worker, o site detecta publicações ainda não anunciadas. Mostra um aviso por publicação neste navegador, sem login, e adia avisos durante uma tentativa. Se as notificações do navegador estiverem permitidas e o recurso não estiver desativado, também exibe uma notificação do sistema para novas publicações após o primeiro acesso. A permissão só é solicitada ao tocar em **Ativar avisos no celular**. No iPhone, pode ser necessário instalar e abrir pela Tela de Início.
 
 O clique na notificação abre a seção Simulados. Estes avisos são verificados quando a pessoa acessa o site novamente; não são push enviados com o site fechado. O lembrete diário existente continua separado. Offline, um catálogo em cache pode ser usado; falhas de rede/JSON não marcam publicações como vistas. Limpar os dados do navegador reinicia os avisos.
+
+## Revisão e atividade dos simulados
+
+Resultados concluídos alimentam **Início → Assuntos a estudar → Revisão dos simulados**. São incluídos erros, brancos e marcações de chute, dificuldade ou revisão da tentativa mais recente de cada simulado. Os botões abrem a questão correspondente no relatório comentado. **Revisar erradas** também abre essa revisão quando há erros de simulado. Resultados anteriores são enriquecidos automaticamente a partir da correção, na próxima visita ao Início; se ela não estiver disponível offline, a revisão pode ser atualizada depois. O banco de provas anteriores mantém seus filtros e respostas próprios.
+
+A turma recebe um resumo de atividade por dia, com a quantidade de simulados concluídos e de questões efetivamente respondidas (A–D). Conclusões com pelo menos uma resposta contam como dia estudado, para a sequência, e somam suas questões em Hoje/Últimos 7 dias. A data é a do término da prova (`stopped`, ou `end` para tentativas antigas), inclusive se a transcrição ou leitura da correção acontecer depois. Abrir o resultado novamente não soma atividade. A tentativa impressa só entra após confirmar a transcrição. O destaque **📋 Fez 1 simulado hoje** não publica o gabarito individual nem a nota.
+
+As tentativas antigas já salvas também entram no cálculo. Os resultados continuam em `S.simResults`, no backup e na sincronização existente; o resumo de atividade usa o JSON `stats.simulados` da turma, sem migração de tabela. O service worker foi atualizado para v13.
+
+## Atualização dos scripts e cache
+
+O HTML usa URLs com versão para `simulados.js`, `simulados.css` e `simulados-avisos.js`, também presentes no pré-cache do service worker v14. Ao mudar esses arquivos, atualize o parâmetro `v` no HTML e em `SIM_ASSETS` do `sw.js`, além da versão do cache. Isso evita que um worker anterior combine o HTML novo com um script antigo. Scripts e estilos usam prioridade à rede, com fallback offline apenas para a mesma URL (incluindo versão). Nenhuma atualização de cache limpa respostas ou tentativas do localStorage.
