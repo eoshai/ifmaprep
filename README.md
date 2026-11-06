@@ -142,3 +142,7 @@ O módulo `simulados-progresso.js` é carregado antes do script principal. Todos
 - **Cache:** service worker v16, URLs `?v=20261104-4` e cache de navegação separado para `index.html` e `auth.html`.
 
 Verificação de acesso, cadastro, callbacks, logout, renovação, isolamento entre contas e layout: `node tests/auth-browser.cjs` (Playwright/Chrome, com respostas de autenticação simuladas, sem criar contas nem enviar e-mails reais). Os testes anteriores usam uma sessão de teste pelo helper `tests/browser-fixture.cjs`; não há bypass de autenticação no produto.
+
+## Orientação do celular
+
+O manifesto usa `orientation: any`, permitindo acompanhar a rotação do aparelho tanto em pé quanto deitado, inclusive no app instalado. A rotação automática precisa estar liberada no dispositivo. O cache foi atualizado para v17 para distribuir o manifesto novo.
