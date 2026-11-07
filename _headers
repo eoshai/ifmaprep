@@ -40,3 +40,8 @@
 
 /manifest.webmanifest
   Cache-Control: no-cache
+
+/admin.js
+  Cache-Control: no-cache
+/admin.css
+  Cache-Control: no-cache

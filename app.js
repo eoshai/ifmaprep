@@ -552,6 +552,7 @@ const LNK={};
 function linkOpen(){const h=location.hash.slice(1);if(!h)return false;const p=new URLSearchParams(h);let to='';
  const tc=(p.get('turma')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
  if(tc){lkS('tur_inv',tc);to='tur'}
+ else if(p.get('admin')==='1'){to='admin'}
  else if(p.get('simulados')==='1'){to='simulados'}
  else if(p.get('q')){const q=Q_ALL.find(x=>x.id===p.get('q'));if(q){LNK.q=q.id;LNK.de=(p.get('de')||'').slice(0,24);to='q1'}}
  if(!to)return false;try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}go(to);return true}
@@ -602,11 +603,11 @@ function novInit(){let seen=null,old=false;try{seen=localStorage.getItem('app_se
  if(seen===APP_VER)return;if(seen===null&&!old){lkS('app_seen',APP_VER);return}
  setTimeout(novBanner,1500)}
 function viewTur(b){if(window.__tur)window.__tur(b);else b.innerHTML='<p class="mu">Carregando…</p>'}
-const TT={...Object.fromEntries(NAV.map(n=>[n[0],n[2]])),estudar:'Estudar agora'};
+const TT={...Object.fromEntries(NAV.map(n=>[n[0],n[2]])),estudar:'Estudar agora',admin:'Administração'};
 function go(v){if(!IFMA_AUTH.readyState){IFMA_AUTH.requireLogin();return}if(sxBusy()&&v!=='simulados')v='simulados';if(v==='cron'||(V==='estudar'&&v!=='estudar'))eaPause();V=v;$$('.ni').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$$('#bn button').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$('#main').scrollTop=0;
  $('#main').innerHTML=`<div class=top><button class="btn hb" id=hb>☰</button><h1>${TT[v]||'Questão de um amigo'}</h1></div><div id=bd></div>`;
  $('#hb').onclick=()=>$('#sd').classList.remove('c');
- ({home,simulados:viewSimulados,estudar:viewEstudar,q1:viewQ1,cron:viewCron,desp:viewDesp,vid:viewVid,mot:viewMot,tur:viewTur}[v]||(x=>viewQ(x,v)))($('#bd'));motBanner(v);
+ ({home,admin:b=>IFMA_ADMIN.view(b),simulados:viewSimulados,estudar:viewEstudar,q1:viewQ1,cron:viewCron,desp:viewDesp,vid:viewVid,mot:viewMot,tur:viewTur}[v]||(x=>viewQ(x,v)))($('#bd'));motBanner(v);
  $('#ft').textContent=Object.keys(S.resp).length+' questões respondidas';if(innerWidth<760)$('#sd').classList.add('c');window.dispatchEvent(new Event('ifma:navigate'))}
 $('#nv').innerHTML=NAV.map(n=>`<button class=ni data-v=${n[0]} title="${n[2]}"><span class=ic>${n[1]}</span><span class=lb>${n[2]}</span></button>`).join('');
 $$('.ni').forEach(n=>n.onclick=()=>go(n.dataset.v));
@@ -873,3 +874,5 @@ if(V==='home'||V==='tur')go(V);
  addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))close()});
  if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol)){const register=()=>navigator.serviceWorker.register('sw.js').catch(()=>{});if(document.readyState==='complete')register();else addEventListener('load',register)}
 })();
+
+IFMA_ADMIN.check();

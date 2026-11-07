@@ -146,3 +146,32 @@ Verificação de acesso, cadastro, callbacks, logout, renovação, isolamento en
 ## Orientação do celular
 
 O manifesto usa `orientation: any`, permitindo acompanhar a rotação do aparelho tanto em pé quanto deitado, inclusive no app instalado. A rotação automática precisa estar liberada no dispositivo. O cache foi atualizado para v17 para distribuir o manifesto novo.
+
+## Painel administrativo
+
+**Administração** aparece no menu somente depois que o servidor confirma a permissão da conta. A versão inicial oferece lista de contas com nome do cadastro, e-mail, data de criação, confirmação e último login; busca por nome/e-mail; filtro de confirmação; paginação de 25; contadores de contas, confirmações e cadastros dos últimos 7 dias. Não inclui senhas, exclusão ou bloqueio de contas. Nomes ausentes de cadastros antigos são exibidos como “Nome não informado”.
+
+### Ativação única no Supabase
+
+1. No mesmo projeto usado por `auth-config.js`, abra **SQL Editor → New query**.
+2. Execute o arquivo inteiro `supabase/admin_setup.sql` como administrador do projeto. Ele localiza a conta `gabriel.shai@icloud.com`, exige e-mail já confirmado e registra o UUID dessa conta. Se não encontrar a conta confirmada, a transação é cancelada. O arquivo pode ser executado novamente sem duplicar a permissão.
+3. Publique os arquivos do site e entre com essa conta. O item **🛡️ Administração** aparecerá. O endereço `/#admin=1` também abre a página, mas a consulta continua exigindo autorização do servidor.
+
+A ativação é necessária: somente publicar o front-end não cria as funções no banco. Não use uma chave `service_role` no site.
+
+### Proteção e dados
+
+- `ifma_admin_private.administrators` é uma tabela privada, com RLS e sem acesso de `anon`/`authenticated`. A permissão usa UUID, não o nome, o e-mail enviado pelo navegador ou metadados editáveis pelo usuário.
+- As funções `public.ifma_is_admin()` e `public.ifma_admin_list_users(...)` têm `search_path` vazio e execução limitada a `authenticated`. A consulta de contas verifica novamente `auth.uid()` e a permissão antes de ler qualquer registro. Usuários comuns recebem erro de autorização mesmo que tentem chamar a função diretamente.
+- São retornadas apenas contas com e-mail e não excluídas, com os campos necessários. O nome vem de `raw_user_meta_data.name`, com fallback para `full_name`. O último login representa uma autenticação, não atividade online em tempo real.
+- A lista é buscada por POST, não fica no localStorage nem no cache offline e é removida da tela ao sair da página. Ao restaurar a página pelo histórico, o acesso é verificado novamente. Nenhuma tabela do banco de questões, progresso ou turma é alterada.
+- Não existe interface pública para promover administradores. Novas concessões futuras devem ser feitas explicitamente no servidor pelo dono do projeto.
+
+Arquivos: `admin.js`, `admin.css`, `supabase/admin_setup.sql`. O cache passou para v18; o loader e `app.js` usam `?v=20261107-1`.
+
+### Testes do painel
+
+- `node tests/admin-browser.cjs`: Playwright/Chrome com respostas de teste, cobrindo busca, paginação, filtro, mobile, usuário comum, backend ausente, restauração do histórico e escape de HTML.
+- `npm install @electric-sql/pglite --prefix .test-runtime --ignore-scripts --no-audit --no-fund`, depois `node tests/admin-database.cjs`: executa o SQL num PostgreSQL local em memória e verifica a autorização, grants, tabela privada, filtros e dados mínimos. `.test-runtime/` é ignorada pelo Git. Não toca nas contas reais.
+
+Referência de segurança das funções: https://supabase.com/docs/guides/database/functions

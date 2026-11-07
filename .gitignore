@@ -1,0 +1,3 @@
+
+# Dependências locais usadas apenas nos testes de autorização.
+.test-runtime/
