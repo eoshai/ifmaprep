@@ -175,3 +175,15 @@ Arquivos: `admin.js`, `admin.css`, `supabase/admin_setup.sql`. O cache passou pa
 - `npm install @electric-sql/pglite --prefix .test-runtime --ignore-scripts --no-audit --no-fund`, depois `node tests/admin-database.cjs`: executa o SQL num PostgreSQL local em memória e verifica a autorização, grants, tabela privada, filtros e dados mínimos. `.test-runtime/` é ignorada pelo Git. Não toca nas contas reais.
 
 Referência de segurança das funções: https://supabase.com/docs/guides/database/functions
+
+## Guia do dia da prova
+
+A aba **🎒 Dia da prova** e os atalhos do Início/Motivação reúnem preparação da véspera, roteiro do dia, materiais, alimentação e estratégia de preenchimento do cartão. O checklist é o mesmo de Motivação: marcações anteriores são preservadas.
+
+- **Regras verificadas:** Edital PRENAE 84/2026, cronograma e itens 8.4–8.6, 8.6.1–8.6.4, 8.9, 8.11 e 8.13. A versão local `Edital.pdf` foi consultada em 10/11/2026 (páginas físicas 5 e 17–19). A aplicação está prevista para 29/11/2026; portões 12h/13h, prova 13h30, duração padrão 3h e chegada pelo menos uma hora antes do fechamento. O término de 16h30 é uma previsão calculada. A interface inclui os links oficiais e lembra de conferir retificações, local e instruções individuais.
+- **Planejamento pessoal:** horário de acordar, referência de sono (13–17 ou 18+), horas planejadas, trajeto e margem para imprevistos. O app calcula horários da véspera e saída para chegar até 12h, alertando quando o despertar/trajeto não cabe no roteiro. Padrão: acordar 07h30, reservar 9h de sono para adolescente, trajeto de 30 min + margem de 30 min. Os 30 min para pegar no sono são uma margem de planejamento, não garantia.
+- **Persistência:** `S.examDayPlan`, por conta, entra no backup e na sincronização; o horário da alteração decide qual versão prevalece. Nenhuma localização é coletada. O botão de copiar usa o roteiro atualmente exibido; para aplicar alterações nos campos, clique em Atualizar antes.
+- **Sugestões distintas das exigências:** exemplos de alimentos e horários não são obrigações do edital. Água/lanche/embalagens têm permissão condicionada à organização, pois os trechos consultados não detalham essas regras. A exigência de caneta é esferográfica azul ou preta com corpo transparente; 2–3 reservas e ponta média são sugestões. Documentos digitais devem estar nos apps oficiais, sem prints/PDF.
+- **Referências gerais:** CDC (https://www.cdc.gov/sleep/about/) e NHS (https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/help-your-child-beat-exam-stress/). O planejador é uma ajuda de organização; não avalia condições de saúde ou necessidades individuais de sono.
+
+Arquivos: `dia-prova.js`, `dia-prova.css`. Links diretos: `/#dia-prova=1`. Cache v19, novo loader/app em `?v=20261110-1`. Testes: `node tests/dia-prova.cjs` e `node tests/dia-prova-browser.cjs` (Playwright/Chrome).

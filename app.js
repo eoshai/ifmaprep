@@ -9,7 +9,7 @@ const APP_ACCOUNT_UID=IFMA_AUTH.readSession()?.uid;
 const save=()=>{if(IFMA_AUTH.readSession()?.uid!==APP_ACCOUNT_UID)return;S._t=Date.now();try{localStorage.setItem('ifma',JSON.stringify(S))}catch(e){}window.__sy&&__sy.dirty()};
 const hms=s=>{s=Math.max(0,Math.floor(s));return[s/3600|0,s%3600/60|0,s%60].map(x=>String(x).padStart(2,'0')).join(':')};
 const stat=q=>S.resp[q.id];
-const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['simulados','📋','Simulados'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['cron','⏱','Cronômetro'],['mot','💪','Motivação'],['tur','👥','Turma de estudo'],['desp','📊','Desempenho']];
+const NAV=[['home','🏠','Início'],['prov','📚','Provas'],['simulados','📋','Simulados'],['ass','🎯','Por assunto'],['dif','⚡','Dificuldade'],['banco','🗂','Banco completo'],['vid','🎬','Resoluções em Vídeo'],['cron','⏱','Cronômetro'],['mot','💪','Motivação'],['examday','🎒','Dia da prova'],['tur','👥','Turma de estudo'],['desp','📊','Desempenho']];
 const FD={ano:['Ano',['Todos',...anos]],mat:['Matéria',['Todas',...MATS]],ass:['Assunto',0],dif:['Dificuldade',['Todas','Fácil','Média','Difícil']],st:['Status',['Todas','Não respondidas','Erradas','Acertadas','Favoritas','Dificuldade','Chutei','A estudar','Revisão de hoje','Não estudadas','Estudadas sem domínio','Domínio confirmado','Erradas 2+ vezes']]};
 const VF={prov:['ano','mat','st'],ass:['mat','ass','st'],dif:['mat','dif','ano'],banco:['ano','mat','ass','dif','st']};
 const ST={};let V='home',SIM=null;
@@ -319,7 +319,7 @@ function home(b){const HS=hStats(),a=Object.values(S.resp),cor=a.filter(x=>x.ok!
  const top=m=>{const c={};Q.filter(q=>q.ano>=2022&&q.materia===m).forEach(q=>c[q.topico]=(c[q.topico]||0)+1);return Object.entries(c).sort((x,y)=>y[1]-x[1]).slice(0,6)};
  b.innerHTML=`<div class=hero><div class=hhd><div class=hlogo>🔥</div><div><div class=hgr id=hgr></div><h2 class=htt>Disciplina até o fim do dia, <span id=hnome class=hn title="Clique para mudar o nome"></span>!</h2><p class=hfr id=hfrase title="Clique para outra frase"></p></div></div><div class=row><button class="btn p" data-a=rand>🎲 Questão aleatória</button><button class=btn data-a=err>♻ Revisar erradas</button></div></div>
  <div class=cards>${[['Respondidas',a.length+'/'+Q.length],['Aproveit. 1ª tentativa',HS.p==null?'—':HS.p+'%'],['Tempo estudado',hms(tt)],['Favoritas',S.fav.length]].map(c=>`<div class=card><small>${c[0]}</small><b>${c[1]}</b></div>`).join('')}</div>
- <div id=sx-home></div><div id=eaw></div>
+ <div id=exam-day-home></div><div id=sx-home></div><div id=eaw></div>
  <div id=dgw></div>
  <div id=cdw></div>
  <div id=plw></div>
@@ -329,7 +329,7 @@ function home(b){const HS=hStats(),a=Object.values(S.resp),cor=a.filter(x=>x.ok!
  <div id=bkw></div>
  <div id=p20></div>
  ${MATS.map(m=>`<h3>Mais cobrados · ${m} <small>(2022–2026)</small></h3><div class=chips>${top(m).map(t=>`<button class=chip data-m="${m}" data-t="${encodeURIComponent(t[0])}">${esc(t[0])} <b>${t[1]}</b></button>`).join('')}</div>`).join('')}`;
- heroInit(b);sxHomeSummary(b);eaHome(b);dgInit(b);cdInit(b);planoInit(b);estInit(b);relInit(b);window.__lem&&__lem(b);bkInit(b);p20Init(b);
+ heroInit(b);examDayHome(b);sxHomeSummary(b);eaHome(b);dgInit(b);cdInit(b);planoInit(b);estInit(b);relInit(b);window.__lem&&__lem(b);bkInit(b);p20Init(b);
  $$('.chip[data-m]',b).filter(c=>!c.closest('#plw,#estw,#rlw,#bkw')).forEach(c=>c.onclick=()=>{ST.ass={f:{mat:c.dataset.m,ass:decodeURIComponent(c.dataset.t)},cur:0};go('ass')});
  $('[data-a=err]',b).onclick=async()=>{await sxEnrichResults();if(sxReviewItems().some(q=>!q.ok)){estInit(b);const panel=$('#estp',b);panel.hidden=false;panel.scrollIntoView({block:'start'});return}ST.banco={f:{st:'Erradas'},cur:0};go('banco')};
  $('[data-a=rand]',b).onclick=()=>{const q=Q[Math.random()*Q.length|0],f={ano:String(q.ano),mat:q.materia};ST.banco={f,cur:Math.max(0,filt(f).findIndex(x=>x.id===q.id))};go('banco')}}
@@ -423,7 +423,7 @@ function motHum(el,saved){if(!el)return;const M=motM(),H=M.hum=M.hum||{},k=dkey(
  $$('[data-h]',el).forEach(x=>x.onclick=()=>sv('h',+x.dataset.h));$$('[data-s]',el).forEach(x=>x.onclick=()=>sv('s',+x.dataset.s))}
 
 /* modo reta final */
-const MOT_CK=['Conferi o local da prova e sei como chegar','Sei o horário em que os portões abrem e vou chegar com folga','Separei um documento oficial com foto','Separei o comprovante/cartão de inscrição (se o edital pedir)','Separei a caneta do tipo exigido no edital','Reli o edital: regras, horários e o que pode ou não levar','Preparei água e um lanche leve','Deixei roupa e material separados na véspera','Planejei dormir cedo na véspera'];
+const MOT_CK=['Conferi o local da prova e sei como chegar','Planejei chegar até 12h: os portões fecham às 13h','Separei um documento oficial com foto','Separei o comprovante/cartão de inscrição (se o edital pedir)','Separei canetas esferográficas azul ou preta, de corpo transparente, já testadas','Reli o edital: regras, horários e o que pode ou não levar','Conferi as regras de água, lanche e embalagens e organizei o que for permitido','Deixei roupa e material separados na véspera','Planejei uma noite de sono suficiente e ajustada à minha rotina'];
 const MOT_PL=[[7,5,'Revise todas as questões que você errou e refaça as que ainda erra.'],[4,3,'Foque nas questões que você errou 2+ vezes e nos assuntos que mais caem.'],[2,2,'Sessão leve: 10 a 15 questões que você já domina. Nada de assunto novo.'],[1,1,'Véspera: no máximo 30 min de revisão leve, confira o checklist, jante leve e durma cedo.'],[0,0,'Dia da prova: respire fundo, leia com calma e comece pelas questões que você domina.']];
 function motReta(el){if(!el)return;const d=motDias();if(d<0){el.innerHTML='';return}
  const M=motM(),ck=M.ck=M.ck||{},on=d<=7,n=MOT_CK.filter((_,i)=>ck[i]).length,pl=MOT_PL.find(p=>d<=p[0]&&d>=p[1]),lb=p=>p[0]===0?'Dia da prova':p[0]===1?'Véspera':p[0]===p[1]?p[0]+' dias':p[0]+' a '+p[1]+' dias';
@@ -431,10 +431,10 @@ function motReta(el){if(!el)return;const d=motDias();if(d<0){el.innerHTML='';ret
  ${on?`<p><b>${d===0?'A prova é hoje!':d===1?'Falta 1 dia.':'Faltam '+d+' dias.'}</b> ${esc(pl?pl[2]:'')}</p><div class="mpl">${MOT_PL.map(p=>`<div class="${p===pl?'on':''}"><b>${lb(p)}</b><span>${esc(p[2])}</span></div>`).join('')}</div>
  <div class="row" style="margin-bottom:10px"><button class="btn" data-g="err">♻ Revisar erradas</button><button class="btn" data-g="err2">🔁 Erradas 2+ vezes</button></div>`
  :`<p class="mu">Faltam ${d} dias para a prova. O plano da reta final aparece quando restarem 7 dias, mas você já pode ir marcando o checklist.</p>`}
- <b>✅ Checklist da prova <span class="mu">(${n}/${MOT_CK.length})</span></b><div style="margin-top:6px">${MOT_CK.map((t,i)=>`<label class="mck${ck[i]?' on':''}"><input type="checkbox" data-i="${i}"${ck[i]?' checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <button class="btn p" data-g="day">🎒 Abrir guia completo do dia da prova</button><br><br><b>✅ Checklist da prova <span class="mu">(${n}/${MOT_CK.length})</span></b><div style="margin-top:6px">${MOT_CK.map((t,i)=>`<label class="mck${ck[i]?' on':''}"><input type="checkbox" data-i="${i}"${ck[i]?' checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
  <small class="mu">Confira sempre os detalhes no edital do IFMA.</small></div>`;
  $$('[data-i]',el).forEach(x=>x.onchange=()=>{ck[x.dataset.i]=x.checked;M.t=Date.now();save();motReta(el);if(x.checked&&MOT_CK.every((_,i)=>ck[i]))confete('✅ Checklist completo! Você está pronto(a)')});
- $$('[data-g]',el).forEach(x=>x.onclick=()=>{const g=x.dataset.g;ST.banco={f:{st:g==='err'?'Erradas':'Erradas 2+ vezes'},cur:0};go('banco')})}
+ $$('[data-g]',el).forEach(x=>x.onclick=()=>{const g=x.dataset.g;if(g==='day'){go('examday');return}ST.banco={f:{st:g==='err'?'Erradas':'Erradas 2+ vezes'},cur:0};go('banco')})}
 
 /* mapa de calor de estudo */
 function motHeat(el){if(!el)return;const W=13,cnt={};(S.log||[]).forEach(x=>{const k=dkey(x.t);cnt[k]=(cnt[k]||0)+1});const kt=dkey(Date.now());if(S.dia&&S.dia.d===kt)cnt[kt]=Math.max(cnt[kt]||0,S.dia.n);
@@ -552,6 +552,7 @@ const LNK={};
 function linkOpen(){const h=location.hash.slice(1);if(!h)return false;const p=new URLSearchParams(h);let to='';
  const tc=(p.get('turma')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
  if(tc){lkS('tur_inv',tc);to='tur'}
+ else if(p.get('dia-prova')==='1'){to='examday'}
  else if(p.get('admin')==='1'){to='admin'}
  else if(p.get('simulados')==='1'){to='simulados'}
  else if(p.get('q')){const q=Q_ALL.find(x=>x.id===p.get('q'));if(q){LNK.q=q.id;LNK.de=(p.get('de')||'').slice(0,24);to='q1'}}
@@ -603,11 +604,11 @@ function novInit(){let seen=null,old=false;try{seen=localStorage.getItem('app_se
  if(seen===APP_VER)return;if(seen===null&&!old){lkS('app_seen',APP_VER);return}
  setTimeout(novBanner,1500)}
 function viewTur(b){if(window.__tur)window.__tur(b);else b.innerHTML='<p class="mu">Carregando…</p>'}
-const TT={...Object.fromEntries(NAV.map(n=>[n[0],n[2]])),estudar:'Estudar agora',admin:'Administração'};
+const TT={...Object.fromEntries(NAV.map(n=>[n[0],n[2]])),estudar:'Estudar agora',admin:'Administração',examday:'Dia da prova'};
 function go(v){if(!IFMA_AUTH.readyState){IFMA_AUTH.requireLogin();return}if(sxBusy()&&v!=='simulados')v='simulados';if(v==='cron'||(V==='estudar'&&v!=='estudar'))eaPause();V=v;$$('.ni').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$$('#bn button').forEach(n=>n.classList.toggle('on',n.dataset.v===v));$('#main').scrollTop=0;
  $('#main').innerHTML=`<div class=top><button class="btn hb" id=hb>☰</button><h1>${TT[v]||'Questão de um amigo'}</h1></div><div id=bd></div>`;
  $('#hb').onclick=()=>$('#sd').classList.remove('c');
- ({home,admin:b=>IFMA_ADMIN.view(b),simulados:viewSimulados,estudar:viewEstudar,q1:viewQ1,cron:viewCron,desp:viewDesp,vid:viewVid,mot:viewMot,tur:viewTur}[v]||(x=>viewQ(x,v)))($('#bd'));motBanner(v);
+ ({home,examday:viewExamDay,admin:b=>IFMA_ADMIN.view(b),simulados:viewSimulados,estudar:viewEstudar,q1:viewQ1,cron:viewCron,desp:viewDesp,vid:viewVid,mot:viewMot,tur:viewTur}[v]||(x=>viewQ(x,v)))($('#bd'));motBanner(v);
  $('#ft').textContent=Object.keys(S.resp).length+' questões respondidas';if(innerWidth<760)$('#sd').classList.add('c');window.dispatchEvent(new Event('ifma:navigate'))}
 $('#nv').innerHTML=NAV.map(n=>`<button class=ni data-v=${n[0]} title="${n[2]}"><span class=ic>${n[1]}</span><span class=lb>${n[2]}</span></button>`).join('');
 $$('.ni').forEach(n=>n.onclick=()=>go(n.dataset.v));
@@ -669,7 +670,7 @@ function merge(L,R){ // L = local, R = remoto; cada um {S,cut,nome}
   o.meta=w.meta!=null?w.meta:(a.meta!=null?a.meta:b.meta);o.fav=arr(w.fav).slice();o.hard=arr(w.hard).slice();o.vid={...(w.vid||{})};o.com={...(w.com||{})};cut={...(wc.cut||{})};
   nome=tl>tr?(L.nome!=null?L.nome:R.nome):(R.nome!=null?R.nome:L.nome);
  }
- o.simReviewEvents={...(b.simReviewEvents||{}),...(a.simReviewEvents||{})};o.simRevisions=sxMergeRevisions(a.simRevisions,b.simRevisions);o.simResults={...(b.simResults||{}),...(a.simResults||{})};o.col=a.col;if(a.mot||b.mot){const ma=a.mot||{},mb=b.mot||{},w=(ma.t||0)>=(mb.t||0)?ma:mb,l=w===ma?mb:ma,u=(x,y)=>[...new Set([...(x||[]),...(y||[])])];o.mot={...l,...w,hum:{...(l.hum||{}),...(w.hum||{})},ck:{...(l.ck||{}),...(w.ck||{})},bd:u(l.bd,w.bd),dm:Math.max(l.dm||0,w.dm||0),meta:(l.meta||'')>(w.meta||'')?l.meta:w.meta,rv:(l.rv||'')>(w.rv||'')?l.rv:w.rv,tmp:(()=>{const o2={...(l.tmp||{})};Object.entries(w.tmp||{}).forEach(([k,v])=>o2[k]=Math.max(o2[k]||0,v));return o2})(),t:Math.max(ma.t||0,mb.t||0)}}o._t=Math.max(tl,tr);
+ o.examDayPlan=(a.examDayPlan?.t||0)>=(b.examDayPlan?.t||0)?a.examDayPlan:b.examDayPlan;o.simReviewEvents={...(b.simReviewEvents||{}),...(a.simReviewEvents||{})};o.simRevisions=sxMergeRevisions(a.simRevisions,b.simRevisions);o.simResults={...(b.simResults||{}),...(a.simResults||{})};o.col=a.col;if(a.mot||b.mot){const ma=a.mot||{},mb=b.mot||{},w=(ma.t||0)>=(mb.t||0)?ma:mb,l=w===ma?mb:ma,u=(x,y)=>[...new Set([...(x||[]),...(y||[])])];o.mot={...l,...w,hum:{...(l.hum||{}),...(w.hum||{})},ck:{...(l.ck||{}),...(w.ck||{})},bd:u(l.bd,w.bd),dm:Math.max(l.dm||0,w.dm||0),meta:(l.meta||'')>(w.meta||'')?l.meta:w.meta,rv:(l.rv||'')>(w.rv||'')?l.rv:w.rv,tmp:(()=>{const o2={...(l.tmp||{})};Object.entries(w.tmp||{}).forEach(([k,v])=>o2[k]=Math.max(o2[k]||0,v));return o2})(),t:Math.max(ma.t||0,mb.t||0)}}o._t=Math.max(tl,tr);
  return{S:o,cut,nome}}
 
 const sj=v=>JSON.stringify(v,(k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(i=>[i,x[i]])):x);
