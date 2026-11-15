@@ -8,8 +8,8 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 
 - ▶ Estudar agora: sessão guiada de até 5 questões e 25 minutos, com prioridade para pendências do plano e assuntos com erros, pausa automática ao sair do app e resumo final. A sessão pode ser retomada neste aparelho.
 
-- 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto, dificuldade e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
-- 🎯 Questões por assunto e por dificuldade, com gabarito e correção automática
+- 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
+- 🎯 Questões por assunto, com gabarito e correção automática
 - 📋 Simulados autorais: SimulAprova Inédito - SHAI (Feito com IA Plus), 30 questões e 3 horas sem pausa; modos impresso e digital, relatório por matéria/assunto e gabarito comentado após a entrega.
 - ⏱ Cronômetro de estudo (livre, regressivo e Pomodoro)
 - 🗓 Plano de estudos até a prova, com contagem regressiva, semanas de base, revisão e reta final (veja abaixo)
@@ -23,7 +23,6 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 - 🎬 Cadastro de links de resoluções em vídeo (YouTube) e comentários por questão
 - 🌗 Tema claro/escuro e modo foco
 - 📱 Layout para celular, zoom nas páginas da prova e instalação como app (PWA), com uso offline
-- 💾 Backup e restauração do progresso em arquivo
 
 ## Plano até a prova
 
@@ -70,7 +69,7 @@ Ao publicar uma nova versão, troque `ifma-v1` em `sw.js` (por `ifma-v2`, etc.) 
 
 ## Seus dados
 
-Por padrão, o progresso fica no `localStorage` do navegador, neste dispositivo e neste endereço. Use **Backup do progresso** na tela inicial antes de trocar de endereço ou limpar os dados do navegador.
+Por padrão, o progresso fica no `localStorage` do navegador, neste dispositivo e neste endereço. O progresso é sincronizado com a conta; não há exportação ou importação por arquivo JSON.
 
 Com sua conta, o progresso (respostas, favoritas, dificuldades, chutes, vídeos e comentários) também é enviado a um banco hospedado no [Supabase](https://supabase.com) para sincronizar seus aparelhos. Ao ativar o lembrete por notificação, ficam guardados no servidor o endereço de envio do navegador, o horário escolhido e o fuso horário. A plataforma exige uma sessão ativa; os dados pessoais sincronizados continuam protegidos pelas políticas RLS do Supabase.
 
@@ -92,7 +91,7 @@ A seção **📋 Simulados** oferece orientações, escolha de formato e uma ten
 
 - **Impresso:** imprima `simulados/simulaprova-shai-v1/caderno-sem-gabarito.pdf` antes de iniciar. Contém somente as páginas 1 a 11: capa, questões e cartão. Após encerrar ou esgotar o prazo, transcreva o cartão físico, sem resolver novamente. O tempo de transcrição não faz parte do tempo para resolver a prova.
 - **Digital:** exibe somente as 11 páginas permitidas, com a folha de respostas por último. Marcações A–D, em branco, chute, dificuldade e revisão são salvas imediatamente. Entrega antecipada exige as 30 questões marcadas (incluindo brancos explícitos); no fim do prazo, entrega automática, com omissões como erro.
-- **Correção:** `correcao.json` só é solicitado pela interface após a entrega; contém as 30 respostas e comentários extraídos do PDF. Por ser um site estático, esse arquivo não tem controle de acesso contra inspeção técnica. Cada questão vale 1 ponto. Há relatório por matéria e sugestões por assunto; tentativas são preservadas separadamente do banco de provas anteriores. Resultados concluídos entram no backup/sincronização existente (`S.simResults`); a tentativa em curso é local.
+- **Correção:** `correcao.json` só é solicitado pela interface após a entrega; contém as 30 respostas e comentários extraídos do PDF. Por ser um site estático, esse arquivo não tem controle de acesso contra inspeção técnica. Cada questão vale 1 ponto. Há relatório por matéria e sugestões por assunto; tentativas são preservadas separadamente do banco de provas anteriores. Resultados concluídos entram na sincronização existente (`S.simResults`); a tentativa em curso é local.
 - **Turma:** usa o campo JSON `stats.simulado` já suportado pela tabela de membros. Mostra modo e prazo até o término das 3 horas, com atualização enquanto a página está aberta. Requer login, participação em turma e conexão. Nenhuma migração de banco é necessária.
 - **Offline:** o service worker v12 inclui os arquivos do simulado. Aguarde a instalação do cache online antes de depender do modo offline.
 
@@ -114,7 +113,7 @@ Resultados concluídos alimentam **Início → Assuntos a estudar → Revisão d
 
 A turma recebe um resumo de atividade por dia, com a quantidade de simulados concluídos e de questões efetivamente respondidas (A–D). Conclusões com pelo menos uma resposta contam como dia estudado, para a sequência, e somam suas questões em Hoje/Últimos 7 dias. A data é a do término da prova (`stopped`, ou `end` para tentativas antigas), inclusive se a transcrição ou leitura da correção acontecer depois. Abrir o resultado novamente não soma atividade. A tentativa impressa só entra após confirmar a transcrição. O destaque **📋 Fez 1 simulado hoje** não publica o gabarito individual nem a nota.
 
-As tentativas antigas já salvas também entram no cálculo. Os resultados continuam em `S.simResults`, no backup e na sincronização existente; o resumo de atividade usa o JSON `stats.simulados` da turma, sem migração de tabela. O service worker foi atualizado para v13.
+As tentativas antigas já salvas também entram no cálculo. Os resultados continuam em `S.simResults`, na sincronização existente; o resumo de atividade usa o JSON `stats.simulados` da turma, sem migração de tabela. O service worker foi atualizado para v13.
 
 ## Atualização dos scripts e cache
 
@@ -126,7 +125,7 @@ O HTML usa URLs com versão para `simulados.js`, `simulados.css` e `simulados-av
 - **Médias:** o relatório mostra tempo total dividido por 30 e, por matéria, o tempo em foco dividido pelo número de questões cronometradas, com esse número explícito (de 15). São estimativas de foco, não medição de leitura ocular. Tentativas antigas e provas impressas não recebem uma divisão inventada por matéria.
 - **Evolução:** a lista de tentativas mostra nota e duração. A tabela compara total, Português, Matemática, duração e chutes da mesma prova; também mostra a diferença entre as últimas notas disponíveis e a melhor nota.
 - **Revisão:** no Início, “Sua próxima revisão” destaca erros e outras pendências. É possível refazer só essas questões, consultar textos de apoio, conferir a resolução e marcar como revisada. A nota e as respostas da prova original são preservadas. No relatório, é possível reabrir uma revisão.
-- **Persistência:** `S.simRevisions` guarda o estado da revisão por tentativa/questão, com merge pelo horário da última alteração. `S.simReviewEvents` preserva as atividades de revisão mesmo após reabrir uma questão. Ambos entram no backup e na sincronização existentes.
+- **Persistência:** `S.simRevisions` guarda o estado da revisão por tentativa/questão, com merge pelo horário da última alteração. `S.simReviewEvents` preserva as atividades de revisão mesmo após reabrir uma questão. Ambos entram na sincronização existente.
 - **Turma:** o histórico reúne conclusões de simulados e atividades do banco/revisões agrupadas por dia, em ordem recente. Publica no máximo 30 registros por pessoa e exibe os 20 mais recentes da turma, sem respostas individuais ou notas de simulado. Rever a mesma questão mais de uma vez no dia não infla o contador. Requer conexão/login e sincronização dos participantes.
 
 O módulo `simulados-progresso.js` é carregado antes do script principal. Todos os scripts do simulado usam `?v=20261104-3` e o service worker v15. Os novos testes são `tests/simulados-recursos.cjs` e `tests/simulados-recursos-browser.cjs` (Playwright/Chrome).
@@ -182,8 +181,17 @@ A aba **🎒 Dia da prova** e os atalhos do Início/Motivação reúnem prepara�
 
 - **Regras verificadas:** Edital PRENAE 84/2026, cronograma e itens 8.4–8.6, 8.6.1–8.6.4, 8.9, 8.11 e 8.13. A versão local `Edital.pdf` foi consultada em 10/11/2026 (páginas físicas 5 e 17–19). A aplicação está prevista para 29/11/2026; portões 12h/13h, prova 13h30, duração padrão 3h e chegada pelo menos uma hora antes do fechamento. O término de 16h30 é uma previsão calculada. A interface inclui os links oficiais e lembra de conferir retificações, local e instruções individuais.
 - **Planejamento pessoal:** horário de acordar, referência de sono (13–17 ou 18+), horas planejadas, trajeto e margem para imprevistos. O app calcula horários da véspera e saída para chegar até 12h, alertando quando o despertar/trajeto não cabe no roteiro. Padrão: acordar 07h30, reservar 9h de sono para adolescente, trajeto de 30 min + margem de 30 min. Os 30 min para pegar no sono são uma margem de planejamento, não garantia.
-- **Persistência:** `S.examDayPlan`, por conta, entra no backup e na sincronização; o horário da alteração decide qual versão prevalece. Nenhuma localização é coletada. O botão de copiar usa o roteiro atualmente exibido; para aplicar alterações nos campos, clique em Atualizar antes.
+- **Persistência:** `S.examDayPlan`, por conta, entra na sincronização; o horário da alteração decide qual versão prevalece. Nenhuma localização é coletada. O botão de copiar usa o roteiro atualmente exibido; para aplicar alterações nos campos, clique em Atualizar antes.
 - **Sugestões distintas das exigências:** exemplos de alimentos e horários não são obrigações do edital. Água/lanche/embalagens têm permissão condicionada à organização, pois os trechos consultados não detalham essas regras. A exigência de caneta é esferográfica azul ou preta com corpo transparente; 2–3 reservas e ponta média são sugestões. Documentos digitais devem estar nos apps oficiais, sem prints/PDF.
 - **Referências gerais:** CDC (https://www.cdc.gov/sleep/about/) e NHS (https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/help-your-child-beat-exam-stress/). O planejador é uma ajuda de organização; não avalia condições de saúde ou necessidades individuais de sono.
 
 Arquivos: `dia-prova.js`, `dia-prova.css`. Links diretos: `/#dia-prova=1`. Cache v19, novo loader/app em `?v=20261110-1`. Testes: `node tests/dia-prova.cjs` e `node tests/dia-prova-browser.cjs` (Playwright/Chrome).
+
+
+## Simulado 2 - IFMA 2027 Integrado (15/11/2026)
+
+A seção Simulados permite escolher entre o SimulAprova original e o Simulado 2. O novo material tem 30 questões (15 de Português e 15 de Matemática), 3 horas e formatos impresso/digital. O caderno disponibilizado tem somente as 10 primeiras páginas do PDF fornecido: capa, questões e folha de respostas. As 30 respostas e os comentários das páginas 12–15 são apresentados na plataforma após a entrega.
+
+Cada prova usa suas próprias páginas, assuntos e correção. Tentativas anteriores permanecem com o mesmo identificador; a evolução é exibida por prova, e a revisão do Início reúne as pendências da tentativa mais recente de cada simulado. Presença, sequência e atividade da turma incluem os dois. O catálogo anuncia a nova publicação, e o service worker v21 inclui o novo caderno, a correção e as 10 imagens para uso offline após o cache ser instalado.
+
+Validação: `node tests/simulados-multiplos.cjs` e `node tests/simulados-multiplos-browser.cjs`, além dos testes anteriores de simulados, progresso, cache e avisos.

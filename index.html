@@ -26,9 +26,8 @@ select,input{background:var(--p2);color:var(--tx);border:1px solid var(--br);bor
 .two{display:grid;grid-template-columns:330px 1fr;gap:16px;align-items:start}
 .lst{max-height:calc(100vh - 210px);overflow:auto;background:var(--pn);border:1px solid var(--br);border-radius:var(--r);padding:8px}
 .li{display:flex;gap:10px;padding:9px 12px;border-radius:12px;cursor:pointer}.li:hover{background:var(--p2)}.li.on{background:var(--p2);outline:1px solid var(--g)}.mk{color:var(--g);width:16px}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok)}.dot.M{background:#ffc857}.dot.D{background:var(--er)}
 .qc,.card2,.hero,.card{background:var(--pn);border:1px solid var(--br);border-radius:var(--r);padding:20px}
-.qh{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tag{background:var(--p2);border-radius:999px;padding:3px 12px;font-size:12px}.tag.P{color:#7dd3fc}.tag.M{color:#ffc857}.tag.dF{color:var(--ok)}.tag.dD{color:var(--er)}
+.qh{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tag{background:var(--p2);border-radius:999px;padding:3px 12px;font-size:12px}.tag.P{color:#7dd3fc}.tag.M{color:#ffc857}
 .ic2{margin-left:auto;background:none;border:0;color:#ffc857;font-size:22px;cursor:pointer}.tp{color:var(--g);margin:10px 0 6px;font-weight:600}
 .en{white-space:pre-wrap;margin:8px 0 14px}.alt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--p2);border:1px solid var(--br);color:var(--tx);border-radius:14px;padding:11px 14px;margin:8px 0;cursor:pointer;font:inherit}
 .alt b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--bg);display:grid;place-items:center;color:var(--g)}.alt:hover{border-color:var(--g)}
@@ -102,7 +101,6 @@ h1{font-weight:800}
 .pld{font-size:38px;color:var(--g);text-shadow:0 0 18px #ff6a2b66}
 .mbar{height:8px;border-radius:99px;background:var(--p2);overflow:hidden;margin:8px 0}.mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--g2),var(--g))}
 .wk{border:1px solid var(--br);border-radius:14px;padding:10px 14px;margin:8px 0;background:#120e0c}.wk summary{cursor:pointer}.fase{color:var(--g);font-weight:700}.chip.dn{border-color:var(--g);color:var(--g)}.chip.dn::before{content:'✓ '}.chip.tx{opacity:.7;cursor:default;border-style:dashed}.wk .mu b{color:inherit}
-html[data-theme=light] .dot.M{background:#b45309}
 html[data-theme=light] .tag.P{color:#0369a1}
 html[data-theme=light] .tag.M{color:#b45309}
 html[data-theme=light] .ic2{margin-left:auto;background:none;border:0;color:#b45309;font-size:22px;cursor:pointer}
@@ -130,10 +128,10 @@ html[data-theme=light] ::-webkit-scrollbar-thumb{background:#e3d3c7}
 
 .chk{display:inline-flex;align-items:center;gap:6px;padding:0 6px;color:var(--mu);font-weight:600;cursor:pointer;user-select:none}.chk input{accent-color:var(--g);width:16px;height:16px}
 .rlg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}.rlg>div{background:var(--p2);border-radius:14px;padding:12px}.rlg small{display:block;color:var(--mu)}.rlg b{display:block;font-size:24px;color:var(--g)}
-.bk{margin:12px 0}.bk.warn{border-color:var(--g)}.bk .row{align-items:center;margin-top:8px}
+.bk{margin:12px 0}.bk .row{align-items:center;margin-top:8px}
 #fcs{position:fixed;top:12px;right:60px;z-index:60;width:38px;height:38px;border-radius:50%;border:1px solid var(--br);background:var(--pn);color:var(--tx);font-size:16px;cursor:pointer;opacity:.85;box-shadow:0 4px 14px #0004}#fcs:hover{opacity:1;border-color:var(--g)}
 html[data-foco=on] .side{display:none}html[data-foco=on] #bd{max-width:860px;margin:0 auto}html[data-foco=on] main{padding-top:58px}
-html[data-foco=on] .hero,html[data-foco=on] #plw,html[data-foco=on] #estw,html[data-foco=on] #rlw,html[data-foco=on] #bkw,html[data-foco=on] #cdw,html[data-foco=on] #lmw{display:none}
+html[data-foco=on] .hero,html[data-foco=on] #plw,html[data-foco=on] #estw,html[data-foco=on] #rlw,html[data-foco=on] #cdw,html[data-foco=on] #lmw{display:none}
 
 /* ===== Ajustes mobile / PWA ===== */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -295,4 +293,4 @@ addEventListener('DOMContentLoaded',()=>{const b=document.createElement('button'
 </head><body><div id="auth-loading" role="status"><strong>AprovaIFMA</strong><p id="auth-loading-status">Preparando sua entrada…</p><button id="auth-loading-retry" hidden>Tentar novamente</button></div><noscript>Ative o JavaScript para entrar na plataforma.</noscript>
 <div id="app"><aside class="side" id="sd"><button class="tg" id="tg" title="Ocultar/mostrar menu">‹</button><div class="brand"><span class="logo">🎓</span><span class="lb">IFMA <b>Prep</b></span></div><nav id="nv"></nav><div class="foot lb" id="ft"></div></aside><div id="bdp"></div><main id="main"></main></div><nav id="bn" aria-label="Navegação principal"></nav><div id="lbx" role="dialog" aria-label="Página da prova"><div class="bar2"><button id="lbz" title="Aproximar/afastar">🔍</button><button id="lbc" title="Fechar">✕</button></div><div class="sc"><img id="lbi" alt=""></div></div>
 <link rel="stylesheet" href="simulados.css?v=20261104-4"><link rel="stylesheet" href="admin.css?v=20261107-1"><link rel="stylesheet" href="dia-prova.css?v=20261110-1">
-<script src="auth-gate.js?v=20261110-1"></script></body></html>
+<script src="auth-gate.js?v=20261115-4"></script></body></html>

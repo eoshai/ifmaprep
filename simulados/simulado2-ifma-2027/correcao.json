@@ -1,0 +1,122 @@
+{
+  "1": {
+    "answer": "A",
+    "explanation": "O narrador passa da desconfiança e da contagem dos exemplares à participação nas relações criadas na praça. Essa mudança organiza o sentido global da crônica."
+  },
+  "2": {
+    "answer": "D",
+    "explanation": "A previsão de que a caixa ficaria vazia revela a desconfiança inicial na colaboração dos usuários quando não há alguém vigiando."
+  },
+  "3": {
+    "answer": "C",
+    "explanation": "“Abrir uma janela” é uma metáfora para o acesso a outras experiências e perspectivas por meio da leitura; não descreve uma ação material."
+  },
+  "4": {
+    "answer": "D",
+    "explanation": "As formas “encontrei”, “perguntei” e “me sentei” mostram um narrador-personagem, em primeira pessoa, que participa dos acontecimentos."
+  },
+  "5": {
+    "answer": "A",
+    "explanation": "O narrador se concentra no número de livros; o avô se envolve com as pessoas. O contraste antecipa a mudança de perspectiva do narrador."
+  },
+  "6": {
+    "answer": "B",
+    "explanation": "A notícia apresenta a iniciativa, números, procedimentos e declarações dos organizadores. Não é um manual nem uma narrativa pessoal."
+  },
+  "7": {
+    "answer": "D",
+    "explanation": "270 é maior que 240. Os dados contabilizam movimentações, não pessoas, e o próprio texto informa que não bastam para demonstrar aumento do hábito de leitura."
+  },
+  "8": {
+    "answer": "C",
+    "explanation": "Os textos compartilham o tema da leitura e da convivência em uma praça, embora apresentem gêneros e formas de organização diferentes: crônica e notícia."
+  },
+  "9": {
+    "answer": "A",
+    "explanation": "A expressão retoma a pergunta implícita no período anterior: se houve crescimento do hábito de leitura. É um recurso de coesão referencial."
+  },
+  "10": {
+    "answer": "C",
+    "explanation": "“Embora” introduz uma oração subordinada adverbial concessiva. O fato de os livros serem usados não impede que proporcionem novas experiências."
+  },
+  "11": {
+    "answer": "C",
+    "explanation": "“No sábado” indica tempo e aparece antes do verbo. A vírgula destaca esse adjunto adverbial deslocado; não há sujeito expresso nesse emprego impessoal de “chover”."
+  },
+  "12": {
+    "answer": "D",
+    "explanation": "“Das” corresponde à contração da preposição “de” com o artigo definido feminino plural “as”, que acompanha “bibliotecas”."
+  },
+  "13": {
+    "answer": "A",
+    "explanation": "“Fazia” e “conversava” estão no pretérito imperfeito do indicativo. No contexto, descrevem comportamentos recorrentes durante o acompanhamento da caixa."
+  },
+  "14": {
+    "answer": "B",
+    "explanation": "Em “dirigi-me à praça”, ocorre a fusão da preposição “a”, exigida por “dirigir-se”, com o artigo “a”. Não se emprega esse acento antes de “uma” nem de “essa”."
+  },
+  "15": {
+    "answer": "D",
+    "explanation": "“Têm” concorda com o sujeito plural “os moradores”. O circunflexo diferencia a terceira pessoa do plural (“têm”) da terceira pessoa do singular (“tem”)."
+  },
+  "16": {
+    "answer": "B",
+    "explanation": "1. Converta a produção: 2,4 × 10⁵ Wh = 240 000 Wh = 240 kWh. 2. Calcule a parcela da biblioteca: (3/8) × 240 = 90 kWh."
+  },
+  "17": {
+    "answer": "B",
+    "explanation": "1. O próximo encontro ocorre após o mínimo múltiplo comum dos três intervalos. 2. 18 = 2 × 3²; 24 = 2³ × 3; 30 = 2 × 3 × 5. 3. MMC = 2³ × 3² × 5 = 360 minutos = 6 horas. 4. Somando ao horário inicial: 8h + 6h = 14h."
+  },
+  "18": {
+    "answer": "C",
+    "explanation": "1. Represente o preço original por P. Após o aumento: 1,20P. 2. O desconto incide sobre o novo preço: 0,70 × 1,20P = 0,84P. 3. A redução foi P − 0,84P = 0,16P, equivalente a 16% do preço original."
+  },
+  "19": {
+    "answer": "B",
+    "explanation": "1. O primeiro serviço exigiu 6 × 5 × 8 = 240 horas de trabalho de uma pessoa. 2. O novo grupo realiza 10 × 4 = 40 horas de trabalho de uma pessoa por dia. 3. O prazo necessário é 240 ÷ 40 = 6 dias."
+  },
+  "20": {
+    "answer": "C",
+    "explanation": "1. Se n é o número de participantes, o custo é C(n) = 120 + 18n. 2. O orçamento exige 120 + 18n ≤ 660. Logo, 18n ≤ 540. 3. Assim, n ≤ 30. Como 30 é inteiro e usa exatamente R$ 660,00, é o máximo permitido."
+  },
+  "21": {
+    "answer": "D",
+    "explanation": "1. Se a largura é x, o comprimento é x + 6. Pela área: x(x + 6) = 216. 2. Logo, x² + 6x − 216 = 0, ou (x − 12)(x + 18) = 0. 3. As raízes são 12 e −18. Como uma medida deve ser positiva, a largura é 12 m."
+  },
+  "22": {
+    "answer": "A",
+    "explanation": "1. Se i representa inteiros e m representa meias-entradas: i + m = 30 e 12i + 8m = 312. 2. Substitua m = 30 − i: 12i + 8(30 − i) = 312. 3. Então, 4i + 240 = 312; 4i = 72; i = 18. 4. Verificação: 18 × 12 + 12 × 8 = 216 + 96 = R$ 312,00."
+  },
+  "23": {
+    "answer": "D",
+    "explanation": "1. No regime simples, J = C × i × t. A taxa decimal é 1,25/100 = 0,0125 ao mês. 2. J = 2 800 × 0,0125 × 4 = R$ 140,00. 3. O montante é M = C + J = 2 800 + 140 = R$ 2.940,00."
+  },
+  "24": {
+    "answer": "B",
+    "explanation": "1. Na primeira retirada, a probabilidade de verde é 4/12. 2. Após retirar um verde, restam 3 verdes entre 11 marcadores. A segunda probabilidade é 3/11. 3. Multiplique: (4/12) × (3/11) = 12/132 = 1/11."
+  },
+  "25": {
+    "answer": "B",
+    "explanation": "1. O gráfico passa por (0, 14) e (8, 38). A taxa fixa é R$ 14,00. 2. O valor por quilômetro é (38 − 14)/(8 − 0) = 24/8 = R$ 3,00. 3. Assim, P(d) = 14 + 3d. Para d = 20: P(20) = 14 + 60 = R$ 74,00."
+  },
+  "26": {
+    "answer": "C",
+    "explanation": "1. Os triângulos formados pelas alturas e sombras são semelhantes: ambos têm um ângulo reto e o mesmo ângulo de incidência dos raios solares. 2. As razões entre altura e sombra são iguais: h/12 = 1,5/2. 3. Logo, h = (12 × 1,5)/2 = 9 m."
+  },
+  "27": {
+    "answer": "A",
+    "explanation": "1. O raio externo é a soma do raio do jardim com a largura da pista: R = 6 + 3 = 9 m. 2. A área da pista é a diferença entre as áreas dos círculos: A = πR² − πr². 3. Então, A = π(9² − 6²) = π(81 − 36) = 45π m²."
+  },
+  "28": {
+    "answer": "A",
+    "explanation": "1. Calcule a capacidade: V = 1,2 × 0,8 × 0,75 = 0,72 m³ = 720 L. 2. O volume inicial é (1/3) × 720 = 240 L. O volume desejado é (5/6) × 720 = 600 L. 3. É necessário acrescentar 600 − 240 = 360 L. 4. Com vazão de 24 L/min, o tempo é 360 ÷ 24 = 15 minutos."
+  },
+  "29": {
+    "answer": "B",
+    "explanation": "1. A diferença horizontal é 14 − 2 = 12 m e a diferença vertical é 6 − 1 = 5 m. 2. O segmento AB é a hipotenusa de um triângulo retângulo com catetos 12 e 5. 3. Pelo teorema de Pitágoras: d² = 12² + 5² = 144 + 25 = 169. 4. Como d é positivo, d = √169 = 13 m."
+  },
+  "30": {
+    "answer": "A",
+    "explanation": "1. Iguale a altura a 15: −t² + 6t + 7 = 15. 2. Reorganize: t² − 6t + 8 = 0, ou (t − 2)(t − 4) = 0. Os instantes são 2 s e 4 s. 3. A parábola tem concavidade para baixo. Seu ponto mais alto ocorre em t = −6/[2 × (−1)] = 3 s. 4. Assim, 2 s corresponde à subida e 4 s à descida. A resposta é 4 s."
+  }
+}
