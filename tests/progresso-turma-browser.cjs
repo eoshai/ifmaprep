@@ -20,7 +20,7 @@ ctx.stats={seq:3,h7:{[day(-2)]:2}};assert.equal(vm.runInContext('turCurrentStats
  return route.fulfill({contentType:'application/json',body:JSON.stringify(u.pathname.endsWith('/turma_membros')&&route.request().method()==='GET'?rows:[])})});
  await context.addInitScript(include=>{localStorage.setItem('ifma_inc2020',include?'1':'0');localStorage.setItem('ifma',JSON.stringify({resp:{'2020-1':{r:'B',ok:true},'2022-1':{r:'D',ok:true},'unknown':{r:'A',ok:true}}}));},include2020);
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:8765');await ready(page);
- assert.equal(await page.locator('.card').filter({has:page.locator('small', {hasText:/^Respondidas$/})}).locator('b').innerText(),include2020?'2/190':'1/150');
+ assert.equal(await page.locator('.card').filter({has:page.locator('small', {hasText:/^Respondidas$/})}).locator('b').innerText(),include2020?'2/238':'1/198');
  assert.match(await page.locator('#ft').innerText(),include2020?/2 questões/:/1 questões/);
  assert.equal(await page.evaluate(()=>!!S.resp['2020-1']),true);
  await page.evaluate(()=>go('tur'));await page.locator('.trm').filter({hasText:'Inativa'}).waitFor();

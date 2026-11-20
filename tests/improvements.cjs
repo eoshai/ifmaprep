@@ -1,0 +1,20 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+(async()=>{
+ const ctx=vm.createContext({console,Date,Math,JSON,Object,Set,Map,AbortController,setTimeout,clearTimeout,navigator:{onLine:true},document:{addEventListener(){}},addEventListener(){},APP_ACCOUNT_UID:'owner',IFMA_AUTH_CONFIG:{url:'https://fixture.test',key:'fixture'},uid:'owner',calls:0,saves:0,S:{questionReports:{}}});
+ ctx.IFMA_AUTH={readSession:()=>({uid:ctx.uid}),ensureSession:async()=>({uid:ctx.uid,access_token:'fixture'})};ctx.save=()=>ctx.saves++;
+ ctx.fetch=async(url,args)=>{ctx.calls++;return{ok:true,json:async()=>JSON.parse(args.body).p_id}};
+ vm.runInContext(fs.readFileSync('melhorias.js','utf8'),ctx);const run=s=>vm.runInContext(s,ctx);
+ const id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';ctx.S.questionReports[id]={id,questionId:'aut-001',reference:'Autoral Q1',source:'Autoral',materia:'Português',topic:'Interpretação',kind:'gabarito',description:'Confira a alternativa desta questão.',createdAt:1,updatedAt:1,deliveredAt:0};
+ ctx.navigator.onLine=false;await run('flushQuestionReports()');assert.equal(ctx.calls,0);assert.equal(ctx.saves,0);
+ ctx.navigator.onLine=true;ctx.uid='other';await run('flushQuestionReports()');assert.equal(ctx.calls,0);
+ ctx.uid='owner';ctx.IFMA_AUTH.ensureSession=async()=>({uid:'other',access_token:'other'});await run('flushQuestionReports()');assert.equal(ctx.calls,0);
+ ctx.IFMA_AUTH.ensureSession=async()=>({uid:'owner',access_token:'fixture'});
+ ctx.fetch=async()=>{ctx.calls++;return{ok:false,status:404,json:async()=>({code:'PGRST202'})}};await run('flushQuestionReports()');assert.equal(ctx.S.questionReports[id].deliveredAt,0);
+ ctx.fetch=async()=>{ctx.calls++;return{ok:true,json:async()=>[]}};await run('flushQuestionReports()');assert.equal(ctx.S.questionReports[id].deliveredAt,0);
+ ctx.fetch=async(url,args)=>{ctx.calls++;return{ok:true,json:async()=>JSON.parse(args.body).p_id}};await run('flushQuestionReports()');assert.ok(ctx.S.questionReports[id].deliveredAt>0);assert.equal(ctx.saves,1);
+ const sent=ctx.calls;await run('flushQuestionReports()');assert.equal(ctx.calls,sent);
+ ctx.left={a:{id:'a',description:'Novo texto',updatedAt:30,deliveredAt:0}};ctx.right={a:{id:'a',description:'Antigo',updatedAt:20,deliveredAt:15},b:{id:'b',updatedAt:10}};
+ const merged=run('mergeQuestionReports(left,right)');assert.equal(merged.a.description,'Novo texto');assert.equal(merged.a.deliveredAt,15);assert.ok(merged.b);assert.equal(ctx.left.a.deliveredAt,0);
+ assert.equal(run('mergeQuestionReports(right,left).a.deliveredAt'),15);
+ console.log('OK: fila offline, isolamento da conta, confirmação estrita, falha preserva pendência, envio sem duplicação e merge conserva recibos e relatos.');
+})().catch(e=>{console.error(e);process.exitCode=1});

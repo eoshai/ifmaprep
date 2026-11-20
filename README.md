@@ -4,10 +4,23 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 
 **Demo:** https://github.com/eoshai/ifmaprep
 
+## Questões autorais
+
+O menu **Questões autorais** e o atalho da tela inicial oferecem 48 questões originais, com quatro alternativas e resolução comentada após a resposta. São 16 assuntos: interpretação de texto e outros 15 escolhidos pela frequência nas 150 questões oficiais de 2022 a 2026. Em empate na última posição, foi priorizada coesão e coerência pelo apoio à compreensão textual. Essa contagem não é previsão da próxima prova.
+
+Cada assunto tem uma questão fácil, uma média e uma difícil. O nível é uma estimativa editorial: fácil exige identificação ou aplicação direta; média combina informações ou etapas; difícil exige inferência, análise de alternativas ou resolução com mais etapas. Não há calibração estatística por respostas de estudantes. As questões oficiais não receberam níveis.
+
+Os filtros de **Origem** e **Nível** também estão no Banco completo e em Por assunto. Respostas, histórico de tentativas, revisão de erros, favoritas e sincronização usam a mesma estrutura das questões oficiais, com IDs próprios `aut-001` a `aut-048`. O gabarito das autorais é identificado separadamente do oficial. A chave interna de ano `0` significa origem autoral e nunca é apresentada como ano de prova.
+
+O conteúdo está em `questoes-autorais.js`, carregado antes de `app.js` e incluído no cache offline. Os IDs são permanentes: não renumerar ao ampliar o banco. Para atualizar, incrementar a versão desse arquivo no carregador autenticado e no service worker, além da versão do cache.
+
+Validação: `node tests/autorais.cjs`, `node tests/autorais-browser.cjs` (com Playwright e Chrome) e `node tests/estudar-agora.cjs`.
+
 ## Recursos
 
 - ▶ Estudar agora: sessão guiada de até 5 questões e 25 minutos, com prioridade para pendências do plano e assuntos com erros, pausa automática ao sair do app e resumo final. A sessão pode ser retomada neste aparelho.
 
+- ✍️ 48 questões autorais comentadas em 16 assuntos, com níveis fácil, médio e difícil e filtros por origem e dificuldade.
 - 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
 - 🎯 Questões por assunto, com gabarito e correção automática
 - 📋 Simulados autorais: SimulAprova Inédito - SHAI (Feito com IA Plus), 30 questões e 3 horas sem pausa; modos impresso e digital, relatório por matéria/assunto e gabarito comentado após a entrega.
@@ -21,7 +34,7 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 - ☁ Login com email e senha e sincronização do progresso entre celular, PC e tablet
 - ⭐ Favoritas, "tive dificuldade", "chutei" e riscar alternativas
 - 🎬 Cadastro de links de resoluções em vídeo (YouTube) e comentários por questão
-- 🌗 Tema claro/escuro e modo foco
+- 🌙 Tema escuro e modo foco
 - 📱 Layout para celular, zoom nas páginas da prova e instalação como app (PWA), com uso offline
 
 ## Plano até a prova
@@ -195,3 +208,23 @@ A seção Simulados permite escolher entre o SimulAprova original e o Simulado 2
 Cada prova usa suas próprias páginas, assuntos e correção. Tentativas anteriores permanecem com o mesmo identificador; a evolução é exibida por prova, e a revisão do Início reúne as pendências da tentativa mais recente de cada simulado. Presença, sequência e atividade da turma incluem os dois. O catálogo anuncia a nova publicação, e o service worker v21 inclui o novo caderno, a correção e as 10 imagens para uso offline após o cache ser instalado.
 
 Validação: `node tests/simulados-multiplos.cjs` e `node tests/simulados-multiplos-browser.cjs`, além dos testes anteriores de simulados, progresso, cache e avisos.
+
+
+## Tela de questões, desempenho e relatos (20/11/2026)
+
+- **Celular:** filtros e lista de questões iniciam recolhidos. Os dois botões permitem abrir os painéis; selecionar uma questão recolhe a lista e leva ao enunciado. Os filtros permanecem abertos enquanto são ajustados. No computador, ambos continuam visíveis.
+- **Origem:** Início e Desempenho mostram provas IFMA e autorais separadamente. Cada percentual usa a primeira tentativa sem consulta, com gabarito, segundo a mesma regra do histórico existente; percentuais sem amostra são exibidos como traço. As provas de 2020 só entram quando estão visíveis. O número de respondidas é distinto da amostra avaliada.
+- **Simulados:** histórico por prova com gráfico de 0 a 30 acertos, comparação da última tentativa corrigida com a anterior, tempo e acertos por assunto. Correções pendentes não viram notas zero. A tabela mantém todas as tentativas e os resultados originais não são alterados pela revisão.
+- **Reportar problema:** botão nas questões do banco, autorais e questões/correções dos simulados. Coleta tipo e descrição, com identificação automática da questão. O relato é salvo em `S.questionReports`, por conta, entra na sincronização existente e só recebe confirmação de entrega após resposta válida do serviço. Sem conexão ou com serviço indisponível, permanece pendente. O Desempenho reúne os próprios relatos e permite tentar enviar novamente. A confirmação significa recebimento, não resolução do problema.
+
+### Ativação do recebimento central de relatos
+
+O código do site não cria a infraestrutura remota sozinho. No **SQL Editor do mesmo projeto Supabase**, execute `supabase/question_reports.sql` após ter ativado a Administração com `supabase/admin_setup.sql`. O arquivo é idempotente. Sem essa ativação, o app preserva os relatos como pendentes e não informa que foram recebidos.
+
+Após ativar, abra **Administração → Relatos de questões**. Há filtro por situação, paginação e marcações de Aberto, Em análise e Resolvido. A lista administrativa não é guardada no cache/localStorage. O usuário comum não pode consultá-la nem alterar situações.
+
+O banco usa tabela privada, RLS sem acesso direto aos papéis do navegador e RPCs que verificam autenticação/administração no servidor. A submissão tem IDs UUID permanentes, reenvio idempotente por conta, limites de tamanho e até 30 novos relatos por conta por dia. Não são enviados tokens, respostas do estudante ou seu histórico dentro do relato. Alterações de estado são exclusivas de administradores.
+
+Arquivos: `melhorias.js`, `theme.css`, `simulados-progresso.js`, `supabase/question_reports.sql`. O carregador autenticado e o service worker incluem os novos arquivos/versionamentos.
+
+Verificação: `node tests/improvements.cjs`, `node tests/improvements-browser.cjs` (Playwright/Chrome), `node tests/question-reports-database.cjs` (PGlite), além dos testes existentes de questões, sessão guiada, simulados e administração.

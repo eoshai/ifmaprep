@@ -4,7 +4,7 @@ for(const m of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g))new vm.Script
 const between=(a,b)=>html.slice(html.indexOf(a),html.indexOf(b,html.indexOf(a)));
 const storage=new Map(),elements=new Map();let mounted;
 const ctx=vm.createContext({console,Date,Map,Set,JSON,Math,localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},document:{addEventListener(){}},addEventListener(){},setInterval(){},motTmp(){},save(){},credit(){},tel:()=>0,cadDue:()=>({due:[]}),go(){},$:s=>{if(!elements.has(s))elements.set(s,{});return elements.get(s)},mountQ:(el,q,c)=>{mounted={q,c}},esc:s=>s,hms:s=>String(Math.floor(s))});
-vm.runInContext(between('const Q_ALL=','const INC20=')+`\nconst Q=Q_ALL.filter(q=>q.ano!==2020),MATS=['Português','Matemática'];let S={resp:{},hist:{},tempo:{}};const stat=q=>S.resp[q.id];const T={run:false};`+between('function hInfo(id)','function hStats()')+between('const PROVA=','function planoInit(b)')+between('/* ===== sessão guiada:','function home(b)'),ctx);
+vm.runInContext(between('const Q_ALL=','const INC20=')+`\nconst Q=Q_ALL.filter(q=>q.ano!==2020),MATS=['Português','Matemática'];let S={resp:{},hist:{},tempo:{}};const stat=q=>S.resp[q.id];const T={run:false};`+between('function hInfo(id)','function hStats(')+between('const PROVA=','function planoInit(b)')+between('/* ===== sessão guiada:','function home(b)'),ctx);
 const run=s=>vm.runInContext(s,ctx);
 assert.equal(run('Q.length'),150);
 assert.match(run('eaCandidates(new Date(2026,9,5))[0].reason'),/semana atual/);
