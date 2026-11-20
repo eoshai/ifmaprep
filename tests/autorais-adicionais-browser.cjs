@@ -1,0 +1,24 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),assert=require('node:assert/strict');
+const {localFiles,ready}=require('./browser-fixture.cjs');
+(async()=>{const browser=await chromium.launch({headless:true,channel:'chrome'});try{
+ const context=await browser.newContext({viewport:{width:1440,height:1000},timezoneId:'America/Fortaleza',serviceWorkers:'block'});await localFiles(context);
+ await context.addInitScript(()=>{localStorage.setItem('app_seen','2026-11-20-quadro-branco');localStorage.setItem('ifma_sim_publicacoes_v1',JSON.stringify(['simulaprova-shai-v1','simulado2-ifma-2027']))});
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.clock.install({time:new Date('2026-11-20T12:00:00-03:00')});await page.goto('http://127.0.0.1:8765');await ready(page);
+ await page.evaluate(()=>{S.resp={};S.hist={};Q.filter(q=>!q.autoral).forEach(q=>S.resp[q.id]={r:G[q.id],ok:true});save();go('home')});
+ assert.match(await page.locator('.home-stats').innerText(),/150\/200/);
+ const base=await page.locator('#plw .wk summary').allInnerTexts();assert.equal(base.slice(0,5).every(t=>t.includes('✅')),true);
+ assert.match(await page.locator('#plw').innerText(),/autorais são treino adicional/);
+ assert.equal(await page.evaluate(()=>eaCandidates().length),0);
+ await page.screenshot({path:'.test-runtime/autorais-adicionais-home.png',animations:'disabled'});
+ await page.locator('#plw .wk').nth(3).locator('summary').click();
+ await page.locator('#plw .wk').nth(3).locator('.chip').filter({hasText:'Coesão e coerência'}).click();
+ assert.equal(await page.locator('select[data-k=orig]').inputValue(),'Provas anteriores');assert.equal(await page.locator('.li').count(),4);assert.equal(await page.locator('#qc .author-level').count(),0);
+ await page.evaluate(()=>{S.resp['aut-049']={r:G['aut-049'],ok:true};save();go('home')});assert.match(await page.locator('.home-stats').innerText(),/151\/200/);
+ const after=await page.locator('#plw .wk summary').allInnerTexts();assert.deepEqual(after,base);
+ await page.reload();await ready(page);assert.match(await page.locator('.home-stats').innerText(),/151\/200/);
+ await page.evaluate(()=>{S.resp={};S.hist={};const g=eaCandidates().find(g=>g.topic==='Estatística e leitura de dados (média, moda, mediana, gráficos)');eaStart(g)});
+ assert.equal(await page.evaluate(()=>EA.ids.every(id=>!Q.find(q=>q.id===id).autoral)),true);
+ await page.evaluate(()=>{eaPause();ST.autorais={f:{},cur:49};go('autorais')});assert.match(await page.locator('#qc').innerText(),/Autoral · Q50/);
+ await page.locator('#qc .alt').filter({hasText:'14.'}).click();await page.locator('#qc #go').click();assert.equal(await page.evaluate(()=>S.resp['aut-050'].ok),true);
+ assert.deepEqual(errors,[]);console.log('OK navegador: semanas concluídas sem autorais, filtros oficiais no plano, respondidas 150/200 e 151/200, persistência, prioridade oficial e gabarito da questão 50.');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

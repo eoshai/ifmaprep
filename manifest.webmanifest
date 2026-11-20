@@ -1,6 +1,6 @@
 {
- "name": "AprovaIFMA · IFMA Prep",
- "short_name": "IFMA Prep",
+ "name": "AprovaIFMA",
+ "short_name": "AprovaIFMA",
  "description": "Questões, simulados e plano de estudos para o IFMA",
  "lang": "pt-BR",
  "start_url": "./",

@@ -1,4 +1,4 @@
-# 🎓 IFMA Prep (AprovaIFMA)
+# 🎓 AprovaIFMA
 
 Banco de questões, simulados e plano de estudos para o processo seletivo do IFMA. Funciona direto no navegador com conta obrigatória e pode ser instalado no celular como app. A entrada com e-mail e senha sincroniza o progresso entre aparelhos.
 
@@ -6,11 +6,11 @@ Banco de questões, simulados e plano de estudos para o processo seletivo do IFM
 
 ## Questões autorais
 
-O menu **Questões autorais** e o atalho da tela inicial oferecem 48 questões originais, com quatro alternativas e resolução comentada após a resposta. São 16 assuntos: interpretação de texto e outros 15 escolhidos pela frequência nas 150 questões oficiais de 2022 a 2026. Em empate na última posição, foi priorizada coesão e coerência pelo apoio à compreensão textual. Essa contagem não é previsão da próxima prova.
+O menu **Questões autorais** e o atalho da tela inicial oferecem 50 questões originais, com quatro alternativas e resolução comentada após a resposta. São 16 assuntos: interpretação de texto e outros 15 escolhidos pela frequência nas 150 questões oficiais de 2022 a 2026. Em empate na última posição, foi priorizada coesão e coerência pelo apoio à compreensão textual. Essa contagem não é previsão da próxima prova.
 
-Cada assunto tem uma questão fácil, uma média e uma difícil. O nível é uma estimativa editorial: fácil exige identificação ou aplicação direta; média combina informações ou etapas; difícil exige inferência, análise de alternativas ou resolução com mais etapas. Não há calibração estatística por respostas de estudantes. As questões oficiais não receberam níveis.
+Cada assunto tem pelo menos uma questão fácil, uma média e uma difícil. Há duas questões adicionais de interpretação e estatística. O nível é uma estimativa editorial: fácil exige identificação ou aplicação direta; média combina informações ou etapas; difícil exige inferência, análise de alternativas ou resolução com mais etapas. Não há calibração estatística por respostas de estudantes. As questões oficiais não receberam níveis.
 
-Os filtros de **Origem** e **Nível** também estão no Banco completo e em Por assunto. Respostas, histórico de tentativas, revisão de erros, favoritas e sincronização usam a mesma estrutura das questões oficiais, com IDs próprios `aut-001` a `aut-048`. O gabarito das autorais é identificado separadamente do oficial. A chave interna de ano `0` significa origem autoral e nunca é apresentada como ano de prova.
+Os filtros de **Origem** e **Nível** também estão no Banco completo e em Por assunto. Respostas, histórico de tentativas, revisão de erros, favoritas e sincronização usam a mesma estrutura das questões oficiais, com IDs próprios `aut-001` a `aut-050`. O gabarito das autorais é identificado separadamente do oficial. A chave interna de ano `0` significa origem autoral e nunca é apresentada como ano de prova.
 
 O conteúdo está em `questoes-autorais.js`, carregado antes de `app.js` e incluído no cache offline. Os IDs são permanentes: não renumerar ao ampliar o banco. Para atualizar, incrementar a versão desse arquivo no carregador autenticado e no service worker, além da versão do cache.
 
@@ -20,7 +20,7 @@ Validação: `node tests/autorais.cjs`, `node tests/autorais-browser.cjs` (com P
 
 - ▶ Estudar agora: sessão guiada de até 5 questões e 25 minutos, com prioridade para pendências do plano e assuntos com erros, pausa automática ao sair do app e resumo final. A sessão pode ser retomada neste aparelho.
 
-- ✍️ 48 questões autorais comentadas em 16 assuntos, com níveis fácil, médio e difícil e filtros por origem e dificuldade.
+- 👑 50 questões autorais comentadas em 16 assuntos, com níveis fácil, médio e difícil e filtros por origem e dificuldade.
 - 📚 150 questões de Português e Matemática das provas de 2022 a 2026, filtráveis por ano, matéria, assunto e status. A prova de 2020 (40 questões, formato antigo) está no banco, mas fica oculta por padrão; um botão na tela inicial a mostra de volta (190 questões no total). Não há prova de 2021
 - 🎯 Questões por assunto, com gabarito e correção automática
 - 📋 Simulados autorais: SimulAprova Inédito - SHAI (Feito com IA Plus), 30 questões e 3 horas sem pausa; modos impresso e digital, relatório por matéria/assunto e gabarito comentado após a entrega.
@@ -228,3 +228,26 @@ O banco usa tabela privada, RLS sem acesso direto aos papéis do navegador e RPC
 Arquivos: `melhorias.js`, `theme.css`, `simulados-progresso.js`, `supabase/question_reports.sql`. O carregador autenticado e o service worker incluem os novos arquivos/versionamentos.
 
 Verificação: `node tests/improvements.cjs`, `node tests/improvements-browser.cjs` (Playwright/Chrome), `node tests/question-reports-database.cjs` (PGlite), além dos testes existentes de questões, sessão guiada, simulados e administração.
+
+
+## Autorais como treino adicional (20/11/2026)
+
+O plano conclui assuntos usando somente as questões oficiais visíveis: 70% de acerto e no mínimo 8 respostas, ou todas as oficiais do assunto quando houver menos. Questões autorais não respondidas ou erradas não retiram a conclusão. Os atalhos dos assuntos no plano abrem as provas anteriores. A estimativa de nota do plano também usa somente as provas IFMA. A sessão guiada prioriza as oficiais enquanto houver pendência do plano; erros nas autorais continuam disponíveis para revisão adicional.
+
+As autorais continuam contando em Respondidas, meta diária, desempenho por origem e revisão. São 200 questões visíveis por padrão (150 oficiais de 2022–2026 + 50 autorais); com 2020 visível, são 240. As novas `aut-049` e `aut-050` não renumeram questões antigas nem alteram o progresso salvo.
+
+
+## Marca e apelido nas turmas (20/11/2026)
+
+A marca exibida é AprovaIFMA, inclusive no nome curto do PWA. Etiquetas de nível médio usam amarelo na lista e na questão. Em Turma de estudo, o formulário Meu apelido nas turmas permite salvar o nome em todas as associações do próprio usuário, usando a atualização autenticada já disponível em turma_membros. A confirmação exige retorno das linhas atualizadas; falhas não alteram a preferência local nem os nomes exibidos. O campo recupera o apelido remoto sem sobrescrever uma edição em andamento. Não é necessária uma nova migração SQL para esse ajuste.
+
+
+## Quadro branco e anotações (20/11/2026)
+
+O botão **Quadro branco** das questões abre uma folha branca para contas e desenhos. Aceita mouse, toque e caneta via Pointer Events. Há caneta, borracha, cor, três espessuras, desfazer/refazer, limpar reversível, zoom e modo Mover para rolar no celular. Consultar questão exibe o enunciado e alternativas sem mostrar a resolução.
+
+Em **Ver prova**, cada página tem **Anotar esta página**; a imagem ampliada também tem Anotar. A anotação é uma camada sobre a imagem: a borracha e Limpar apagam apenas os traços. Dentro do quadro, a seleção Papel alterna entre folha branca e páginas relacionadas. Os simulados também têm o botão por questão; o prazo da tentativa continua correndo.
+
+Os vetores dos desenhos ficam no IndexedDB `aprovaifma-rascunhos`, separados pelo UUID da conta e pelo ID da questão ou caminho da página. O rascunho da folha branca é independente das marcações de página. Não há sincronização dos desenhos nem alteração de respostas/notas. Ao trocar de conta ou navegar para outra tela, o quadro fecha. Se o armazenamento estiver indisponível, há fallback em memória com aviso de duração apenas na sessão.
+
+Arquivos: `quadro-branco.js` e `quadro-branco.css`, incluídos no carregador autenticado e no cache offline. Atalhos de teclado: Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z e Escape para fechar.

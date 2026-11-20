@@ -1027,5 +1027,45 @@ const Q_AUTORAIS=[
     "resposta": "A",
     "explicacao": "A expressão explícita “o projeto de Pedro” identifica sem dúvida o possuidor. Nas outras versões, “seu”, “seu próprio” ou “dele” ainda podem ser associados a Lucas ou a Pedro.",
     "pags": []
+  },
+  {
+    "id": "aut-049",
+    "ano": 0,
+    "num": 49,
+    "materia": "Português",
+    "topico": "Interpretação e inferência (informação explícita e implícita)",
+    "autoral": true,
+    "origem": "Autoral",
+    "dificuldade": "Média",
+    "enun": "Leia o aviso elaborado para esta questão:\n“A sala de estudos ficará fechada das 10h às 12h para manutenção. Os empréstimos de livros continuarão normalmente no balcão da biblioteca.”\nA leitura do aviso permite concluir que",
+    "alts": [
+      "a biblioteca inteira ficará fechada durante a manutenção.",
+      "os empréstimos só poderão ser realizados depois das 12h.",
+      "a manutenção impedirá o acesso a todos os serviços da biblioteca.",
+      "a suspensão temporária do uso da sala não interromperá os empréstimos."
+    ],
+    "resposta": "D",
+    "explicacao": "O aviso distingue o uso da sala de estudos do serviço de empréstimos. Apenas a sala ficará fechada durante a manutenção; os empréstimos continuarão normalmente no balcão. Não é possível ampliar o fechamento para toda a biblioteca ou para todos os seus serviços.",
+    "pags": []
+  },
+  {
+    "id": "aut-050",
+    "ano": 0,
+    "num": 50,
+    "materia": "Matemática",
+    "topico": "Estatística e leitura de dados (média, moda, mediana, gráficos)",
+    "autoral": true,
+    "origem": "Autoral",
+    "dificuldade": "Fácil",
+    "enun": "Durante cinco dias, uma estudante resolveu, respectivamente, 12, 15, 9, 18 e 16 questões. A média diária de questões resolvidas nesse período foi",
+    "alts": [
+      "12.",
+      "14.",
+      "15.",
+      "16."
+    ],
+    "resposta": "B",
+    "explicacao": "A média aritmética é a soma dos valores dividida pela quantidade de dias: (12 + 15 + 9 + 18 + 16) ÷ 5 = 70 ÷ 5 = 14 questões por dia.",
+    "pags": []
   }
 ];

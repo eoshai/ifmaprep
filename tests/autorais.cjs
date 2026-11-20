@@ -5,9 +5,9 @@ const c=vm.createContext({console,Date,Math,Map,Set,JSON,localStorage:{getItem:k
 const between=(a,b)=>app.slice(app.indexOf(a),app.indexOf(b,app.indexOf(a)));
 vm.runInContext(data+'\n'+app.slice(0,app.indexOf('const $='))+between('const MATS=','const escA=')+between('const STL=','const MK=')+between('const REVF=','function histBlock()'),c);
 const run=s=>vm.runInContext(s,c),list=JSON.parse(run('JSON.stringify(Q_AUTORAIS)'));
-assert.equal(list.length,48);assert.equal(run('Q.length'),198);assert.equal(run('Q_ALL.length'),238);
-assert.equal(new Set(list.map(q=>q.id)).size,48);
-assert.equal(run('new Set(Q_ALL.map(q=>q.id)).size'),238);
+assert.equal(list.length,50);assert.equal(run('Q.length'),200);assert.equal(run('Q_ALL.length'),240);
+assert.equal(new Set(list.map(q=>q.id)).size,50);
+assert.equal(run('new Set(Q_ALL.map(q=>q.id)).size'),240);
 assert.equal(run("S.resp['2026-1'].r"),'D');
 for(const q of list){
  assert.ok(q.autoral&&q.origem==='Autoral'&&q.ano===0);
@@ -17,8 +17,8 @@ for(const q of list){
  assert.equal(run(`qRef(Q_ALL.find(q=>q.id===${JSON.stringify(q.id)}))`),`Autoral · Q${q.num}`);
 }
 const topics=new Set(list.map(q=>q.topico));assert.equal(topics.size,16);
-for(const t of topics)assert.deepEqual(list.filter(q=>q.topico===t).map(q=>q.dificuldade),['Fácil','Média','Difícil']);
-for(const level of ['Fácil','Média','Difícil'])assert.equal(run(`filt({orig:'Autorais',dif:'${level}'}).length`),16);
+for(const t of topics){const levels=list.filter(q=>q.topico===t).map(q=>q.dificuldade);for(const level of ['Fácil','Média','Difícil'])assert.ok(levels.includes(level),t)}
+for(const [level,count] of [['Fácil',17],['Média',17],['Difícil',16]])assert.equal(run(`filt({orig:'Autorais',dif:'${level}'}).length`),count);
 assert.equal(run("filt({orig:'Provas anteriores'}).length"),150);
 assert.equal(run("filt({orig:'Provas anteriores',dif:'Fácil'}).length"),0);
 assert.equal(run("filt({dif:'Sem classificação'}).length"),150);
@@ -34,7 +34,7 @@ assert.ok(unselected.every(([,n])=>n<=4));
 const choice=n=>{const q=list.find(q=>q.num===n);return q.alts['ABCD'.indexOf(q.resposta)]};
 const number=n=>Number(choice(n).match(/[\d.,]+/)[0].replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',','.').replace(/\.$/,''));
 const expected=new Map([
- [7,(6+8+10+12)/4], [9,21*7.8-(12*7+8*9)],
+ [50,(12+15+9+18+16)/5],[7,(6+8+10+12)/4], [9,21*7.8-(12*7+8*9)],
  [16,180*.85],[17,(1.2*.9-1)*100],[18,(200*.5-200*.4)/.5],
  [19,36],[25,450/(180/6)],[26,6*10/15],[27,2400*(6*8*3)/(4*6*5)],
  [37,800*.02*5],[38,(1770-1500)/(1500*.015)],[39,2800/(1+.18*8/12)],
@@ -52,6 +52,6 @@ assert.equal(run("hInfo('aut-001').first"),false);
 assert.equal(run("filt({orig:'Autorais',st:'Erradas'}).length"),1);
 run("S.fav.push('aut-045')");assert.equal(run("filt({orig:'Autorais',st:'Favoritas'})[0].id"),'aut-045');
 const gate=fs.readFileSync('auth-gate.js','utf8'),sw=fs.readFileSync('sw.js','utf8');
-assert.ok(gate.indexOf('questoes-autorais.js?v=20261120-1')<gate.indexOf('app.js?v=20261120-5'));
-assert.ok(sw.includes('questoes-autorais.js?v=20261120-1'));
-console.log('OK: 48 autorais, 16 assuntos por frequência, 3 níveis, IDs únicos, filtros, gabaritos numéricos, histórico, favoritas, progresso anterior e cache offline.');
+assert.ok(gate.indexOf('questoes-autorais.js?v=20261120-2')<gate.indexOf('app.js?v=20261120-8'));
+assert.ok(sw.includes('questoes-autorais.js?v=20261120-2'));
+console.log('OK: 50 autorais, 16 assuntos por frequência, 3 níveis, IDs únicos, filtros, gabaritos numéricos, histórico, favoritas, progresso anterior e cache offline.');

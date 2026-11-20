@@ -12,6 +12,7 @@ html[data-theme=dark] {
   --tx:#f2f5fa;
   --mu:#a4b2c5;
   --er:#ff6b7f;
+  --warning:#f5ce5c;
   --r:10px;
   --action:#df1936;
   --action-hover:#c81430;
@@ -73,7 +74,7 @@ input[type=checkbox] { accent-color:var(--action); }
 }
 .qh>.tag.author-level { background:var(--p2);border-color:var(--br); }
 .author-level[data-level="Fácil"],.qh>.author-level[data-level="Fácil"] { color:var(--ok); }
-.author-level[data-level="Média"],.qh>.author-level[data-level="Média"] { color:var(--g); }
+.author-level[data-level="Média"],.qh>.author-level[data-level="Média"] { color:var(--warning); }
 .author-level[data-level="Difícil"],.qh>.author-level[data-level="Difícil"] { color:var(--er); }
 .ic2{ color:var(--mu); }
 .tp { margin-top:14px;font-size:13px; }
@@ -178,3 +179,5 @@ input[type=checkbox] { accent-color:var(--action); }
  #qc{scroll-margin-top:76px}.evolution-summary{grid-template-columns:1fr 1fr}.evolution-summary>.card:last-child{grid-column:1/-1}
  .acts #report-question{grid-column:1/-1}
 }
+
+.nickname-form .row{align-items:end}.nickname-form label{display:grid;gap:7px;flex:1;min-width:0}.nickname-form input{width:100%;max-width:360px;box-sizing:border-box}.nickname-form .sbm{margin-bottom:0}

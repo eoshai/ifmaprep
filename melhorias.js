@@ -48,5 +48,5 @@ async function adminQuestionReports(b,filter='open',offset=0){
 }
 addEventListener('online',()=>flushQuestionReports());
 addEventListener('ifma:navigate',()=>{if(typeof V!=='undefined'&&V!=='admin')adminReportAbort?.abort()});
-function simReportButton(exam,n){return `<button class="btn report-question" type="button" data-report-exam="${escA(exam)}" data-report-number="${n}">⚑ Reportar problema</button>`}
+function simReportButton(exam,n){return `<button class="btn report-question" type="button" data-report-exam="${escA(exam)}" data-report-number="${n}">⚑ Reportar problema</button><button class="btn" type="button" data-whiteboard-exam="${escA(exam)}" data-whiteboard-number="${n}">📝 Quadro branco</button>`}
 document.addEventListener('click',e=>{const button=e.target.closest('[data-report-exam]');if(!button)return;const exam=button.dataset.reportExam,n=+button.dataset.reportNumber,meta=SX_EXAMS[exam];if(!meta||n<1||n>30)return;openQuestionReport({id:'sim:'+exam+':'+n,reference:meta.name+' · Q'+n,origem:'Simulado',materia:n<=15?'Português':'Matemática',topico:meta.topics[n-1]})});
