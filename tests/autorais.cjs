@@ -52,6 +52,6 @@ assert.equal(run("hInfo('aut-001').first"),false);
 assert.equal(run("filt({orig:'Autorais',st:'Erradas'}).length"),1);
 run("S.fav.push('aut-045')");assert.equal(run("filt({orig:'Autorais',st:'Favoritas'})[0].id"),'aut-045');
 const gate=fs.readFileSync('auth-gate.js','utf8'),sw=fs.readFileSync('sw.js','utf8');
-assert.ok(gate.indexOf('questoes-autorais.js?v=20261120-2')<gate.indexOf('app.js?v=20261120-8'));
+assert.ok(gate.indexOf('questoes-autorais.js?v=20261120-2')<gate.indexOf('app.js?v=20261120-9'));
 assert.ok(sw.includes('questoes-autorais.js?v=20261120-2'));
 console.log('OK: 50 autorais, 16 assuntos por frequência, 3 níveis, IDs únicos, filtros, gabaritos numéricos, histórico, favoritas, progresso anterior e cache offline.');

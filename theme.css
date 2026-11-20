@@ -181,3 +181,5 @@ input[type=checkbox] { accent-color:var(--action); }
 }
 
 .nickname-form .row{align-items:end}.nickname-form label{display:grid;gap:7px;flex:1;min-width:0}.nickname-form input{width:100%;max-width:360px;box-sizing:border-box}.nickname-form .sbm{margin-bottom:0}
+
+.exam-checklist-group{border:0;padding:0;margin:16px 0}.exam-checklist-group legend{padding:0;margin-bottom:5px;font-size:16px;font-weight:700;color:var(--tx)}

@@ -251,3 +251,8 @@ Em **Ver prova**, cada página tem **Anotar esta página**; a imagem ampliada ta
 Os vetores dos desenhos ficam no IndexedDB `aprovaifma-rascunhos`, separados pelo UUID da conta e pelo ID da questão ou caminho da página. O rascunho da folha branca é independente das marcações de página. Não há sincronização dos desenhos nem alteração de respostas/notas. Ao trocar de conta ou navegar para outra tela, o quadro fecha. Se o armazenamento estiver indisponível, há fallback em memória com aviso de duração apenas na sessão.
 
 Arquivos: `quadro-branco.js` e `quadro-branco.css`, incluídos no carregador autenticado e no cache offline. Atalhos de teclado: Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z e Escape para fechar.
+
+
+## Checklist pessoal (20/11/2026)
+
+Dia da prova e Motivação compartilham um checklist dividido em De roupa (4 peças) e Itens (5 itens), com o texto personalizado solicitado. As marcações usam IDs por item em `S.mot.ck`, para não confundir posições do checklist anterior com as novas roupas e materiais. Os registros antigos não são apagados, mas não marcam automaticamente itens diferentes. A sincronização existente mantém as novas marcações por conta.

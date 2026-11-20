@@ -437,17 +437,22 @@ function motHum(el,saved){if(!el)return;const M=motM(),H=M.hum=M.hum||{},k=dkey(
  $$('[data-h]',el).forEach(x=>x.onclick=()=>sv('h',+x.dataset.h));$$('[data-s]',el).forEach(x=>x.onclick=()=>sv('s',+x.dataset.s))}
 
 /* modo reta final */
-const MOT_CK=['Conferi o local da prova e sei como chegar','Planejei chegar até 12h: os portões fecham às 13h','Separei um documento oficial com foto','Separei o comprovante/cartão de inscrição (se o edital pedir)','Separei canetas esferográficas azul ou preta, de corpo transparente, já testadas','Reli o edital: regras, horários e o que pode ou não levar','Conferi as regras de água, lanche e embalagens e organizei o que for permitido','Deixei roupa e material separados na véspera','Planejei uma noite de sono suficiente e ajustada à minha rotina'];
+const MOT_CK=["Camisa preta básica", "Bermuda (preferencialmente preta)", "Chinelo (ou tênis se mudar de ideia)", "Casaco leve", "RG original", "Canetas esferográficas (preferencialmente pretas)", "Garrafa de água (bem gelada)", "Chocolate 50% e Bis", "Celular completamente desligado e guardado conforme orientação"];
+// IDs próprios evitam associar as marcações numéricas do checklist antigo a outros itens.
+const MOT_CK_IDS=["roupa-camisa-preta", "roupa-bermuda", "roupa-calcado", "roupa-casaco-leve", "item-rg-original", "item-canetas", "item-agua-gelada", "item-chocolate-bis", "item-celular-desligado"];
+function motChecklistHTML(ck,attribute='data-i'){
+ return [{title:'De roupa',start:0,end:4},{title:'Itens',start:4,end:MOT_CK.length}].map(group=>`<fieldset class="exam-checklist-group"><legend>${group.title}</legend>${MOT_CK.slice(group.start,group.end).map((label,offset)=>{const i=group.start+offset,checked=!!ck[MOT_CK_IDS[i]];return `<label class="mck${checked?' on':''}"><input type="checkbox" ${attribute}="${i}"${checked?' checked':''}><span>${esc(label)}</span></label>`}).join('')}</fieldset>`).join('');
+}
 const MOT_PL=[[7,5,'Revise todas as questões que você errou e refaça as que ainda erra.'],[4,3,'Foque nas questões que você errou 2+ vezes e nos assuntos que mais caem.'],[2,2,'Sessão leve: 10 a 15 questões que você já domina. Nada de assunto novo.'],[1,1,'Véspera: no máximo 30 min de revisão leve, confira o checklist, jante leve e durma cedo.'],[0,0,'Dia da prova: respire fundo, leia com calma e comece pelas questões que você domina.']];
 function motReta(el){if(!el)return;const d=motDias();if(d<0){el.innerHTML='';return}
- const M=motM(),ck=M.ck=M.ck||{},on=d<=7,n=MOT_CK.filter((_,i)=>ck[i]).length,pl=MOT_PL.find(p=>d<=p[0]&&d>=p[1]),lb=p=>p[0]===0?'Dia da prova':p[0]===1?'Véspera':p[0]===p[1]?p[0]+' dias':p[0]+' a '+p[1]+' dias';
+ const M=motM(),ck=M.ck=M.ck||{},on=d<=7,n=MOT_CK_IDS.filter(id=>ck[id]).length,pl=MOT_PL.find(p=>d<=p[0]&&d>=p[1]),lb=p=>p[0]===0?'Dia da prova':p[0]===1?'Véspera':p[0]===p[1]?p[0]+' dias':p[0]+' a '+p[1]+' dias';
  el.innerHTML=`<div class="card2 mx${on?' mrfb':''}"><h3>🏁 Modo reta final</h3>
  ${on?`<p><b>${d===0?'A prova é hoje!':d===1?'Falta 1 dia.':'Faltam '+d+' dias.'}</b> ${esc(pl?pl[2]:'')}</p><div class="mpl">${MOT_PL.map(p=>`<div class="${p===pl?'on':''}"><b>${lb(p)}</b><span>${esc(p[2])}</span></div>`).join('')}</div>
  <div class="row" style="margin-bottom:10px"><button class="btn" data-g="err">♻ Revisar erradas</button><button class="btn" data-g="err2">🔁 Erradas 2+ vezes</button></div>`
  :`<p class="mu">Faltam ${d} dias para a prova. O plano da reta final aparece quando restarem 7 dias, mas você já pode ir marcando o checklist.</p>`}
- <button class="btn p" data-g="day">🎒 Abrir guia completo do dia da prova</button><br><br><b>✅ Checklist da prova <span class="mu">(${n}/${MOT_CK.length})</span></b><div style="margin-top:6px">${MOT_CK.map((t,i)=>`<label class="mck${ck[i]?' on':''}"><input type="checkbox" data-i="${i}"${ck[i]?' checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <button class="btn p" data-g="day">🎒 Abrir guia completo do dia da prova</button><br><br><b>✅ Checklist da prova <span class="mu">(${n}/${MOT_CK.length})</span></b><div style="margin-top:6px">${motChecklistHTML(ck)}</div>
  <small class="mu">Confira sempre os detalhes no edital do IFMA.</small></div>`;
- $$('[data-i]',el).forEach(x=>x.onchange=()=>{ck[x.dataset.i]=x.checked;M.t=Date.now();save();motReta(el);if(x.checked&&MOT_CK.every((_,i)=>ck[i]))confete('✅ Checklist completo! Você está pronto(a)')});
+ $$('[data-i]',el).forEach(x=>x.onchange=()=>{ck[MOT_CK_IDS[+x.dataset.i]]=x.checked;M.t=Date.now();save();motReta(el);if(x.checked&&MOT_CK_IDS.every(id=>ck[id]))confete('✅ Checklist completo! Você está pronto(a)')});
  $$('[data-g]',el).forEach(x=>x.onclick=()=>{const g=x.dataset.g;if(g==='day'){go('examday');return}ST.banco={f:{st:g==='err'?'Erradas':'Erradas 2+ vezes'},cur:0};go('banco')})}
 
 /* mapa de calor de estudo */
@@ -583,6 +588,10 @@ function viewQ1(b){const q=Q_ALL.find(x=>x.id===LNK.q);if(!q){b.innerHTML='<p cl
 /* ===== novidades: aviso de atualização + "o que há de novo" ===== */
 /* Para a próxima atualização: adicione um item NOVO no TOPO desta lista (v diferente). Quem já viu a anterior verá o aviso de novo. */
 const NOVIDADES=[
+ {v:'2026-11-20-checklist-pessoal',data:'20 nov 2026',titulo:'Checklist de roupas e itens atualizado',itens:[
+ ['👕','De roupa','Camisa preta básica, bermuda preferencialmente preta, chinelo ou tênis e casaco leve.'],
+ ['🎒','Itens','RG original, canetas esferográficas preferencialmente pretas, garrafa de água bem gelada, Chocolate 50% e Bis, celular completamente desligado e guardado conforme orientação.'],
+ ['✅','Mesmas marcações nas duas seções','O checklist é compartilhado entre Dia da prova e Motivação, com grupos separados para roupas e itens.']]},
  {v:'2026-11-20-quadro-branco',data:'20 nov 2026',titulo:'Quadro branco e anotações na prova',itens:[
  ['📝','Papel para resolver as questões','Abra o Quadro branco para fazer contas e desenhos com mouse, dedo ou caneta. Há cores, espessuras, borracha, desfazer, refazer e limpar.'],
  ['✎','Desenhe sobre a página da prova','Em Ver prova, use Anotar esta página. O mesmo botão aparece na imagem ampliada. Você também pode trocar entre a folha em branco e as páginas dentro do quadro.'],
